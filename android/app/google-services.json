@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "435277198195",
+    "project_id": "sihproject-829f6",
+    "storage_bucket": "sihproject-829f6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:435277198195:android:dec730b9bbbd0405ef0b06",
+        "android_client_info": {
+          "package_name": "com.example.sihwaterresq"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfSKtwURYjaiaM9EHKpTmQlgMAlseriEE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
