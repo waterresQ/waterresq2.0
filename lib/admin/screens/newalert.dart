@@ -2,6 +2,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:sihwaterresq/admin/screens/adminalertspage.dart';
 import 'package:sihwaterresq/admin/screens/adminhome.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class newAlert extends StatefulWidget {
   const newAlert({super.key});
@@ -74,7 +76,7 @@ class _newAlertState extends State<newAlert> {
                     color: Colors.red,
                   ),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       String formattedTime =
                           "${now.hour}:${now.minute}:${now.second}";
@@ -100,7 +102,39 @@ class _newAlertState extends State<newAlert> {
                         'date': formattedDate,
                       });
                       // Perform actions with title and message
+                      alertReference.child(title).update({
+        'timestamp': ServerValue.timestamp,
+        'formattedTime': formattedTime,
+        'title': title,
+        'message': message,
+        'date': formattedDate,
+      });
 
+      // Send a notification to other users
+      final String serverToken = 'AAAAZViK83M:APA91bEfsM2-_JxLO8R4zo9r670fy92mP5YZ7lyIeDq6yyyrdeWnCC4PM3o2uN6e6-KaDxs1wcYZBAk13bQ2NUfZo7i4jGxuUx9vjCmtaP2yOMbN144OtL0YiSWVuLTYKZp4dPY13B4Z';
+      final String fcmEndpoint = 'https://fcm.googleapis.com/fcm/send';
+      await http.post(
+        Uri.parse(fcmEndpoint),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': 'key=$serverToken',
+        },
+        body: jsonEncode(
+          <String, dynamic>{
+            'notification': <String, dynamic>{
+              'body': 'A new alert has been posted',
+              'title': 'New Alert'
+            },
+            'priority': 'high',
+            'data': <String, dynamic>{
+              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+              'id': '1',
+              'status': 'done'
+            },
+            'to': '/topics/all',
+          },
+        ),
+      );
                       setState(() {
                         _isProcessing = false;
                       });

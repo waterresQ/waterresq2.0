@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        useMaterial3: false,
       ),
       home: FutureBuilder<String>(
         future: checkLoginStatus(),
