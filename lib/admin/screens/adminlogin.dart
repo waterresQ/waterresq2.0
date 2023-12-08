@@ -1,22 +1,18 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sihwaterresq/Screens/home.dart';
-import 'package:sihwaterresq/Screens/signup.dart';
-import 'package:sihwaterresq/admin/screens/adminlogin.dart';
+import 'package:sihwaterresq/admin/screens/adminhome.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
-import 'package:flutter/services.dart';
 
-class login extends StatefulWidget {
-  const login({super.key});
+class adminlogin extends StatefulWidget {
+  const adminlogin({super.key});
 
   @override
-  State<login> createState() => _loginState();
+  State<adminlogin> createState() => _adminloginState();
 }
 
-class _loginState extends State<login> {
+class _adminloginState extends State<adminlogin> {
   final TextEditingController _username = TextEditingController();
   final TextEditingController _password = TextEditingController();
   final DatabaseReference _databaseReference =
@@ -29,26 +25,10 @@ class _loginState extends State<login> {
     super.dispose();
   }
 
-  void _openAddExpensesOverlay() {
-    showModalBottomSheet(
-      isScrollControlled: true,
-      useSafeArea: true,
-      context: context,
-      builder: (ctx) => signup(),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
-      ),
-    );
-
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: true,
@@ -107,7 +87,7 @@ class _loginState extends State<login> {
                     padding: EdgeInsets.only(top: screenHeight * 0.35),
                     child: Container(
                       width: screenWidth * 0.85,
-                      height: screenHeight * 0.45, // Adjust the width as needed
+                      height: screenHeight * 0.3, // Adjust the width as needed
                       padding: const EdgeInsets.all(16.0),
                       decoration: BoxDecoration(
                         color: Colors.blue[50],
@@ -214,76 +194,6 @@ class _loginState extends State<login> {
                                 ),
                               ),
                             ),
-                            Center(
-                              child: Text(
-                                "New User?",
-                                style: GoogleFonts.jost(
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
-                            ElevatedButton(
-                              onPressed: _openAddExpensesOverlay,
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Colors.blue[50]!),
-                                side: MaterialStateProperty.all<BorderSide>(
-                                    BorderSide(color: Colors.black)),
-                                foregroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Colors.black),
-                                shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                        10.0), // Set the border radius here
-                                  ),
-                                ),
-                              ),
-                              child: Text(
-                                "Create an Account",
-                                style: GoogleFonts.jost(
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  left: screenWidth * 0.02,
-                                  right: screenWidth * 0.02),
-                              child: Container(
-                                width: double
-                                    .infinity, // Make the button width match the container
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>const adminlogin(),
-                                      ),
-                                    );
-                                  },
-                                  style: ButtonStyle(
-                                    side: MaterialStateProperty.all<BorderSide>(
-                                        BorderSide(color: Colors.black)),
-                                    shape: MaterialStateProperty.all<
-                                        RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            10.0), // Set the border radius here
-                                      ),
-                                    ),
-                                  ),
-                                  child: Text(
-                                    "Administrative Login",
-                                    style: GoogleFonts.jost(
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
                           ],
                         ),
                       ),
@@ -359,13 +269,11 @@ class _loginState extends State<login> {
       if (isMatched) {
         print('Username: $username');
         print('Password: $password');
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('loggedinuser', username);
-        // Navigate to the "feed" screen if authentication is successful
+
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => home(),
+            builder: (context) => adminhome(),
           ),
         );
         setState(() {
@@ -400,7 +308,7 @@ class _loginState extends State<login> {
   Future<bool> authenticateUser(String username, String password) async {
     try {
       DatabaseEvent userEvent = await _databaseReference
-          .child('users')
+          .child('admin')
           .orderByChild('username')
           .equalTo(username)
           .once();

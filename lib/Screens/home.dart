@@ -38,49 +38,52 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
           } else {
             var controller = snapshot.data![0];
             var checkResult = snapshot.data![1];
-            return SafeArea(
-              child: Scaffold(
-                appBar: AppBar(
-                  title: Text(checkResult),
-                  actions: [
-                    IconButton(
-                      onPressed: () async {
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        await prefs.setString('loggedinuser', 'X');
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => login(),
-                          ),
-                        );
-                      },
-                      icon: Icon(Icons.logout),
+            return WillPopScope(
+              onWillPop: () async => false,
+              child: SafeArea(
+                child: Scaffold(
+                  appBar: AppBar(
+                    title: Text(checkResult),
+                    actions: [
+                      IconButton(
+                        onPressed: () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          await prefs.setString('loggedinuser', 'X');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => login(),
+                            ),
+                          );
+                        },
+                        icon: Icon(Icons.logout),
+                      ),
+                    ],
+                    bottom: TabBar(
+                      controller: _controller,
+                      indicatorColor: Colors.white,
+                      tabs: const [
+                        Tab(
+                          text: "MAPS",
+                        ),
+                        Tab(
+                          text: "MENU",
+                        ),
+                        Tab(
+                          text: "FEED",
+                        )
+                      ],
                     ),
-                  ],
-                  bottom: TabBar(
+                  ),
+                  body: TabBarView(
                     controller: _controller,
-                    indicatorColor: Colors.white,
-                    tabs: const [
-                      Tab(
-                        text: "MAPS",
-                      ),
-                      Tab(
-                        text: "MENU",
-                      ),
-                      Tab(
-                        text: "FEED",
-                      )
+                    children: const [
+                      usermaps(),
+                      menupage(),
+                      feedscreen(),
                     ],
                   ),
-                ),
-                body: TabBarView(
-                  controller: _controller,
-                  children: const [
-                    usermaps(),
-                    menupage(),
-                    feedscreen(),
-                  ],
                 ),
               ),
             );

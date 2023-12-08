@@ -5,11 +5,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sihwaterresq/Screens/home.dart';
 import 'package:sihwaterresq/Screens/loading.dart';
 import 'package:sihwaterresq/Screens/login.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
 }
+
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
 
@@ -26,6 +28,9 @@ class MyApp extends StatelessWidget {
     ]);
 
     return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
       home: FutureBuilder<String>(
         future: checkLoginStatus(),
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
