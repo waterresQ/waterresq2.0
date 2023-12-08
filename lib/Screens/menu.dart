@@ -58,13 +58,14 @@ class _menupageState extends State<menupage> {
             mainAxisSpacing: 30,
             childAspectRatio: 1.5,
             children: [
-              itemDashboard('report', report),
-              itemDashboard('alert', alert),
-              itemDashboard('Raise complaint', complaint),
-              itemDashboard('traffic updates', map),
-              itemDashboard('weather', weather),
-              itemDashboard('Emergency contact', emergency),
-              itemDashboard('precautions', precaution),
+              itemDashboard('report', context, report, '/report'),
+              itemDashboard('alert', context, alert, '/report'),
+              itemDashboard('Raise complaint', context, complaint, '/feed'),
+              itemDashboard('traffic updates', context, map, '/map'),
+              itemDashboard('weather', context, weather, '/weather'),
+              itemDashboard(
+                  'Emergency contact', context, emergency, '/emergency'),
+              itemDashboard('precautions', context, precaution, '/precautions'),
             ],
           ),
         ),
@@ -73,10 +74,12 @@ class _menupageState extends State<menupage> {
   }
 }
 
-itemDashboard(String title, Image image) => Container(
+itemDashboard(String title, BuildContext context, Image image, String route) =>
+    Container(
       child: GestureDetector(
         onTap: () {
           print("Printed $title");
+          Navigator.pushNamed(context, route);
         },
         child: Container(
           decoration: BoxDecoration(
@@ -84,15 +87,14 @@ itemDashboard(String title, Image image) => Container(
             borderRadius: BorderRadius.circular(20),
             boxShadow: const [
               BoxShadow(
-                offset: Offset(3, 3),
-                blurRadius: 2,
+                offset: Offset(1, 1),
+                blurRadius: 1,
                 spreadRadius: 1,
                 color: Color.fromARGB(255, 157, 156, 156),
               ),
             ],
             border: Border.all(
-              color:
-                  const Color.fromARGB(255, 78, 76, 76), // Set the border color
+              color: Color.fromARGB(255, 112, 109, 109), // Set the border color
               width: 1.5, // Set the border width
             ),
           ),
