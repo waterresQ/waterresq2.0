@@ -45,6 +45,9 @@ dependencies:
   shared_preferences: ^2.2.2
   intl: ^0.19.0
   http: ^1.1.0
+  firebase_messaging: ^14.7.7
+  flutter_local_notifications: ^16.2.0
+  overlay_support: ^2.1.0
 
 
 dev_dependencies:
@@ -78,6 +81,7 @@ flutter:
     - lib\widgets\menuimages\map.png
     - lib\widgets\menuimages\precaution.png
     - lib\widgets\menuimages\weather.png
+    - assets/notify.mp3
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
