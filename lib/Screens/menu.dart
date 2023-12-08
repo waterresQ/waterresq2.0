@@ -93,10 +93,10 @@ itemDashboard(String title, BuildContext context, Image image, String route) =>
                 color: Color.fromARGB(255, 157, 156, 156),
               ),
             ],
-            border: Border.all(
-              color: Color.fromARGB(255, 112, 109, 109), // Set the border color
-              width: 1.5, // Set the border width
-            ),
+            // border: Border.all(
+            //   color: Color.fromARGB(255, 112, 109, 109), // Set the border color
+            //   width: 1.5, // Set the border width
+            // ),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
