@@ -46,13 +46,13 @@ class _alertcardState extends State<alertcard> {
           ),
           SizedBox(height: 10),
           Text(
-            'Date: $widget.date',
+            'Date: '+widget.date,
             style: TextStyle(
               fontSize: 16,
             ),
           ),
           Text(
-            'Time: $widget.time',
+            'Time:'+widget.time,
             style: TextStyle(
               fontSize: 16,
             ),

@@ -11,38 +11,38 @@ class _menupageState extends State<menupage> {
   Color bg = Colors.white;
   Image complaint = Image.asset(
     'lib/widgets/menuimages/complaint.png',
-    height: 110,
-    width: 100,
+    height: 75,
+    width: 60,
   );
   Image alert = Image.asset(
     'lib/widgets/menuimages/alert.png',
-    height: 110,
-    width: 100,
+    height: 75,
+    width: 70,
   );
   Image emergency = Image.asset(
     'lib/widgets/menuimages/emergency.png',
-    height: 80,
-    width: 80,
+    height: 75,
+    width: 60,
   );
   Image report = Image.asset(
     'lib/widgets/menuimages/feeds.png',
-    height: 110,
-    width: 100,
+    height: 75,
+    width: 60,
   );
   Image map = Image.asset(
     'lib/widgets/menuimages/map.png',
-    height: 110,
-    width: 110,
+    height: 80,
+    width: 95,
   );
   Image precaution = Image.asset(
     'lib/widgets/menuimages/precaution.png',
-    height: 110,
-    width: 100,
+    height: 75,
+    width: 60,
   );
   Image weather = Image.asset(
     'lib/widgets/menuimages/weather.png',
-    height: 110,
-    width: 100,
+    height: 75,
+    width: 60,
   );
 
   @override
@@ -56,14 +56,16 @@ class _menupageState extends State<menupage> {
             crossAxisCount: 2,
             crossAxisSpacing: 35,
             mainAxisSpacing: 30,
+            childAspectRatio: 1.5,
             children: [
-              itemDashboard('report', report),
-              itemDashboard('alert', alert),
-              itemDashboard('Raise complaint', complaint),
-              itemDashboard('traffic updates', map),
-              itemDashboard('weather', weather),
-              itemDashboard('Emergency contact', emergency),
-              itemDashboard('precautions', precaution),
+              itemDashboard('report', context, report, '/report'),
+              itemDashboard('alert', context, alert, '/alerts'),
+              itemDashboard('Raise complaint', context, complaint, '/feed'),
+              itemDashboard('traffic updates', context, map, '/map'),
+              itemDashboard('weather', context, weather, '/weather'),
+              itemDashboard(
+                  'Emergency contact', context, emergency, '/emergency'),
+              itemDashboard('precautions', context, precaution, '/precautions'),
             ],
           ),
         ),
@@ -72,10 +74,12 @@ class _menupageState extends State<menupage> {
   }
 }
 
-itemDashboard(String title, Image image) => Container(
+itemDashboard(String title, BuildContext context, Image image, String route) =>
+    Container(
       child: GestureDetector(
         onTap: () {
           print("Printed $title");
+          Navigator.pushNamed(context, route);
         },
         child: Container(
           decoration: BoxDecoration(
@@ -83,23 +87,30 @@ itemDashboard(String title, Image image) => Container(
             borderRadius: BorderRadius.circular(20),
             boxShadow: const [
               BoxShadow(
-                offset: Offset(3, 3),
-                blurRadius: 2,
+                offset: Offset(1, 1),
+                blurRadius: 1,
                 spreadRadius: 1,
                 color: Color.fromARGB(255, 157, 156, 156),
               ),
             ],
+            // border: Border.all(
+            //   color: Color.fromARGB(255, 112, 109, 109), // Set the border color
+            //   width: 1.5, // Set the border width
+            // ),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Center(child: image),
-              const SizedBox(
-                height: 7,
-              ),
+              // const SizedBox(
+              //   height: 3,
+              // ),
               Padding(
-                  padding: EdgeInsets.only(left: 8),
-                  child: Text(title.toUpperCase())),
+                  padding: EdgeInsets.only(left: 8, bottom: 1),
+                  child: Text(
+                    title.toUpperCase(),
+                    style: TextStyle(fontSize: 12),
+                  )),
             ],
           ),
         ),
