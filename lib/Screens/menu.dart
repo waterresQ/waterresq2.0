@@ -11,38 +11,38 @@ class _menupageState extends State<menupage> {
   Color bg = Colors.white;
   Image complaint = Image.asset(
     'lib/widgets/menuimages/complaint.png',
-    height: 110,
-    width: 100,
+    height: 75,
+    width: 60,
   );
   Image alert = Image.asset(
     'lib/widgets/menuimages/alert.png',
-    height: 110,
-    width: 100,
+    height: 75,
+    width: 70,
   );
   Image emergency = Image.asset(
     'lib/widgets/menuimages/emergency.png',
-    height: 80,
-    width: 80,
+    height: 75,
+    width: 60,
   );
   Image report = Image.asset(
     'lib/widgets/menuimages/feeds.png',
-    height: 110,
-    width: 100,
+    height: 75,
+    width: 60,
   );
   Image map = Image.asset(
     'lib/widgets/menuimages/map.png',
-    height: 110,
-    width: 110,
+    height: 80,
+    width: 95,
   );
   Image precaution = Image.asset(
     'lib/widgets/menuimages/precaution.png',
-    height: 110,
-    width: 100,
+    height: 75,
+    width: 60,
   );
   Image weather = Image.asset(
     'lib/widgets/menuimages/weather.png',
-    height: 110,
-    width: 100,
+    height: 75,
+    width: 60,
   );
 
   @override
@@ -56,6 +56,7 @@ class _menupageState extends State<menupage> {
             crossAxisCount: 2,
             crossAxisSpacing: 35,
             mainAxisSpacing: 30,
+            childAspectRatio: 1.5,
             children: [
               itemDashboard('report', report),
               itemDashboard('alert', alert),
@@ -89,17 +90,25 @@ itemDashboard(String title, Image image) => Container(
                 color: Color.fromARGB(255, 157, 156, 156),
               ),
             ],
+            border: Border.all(
+              color:
+                  const Color.fromARGB(255, 78, 76, 76), // Set the border color
+              width: 1.5, // Set the border width
+            ),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Center(child: image),
-              const SizedBox(
-                height: 7,
-              ),
+              // const SizedBox(
+              //   height: 3,
+              // ),
               Padding(
-                  padding: EdgeInsets.only(left: 8),
-                  child: Text(title.toUpperCase())),
+                  padding: EdgeInsets.only(left: 8, bottom: 1),
+                  child: Text(
+                    title.toUpperCase(),
+                    style: TextStyle(fontSize: 12),
+                  )),
             ],
           ),
         ),
