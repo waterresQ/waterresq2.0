@@ -54,8 +54,8 @@ class _menupageState extends State<menupage> {
           padding: const EdgeInsets.all(30.0),
           child: GridView.count(
             crossAxisCount: 2,
-            crossAxisSpacing: 35,
-            mainAxisSpacing: 30,
+            crossAxisSpacing: 15,
+            mainAxisSpacing: 20,
             childAspectRatio: 1.5,
             children: [
               itemDashboard('report', context, report, '/report'),
@@ -105,12 +105,12 @@ itemDashboard(String title, BuildContext context, Image image, String route) =>
               // const SizedBox(
               //   height: 3,
               // ),
-              Padding(
-                  padding: EdgeInsets.only(left: 8, bottom: 1),
-                  child: Text(
-                    title.toUpperCase(),
-                    style: TextStyle(fontSize: 12),
-                  )),
+              // Padding(
+              //padding: EdgeInsets.only(left: 8, bottom: 1),
+              Text(
+                title.toUpperCase(),
+                style: TextStyle(fontSize: 12),
+              ),
             ],
           ),
         ),
