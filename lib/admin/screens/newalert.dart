@@ -1,9 +1,9 @@
+import 'dart:convert';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:sihwaterresq/admin/screens/adminalertspage.dart';
-import 'package:sihwaterresq/admin/screens/adminhome.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:sihwaterresq/admin/screens/adminhome.dart';
 
 class newAlert extends StatefulWidget {
   const newAlert({super.key});
@@ -101,40 +101,53 @@ class _newAlertState extends State<newAlert> {
                         'message': message,
                         'date': formattedDate,
                       });
-                      // Perform actions with title and message
-                      alertReference.child(title).update({
-        'timestamp': ServerValue.timestamp,
-        'formattedTime': formattedTime,
-        'title': title,
-        'message': message,
-        'date': formattedDate,
-      });
 
-      // Send a notification to other users
-      final String serverToken = 'AAAAZViK83M:APA91bEfsM2-_JxLO8R4zo9r670fy92mP5YZ7lyIeDq6yyyrdeWnCC4PM3o2uN6e6-KaDxs1wcYZBAk13bQ2NUfZo7i4jGxuUx9vjCmtaP2yOMbN144OtL0YiSWVuLTYKZp4dPY13B4Z';
-      final String fcmEndpoint = 'https://fcm.googleapis.com/fcm/send';
-      await http.post(
-        Uri.parse(fcmEndpoint),
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-          'Authorization': 'key=$serverToken',
-        },
-        body: jsonEncode(
-          <String, dynamic>{
-            'notification': <String, dynamic>{
-              'body': 'A new alert has been posted',
-              'title': 'New Alert'
-            },
-            'priority': 'high',
-            'data': <String, dynamic>{
-              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
-              'id': '1',
-              'status': 'done'
-            },
-            'to': '/topics/all',
-          },
-        ),
-      );
+                      // Send a notification to other users
+                      final serverKey =
+                          'AAAAZViK83M:APA91bEfsM2-_JxLO8R4zo9r670fy92mP5YZ7lyIeDq6yyyrdeWnCC4PM3o2uN6e6-KaDxs1wcYZBAk13bQ2NUfZo7i4jGxuUx9vjCmtaP2yOMbN144OtL0YiSWVuLTYKZp4dPY13B4Z';
+                      final url =
+                          Uri.parse('https://fcm.googleapis.com/fcm/send');
+                      final headers = <String, String>{
+                        'Content-Type': 'application/json',
+                        'Authorization': 'key=$serverKey',
+                      };
+
+                      // Retrieve all tokens from the database
+                      final databaseRef = FirebaseDatabase.instance.reference();
+                      final event =
+                          await databaseReference.child('usertokens').once();
+                      final snapshot = event.snapshot;
+
+                      if (snapshot.value != null) {
+                        final tokens = Map<String, dynamic>.from(
+                            snapshot.value as Map<dynamic, dynamic>);
+                        // Send a notification to each token
+                        for (final token in tokens.values) {
+                          print(token);
+                          final body = jsonEncode(<String, dynamic>{
+                            'notification': <String, dynamic>{
+                              'body': message,
+                              'title': title,
+                            },
+                            'priority': 'high',
+                            'data': <String, dynamic>{
+                              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+                              'id': '1',
+                              'status': 'done'
+                            },
+                            'to': token,
+                          });
+
+                          final response = await http.post(url,
+                              headers: headers, body: body);
+
+                          if (response.statusCode == 200) {
+                            print('Notification sent successfully to $token');
+                          } else {
+                            print('Notification not sent to $token');
+                          }
+                        }
+                      }
                       setState(() {
                         _isProcessing = false;
                       });

@@ -59,7 +59,7 @@ class _menupageState extends State<menupage> {
             childAspectRatio: 1.5,
             children: [
               itemDashboard('report', context, report, '/report'),
-              itemDashboard('alert', context, alert, '/report'),
+              itemDashboard('alert', context, alert, '/alerts'),
               itemDashboard('Raise complaint', context, complaint, '/feed'),
               itemDashboard('traffic updates', context, map, '/map'),
               itemDashboard('weather', context, weather, '/weather'),
