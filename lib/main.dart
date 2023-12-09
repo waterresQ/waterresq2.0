@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-
+    
     return MaterialApp(
       routes: {
         '/emergency': (context) => emergency(),
