@@ -47,6 +47,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
               child: SafeArea(
                 child: Scaffold(
                   appBar: AppBar(
+                    backgroundColor: const Color.fromARGB(255, 11, 51, 83),
                     title: Text(checkResult),
                     actions: [
                       IconButton(
