@@ -48,7 +48,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                 child: Scaffold(
                   appBar: AppBar(
                     backgroundColor: const Color.fromARGB(255, 11, 51, 83),
-                    title: Text(checkResult),
+                    title: Text("WaterResQ"),
                     actions: [
                       IconButton(
                         onPressed: () async {
@@ -83,9 +83,9 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                   ),
                   body: TabBarView(
                     controller: _controller,
-                    children: const [
+                    children:  [
                       usermaps(),
-                      menupage(),
+                      menupage(username: checkResult,),
                       feedscreen(),
                     ],
                   ),
