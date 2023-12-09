@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sihwaterresq/Screens/Usermaps.dart';
 import 'package:sihwaterresq/Screens/alerts.dart';
@@ -9,12 +8,11 @@ import 'package:sihwaterresq/Screens/feed.dart';
 import 'package:sihwaterresq/Screens/home.dart';
 import 'package:sihwaterresq/Screens/loading.dart';
 import 'package:sihwaterresq/Screens/login.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:sihwaterresq/firebase_api.dart';
 import 'package:sihwaterresq/Screens/menuicons/emergency.dart';
 import 'package:sihwaterresq/Screens/menuicons/precautions.dart';
 import 'package:sihwaterresq/Screens/menuicons/report.dart';
 import 'package:sihwaterresq/Screens/menuicons/weather.dart';
+import 'package:sihwaterresq/firebase_api.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,9 +43,9 @@ class MyApp extends StatelessWidget {
         '/report': (context) => report(),
         '/precautions': (context) => precautions(),
         '/weather': (context) => weather(),
-        '/feeds': (context) => feedscreen(),
+        '/feed': (context) => feedscreen(),
         '/map': (context) => usermaps(),
-        '/alerts':(context)=>alerts(),
+        '/alerts': (context) => alerts(),
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,
