@@ -39,6 +39,7 @@ class _admincentersState extends State<admincenters> {
               point: lt.LatLng(latitude, longitude),
               width: 80,
               height: 80,
+
               builder: (ctx) => GestureDetector(
                 onTap: () {
                   showDialog(
@@ -98,6 +99,7 @@ class _admincentersState extends State<admincenters> {
           options: MapOptions(
             center: lt.LatLng(13.078547, 80.292314),
             zoom: 13.2,
+            maxZoom: 18,
             onTap: (tapPosition, point) {
               setState(() {
                 markers.add(

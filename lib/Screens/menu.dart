@@ -21,74 +21,77 @@ class _menupageState extends State<menupage> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return SafeArea(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.only(
-              left: screenWidth * 0.05, right: screenWidth * 0.05),
-          child: Column(
-            children: [
-              SizedBox(height: 10,),
-              Text(
-                'Welcome back ${widget.username}!',
-                style: const TextStyle(fontSize: 20,),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  buildContainer(screenWidth * 0.55, screenHeight * 0.15,
-                      ' Reports', report(), Icons.report_outlined),
-                  Spacer(),
-                  buildContainer(screenWidth * 0.30, screenHeight * 0.15,
-                      'Alerts', alerts(), Icons.warning_amber_outlined),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  buildContainer(screenWidth * 0.30, screenHeight * 0.15,
-                      'Raise Complaint', alerts(), Icons.phone_iphone_rounded),
-                  Spacer(),
-                  buildContainer(
-                      screenWidth * 0.55,
-                      screenHeight * 0.15,
-                      'Evacuation Center',
-                      centers(),
-                      Icons.night_shelter_outlined),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  buildContainer(screenWidth * 0.55, screenHeight * 0.15,
-                      ' Weather', precautions(), Icons.cloud_outlined),
-                  Spacer(),
-                  buildContainer(
-                      screenWidth * 0.30,
-                      screenHeight * 0.15,
-                      'Emergency Contact',
-                      emergency(),
-                      Icons.emergency_outlined),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  buildContainer(screenWidth * 0.30, screenHeight * 0.15,
-                      'Precaution', precautions(), Icons.phone_iphone_rounded),
-                  Spacer(),
-                  buildContainer(screenWidth * 0.55, screenHeight * 0.15,
-                      'Community', usermaps(), Icons.holiday_village_sharp),
-                ],
-              ),
-            ],
+      child: Scaffold(
+        backgroundColor: Color.fromARGB(255, 252, 252, 252),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.only(
+                left: screenWidth * 0.05, right: screenWidth * 0.05),
+            child: Column(
+              children: [
+                SizedBox(height: 10,),
+                Text(
+                  'Welcome back ${widget.username}!',
+                  style: const TextStyle(fontSize: 20,),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    buildContainer(screenWidth * 0.55, screenHeight * 0.15,
+                        ' Reports', report(), Icons.report_outlined),
+                    Spacer(),
+                    buildContainer(screenWidth * 0.30, screenHeight * 0.15,
+                        'Alerts', alerts(), Icons.warning_amber_outlined),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    buildContainer(screenWidth * 0.30, screenHeight * 0.15,
+                        'Raise Complaint', alerts(), Icons.phone_iphone_rounded),
+                    Spacer(),
+                    buildContainer(
+                        screenWidth * 0.55,
+                        screenHeight * 0.15,
+                        'Evacuation Center',
+                        centers(),
+                        Icons.night_shelter_outlined),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    buildContainer(screenWidth * 0.55, screenHeight * 0.15,
+                        ' Weather', precautions(), Icons.cloud_outlined),
+                    Spacer(),
+                    buildContainer(
+                        screenWidth * 0.30,
+                        screenHeight * 0.15,
+                        'Emergency Contact',
+                        emergency(),
+                        Icons.emergency_outlined),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    buildContainer(screenWidth * 0.30, screenHeight * 0.15,
+                        'Precaution', precautions(), Icons.phone_iphone_rounded),
+                    Spacer(),
+                    buildContainer(screenWidth * 0.55, screenHeight * 0.15,
+                        'Community', usermaps(), Icons.holiday_village_sharp),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
