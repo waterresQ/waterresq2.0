@@ -31,6 +31,7 @@ class _admincentersState extends State<admincenters> {
       data.forEach((key, value) {
         final latitude = double.parse(value['latitude'].toString());
         final longitude = double.parse(value['longitude'].toString());
+        final description = value['description'].toString();
 
         setState(() {
           markers.add(
@@ -38,9 +39,40 @@ class _admincentersState extends State<admincenters> {
               point: lt.LatLng(latitude, longitude),
               width: 80,
               height: 80,
-              builder: (context) => Icon(
-                Icons.location_on,
-                size: 50,
+              builder: (ctx) => GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: Text('Marker Description'),
+                      content: Text(description),
+                      actions: [
+                        TextButton(
+                          child: Text('Close'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        TextButton(
+                          child: Text('Navigate'),
+                          onPressed: () async {
+                            final url =
+                                'https://www.google.com/maps/dir/?api=1&destination=$latitude,$longitude';
+                            if (await canLaunch(url)) {
+                              await launch(url);
+                            } else {
+                              throw 'Could not launch $url';
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                child: Icon(
+                  Icons.location_on,
+                  size: 50,
+                ),
               ),
             ),
           );
@@ -53,15 +85,7 @@ class _admincentersState extends State<admincenters> {
   TextEditingController descriptionController = TextEditingController();
   final databaseReference = FirebaseDatabase.instance.reference();
   List<Marker> markers = [
-    Marker(
-      point: lt.LatLng(13.078547, 80.292314),
-      width: 80,
-      height: 80,
-      builder: (context) => Icon(
-        Icons.location_on,
-        size: 50,
-      ),
-    ),
+    
   ];
   @override
   Widget build(BuildContext context) {
