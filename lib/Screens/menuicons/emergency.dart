@@ -6,14 +6,30 @@ class emergency extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color.fromARGB(255, 186, 209, 225),
+        backgroundColor: const Color.fromARGB(255, 177, 216, 255),
         appBar: AppBar(
-          leading: Icon(Icons.arrow_back_ios),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
           child: ListView(
             children: [
+              const Text(
+                "NOTE:",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold),
+              ),
+              const Text(
+                "These contact numbers remain accessible even when there is no signal",
+                style: TextStyle(fontSize: 25),
+              ),
               ContactWidget('Police', '100'),
               ContactWidget('Ambulance', '108'),
               ContactWidget('National Disaster Response Force', '1070'),
@@ -42,20 +58,20 @@ class ContactWidget extends StatelessWidget {
 
   Widget _buildContactButton(String name, Uri phoneNumber) {
     return Container(
-      padding: EdgeInsets.only(top: 20),
+      padding: const EdgeInsets.only(top: 20),
       child: ElevatedButton.icon(
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.white,
           minimumSize: const Size(double.infinity, 60),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50),
+            borderRadius: BorderRadius.circular(20),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
         ),
         onPressed: () {
           _launchPhoneCall(phoneNumber);
         },
-        icon: Icon(
+        icon: const Icon(
           Icons.call,
           size: 30,
           color: Colors.black,
@@ -63,11 +79,11 @@ class ContactWidget extends StatelessWidget {
         label: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Flexible(
               child: Text(
                 name,
-                style: const TextStyle(fontSize: 25, color: Colors.black),
+                style: const TextStyle(fontSize: 20, color: Colors.black),
               ),
             )
           ],
