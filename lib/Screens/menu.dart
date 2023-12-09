@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:sihwaterresq/Screens/Usermaps.dart';
 import 'package:sihwaterresq/Screens/alerts.dart';
+import 'package:sihwaterresq/Screens/centers.dart';
 import 'package:sihwaterresq/Screens/menuicons/emergency.dart';
 import 'package:sihwaterresq/Screens/menuicons/precautions.dart';
 import 'package:sihwaterresq/Screens/menuicons/report.dart';
 import 'package:sihwaterresq/Screens/menuicons/weather.dart';
 
 class menupage extends StatefulWidget {
-  menupage({required this.username,super.key});
-  
+  menupage({required this.username, super.key});
+
   @override
   State<menupage> createState() => _menupageState();
   String username;
 }
 
 class _menupageState extends State<menupage> {
-
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -23,22 +23,22 @@ class _menupageState extends State<menupage> {
     return SafeArea(
       child: SingleChildScrollView(
         child: Padding(
-          padding:
-              EdgeInsets.only(left: screenWidth * 0.05, right: screenWidth * 0.05),
+          padding: EdgeInsets.only(
+              left: screenWidth * 0.05, right: screenWidth * 0.05),
           child: Column(
             children: [
-              Text(widget.username),
+              SizedBox(height: 10,),
+              Text(
+                'Welcome back ${widget.username}!',
+                style: const TextStyle(fontSize: 20,),
+              ),
               const SizedBox(
                 height: 10,
               ),
               Row(
                 children: [
-                  buildContainer(
-                      screenWidth * 0.55,
-                      screenHeight * 0.15,
-                      ' Reports',
-                      report(),
-                      Icons.report_outlined),
+                  buildContainer(screenWidth * 0.55, screenHeight * 0.15,
+                      ' Reports', report(), Icons.report_outlined),
                   Spacer(),
                   buildContainer(screenWidth * 0.30, screenHeight * 0.15,
                       'Alerts', alerts(), Icons.warning_amber_outlined),
@@ -49,27 +49,15 @@ class _menupageState extends State<menupage> {
               ),
               Row(
                 children: [
-                  buildContainer(screenWidth * 0.30, screenHeight * 0.15, 'Raise Complaint',
-                      alerts(), Icons.phone_iphone_rounded),
+                  buildContainer(screenWidth * 0.30, screenHeight * 0.15,
+                      'Raise Complaint', alerts(), Icons.phone_iphone_rounded),
                   Spacer(),
-                  buildContainer(
-                      screenWidth * 0.55, screenHeight * 0.15, 'Evacuation Center', usermaps(),Icons.night_shelter_outlined),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
                   buildContainer(
                       screenWidth * 0.55,
                       screenHeight * 0.15,
-                      ' Weather',
-                      precautions(),
-                      Icons.cloud_outlined),
-                  Spacer(),
-                  buildContainer(screenWidth * 0.30, screenHeight * 0.15,
-                      'Emergency Contact', emergency(), Icons.emergency_outlined),
+                      'Evacuation Center',
+                      centers(),
+                      Icons.night_shelter_outlined),
                 ],
               ),
               const SizedBox(
@@ -77,11 +65,27 @@ class _menupageState extends State<menupage> {
               ),
               Row(
                 children: [
-                  buildContainer(screenWidth * 0.30, screenHeight * 0.15, 'Precaution',
-                      precautions(), Icons.phone_iphone_rounded),
+                  buildContainer(screenWidth * 0.55, screenHeight * 0.15,
+                      ' Weather', precautions(), Icons.cloud_outlined),
                   Spacer(),
                   buildContainer(
-                      screenWidth * 0.55, screenHeight * 0.15, 'Community', usermaps(),Icons.holiday_village_sharp),
+                      screenWidth * 0.30,
+                      screenHeight * 0.15,
+                      'Emergency Contact',
+                      emergency(),
+                      Icons.emergency_outlined),
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: [
+                  buildContainer(screenWidth * 0.30, screenHeight * 0.15,
+                      'Precaution', precautions(), Icons.phone_iphone_rounded),
+                  Spacer(),
+                  buildContainer(screenWidth * 0.55, screenHeight * 0.15,
+                      'Community', usermaps(), Icons.holiday_village_sharp),
                 ],
               ),
             ],
@@ -90,6 +94,7 @@ class _menupageState extends State<menupage> {
       ),
     );
   }
+
   Widget buildContainer(
       double width, double height, String text, Widget screen, IconData icon) {
     return InkWell(
@@ -105,21 +110,24 @@ class _menupageState extends State<menupage> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           gradient: LinearGradient(
-            colors: [const Color.fromARGB(255, 0, 0, 0), const Color.fromARGB(255, 11, 51, 83),Colors.blue,],
+            colors: [
+              const Color.fromARGB(255, 0, 0, 0),
+              const Color.fromARGB(255, 11, 51, 83),
+              Colors.blue,
+            ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
         ),
         child: Stack(
           children: [
-            
             Align(
               alignment: Alignment.topLeft,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   text,
-                  style: TextStyle(color: Colors.white,fontSize: 19),
+                  style: TextStyle(color: Colors.white, fontSize: 19),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -142,5 +150,3 @@ class _menupageState extends State<menupage> {
     );
   }
 }
-
-

@@ -38,7 +38,7 @@ class _admincentersState extends State<admincenters> {
               point: lt.LatLng(latitude, longitude),
               width: 80,
               height: 80,
-              child: Icon(
+              builder: (context) => Icon(
                 Icons.location_on,
                 size: 50,
               ),
@@ -57,7 +57,7 @@ class _admincentersState extends State<admincenters> {
       point: lt.LatLng(13.078547, 80.292314),
       width: 80,
       height: 80,
-      child: Icon(
+      builder: (context) => Icon(
         Icons.location_on,
         size: 50,
       ),
@@ -72,17 +72,18 @@ class _admincentersState extends State<admincenters> {
         ),
         body: FlutterMap(
           options: MapOptions(
-            initialCenter: lt.LatLng(13.078547, 80.292314),
-            initialZoom: 13.2,
+            center: lt.LatLng(13.078547, 80.292314),
+            zoom: 13.2,
             onTap: (tapPosition, point) {
               setState(() {
                 markers.add(
-                  new Marker(
-                      point: point,
-                      child: Icon(
-                        Icons.location_on,
-                        size: 50,
-                      )),
+                  Marker(
+                    point: point,
+                    builder: (context) => Icon(
+                      Icons.location_on,
+                      size: 50,
+                    ),
+                  ),
                 );
               });
               showDialog(
