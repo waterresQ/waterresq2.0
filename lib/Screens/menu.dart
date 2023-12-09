@@ -1,118 +1,167 @@
 import 'package:flutter/material.dart';
+import 'package:sihwaterresq/Screens/Usermaps.dart';
+import 'package:sihwaterresq/Screens/alerts.dart';
+import 'package:sihwaterresq/Screens/centers.dart';
+import 'package:sihwaterresq/Screens/menuicons/emergency.dart';
+import 'package:sihwaterresq/Screens/menuicons/precautions.dart';
+import 'package:sihwaterresq/Screens/menuicons/report.dart';
+import 'package:sihwaterresq/Screens/menuicons/weather.dart';
 
 class menupage extends StatefulWidget {
-  const menupage({Key? key}) : super(key: key);
+  menupage({required this.username, super.key});
 
   @override
   State<menupage> createState() => _menupageState();
+  String username;
 }
 
 class _menupageState extends State<menupage> {
-  Color bg = Colors.white;
-  Image complaint = Image.asset(
-    'lib/widgets/menuimages/complaint.png',
-    height: 75,
-    width: 60,
-  );
-  Image alert = Image.asset(
-    'lib/widgets/menuimages/alert.png',
-    height: 75,
-    width: 70,
-  );
-  Image emergency = Image.asset(
-    'lib/widgets/menuimages/emergency.png',
-    height: 75,
-    width: 60,
-  );
-  Image report = Image.asset(
-    'lib/widgets/menuimages/feeds.png',
-    height: 75,
-    width: 60,
-  );
-  Image map = Image.asset(
-    'lib/widgets/menuimages/map.png',
-    height: 80,
-    width: 95,
-  );
-  Image precaution = Image.asset(
-    'lib/widgets/menuimages/precaution.png',
-    height: 75,
-    width: 60,
-  );
-  Image weather = Image.asset(
-    'lib/widgets/menuimages/weather.png',
-    height: 75,
-    width: 60,
-  );
-
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: bg,
-        body: Padding(
-          padding: const EdgeInsets.all(30.0),
-          child: GridView.count(
-            crossAxisCount: 2,
-            crossAxisSpacing: 15,
-            mainAxisSpacing: 20,
-            childAspectRatio: 1.5,
-            children: [
-              itemDashboard('report', context, report, '/report'),
-              itemDashboard('alert', context, alert, '/alerts'),
-              itemDashboard('Raise complaint', context, complaint, '/feed'),
-              itemDashboard('traffic updates', context, map, '/map'),
-              itemDashboard('weather', context, weather, '/weather'),
-              itemDashboard(
-                  'Emergency contact', context, emergency, '/emergency'),
-              itemDashboard('precautions', context, precaution, '/precautions'),
-            ],
+        backgroundColor: Color.fromARGB(255, 252, 252, 252),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.only(
+                left: screenWidth * 0.05, right: screenWidth * 0.05),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  'Welcome back ${widget.username}!',
+                  style: const TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    buildContainer(screenWidth * 0.55, screenHeight * 0.15,
+                        ' Reports', report(), Icons.report_outlined),
+                    Spacer(),
+                    buildContainer(screenWidth * 0.30, screenHeight * 0.15,
+                        'Alerts', alerts(), Icons.warning_amber_outlined),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    buildContainer(
+                        screenWidth * 0.30,
+                        screenHeight * 0.15,
+                        'Raise Complaint',
+                        alerts(),
+                        Icons.phone_iphone_rounded),
+                    Spacer(),
+                    buildContainer(
+                        screenWidth * 0.55,
+                        screenHeight * 0.15,
+                        'Evacuation Center',
+                        centers(),
+                        Icons.night_shelter_outlined),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    buildContainer(screenWidth * 0.55, screenHeight * 0.15,
+                        ' Weather', WeatherApp(), Icons.cloud_outlined),
+                    Spacer(),
+                    buildContainer(
+                        screenWidth * 0.30,
+                        screenHeight * 0.15,
+                        'Emergency Contact',
+                        emergency(),
+                        Icons.emergency_outlined),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    buildContainer(
+                        screenWidth * 0.30,
+                        screenHeight * 0.15,
+                        'Precaution',
+                        precautions(),
+                        Icons.phone_iphone_rounded),
+                    Spacer(),
+                    buildContainer(screenWidth * 0.55, screenHeight * 0.15,
+                        'Community', usermaps(), Icons.holiday_village_sharp),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
-}
 
-itemDashboard(String title, BuildContext context, Image image, String route) =>
-    Container(
-      child: GestureDetector(
-        onTap: () {
-          print("Printed $title");
-          Navigator.pushNamed(context, route);
-        },
-        child: Container(
-          decoration: BoxDecoration(
-            color: Color.fromARGB(255, 177, 216, 255),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                offset: Offset(1, 1),
-                blurRadius: 1,
-                spreadRadius: 1,
-                color: Color.fromARGB(255, 157, 156, 156),
-              ),
+  Widget buildContainer(
+      double width, double height, String text, Widget screen, IconData icon) {
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => screen),
+        );
+      },
+      child: Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          gradient: LinearGradient(
+            colors: [
+              const Color.fromARGB(255, 0, 0, 0),
+              const Color.fromARGB(255, 11, 51, 83),
+              Colors.blue,
             ],
-            // border: Border.all(
-            //   color: Color.fromARGB(255, 112, 109, 109), // Set the border color
-            //   width: 1.5, // Set the border width
-            // ),
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Center(child: image),
-              // const SizedBox(
-              //   height: 3,
-              // ),
-              // Padding(
-              //padding: EdgeInsets.only(left: 8, bottom: 1),
-              Text(
-                title.toUpperCase(),
-                style: TextStyle(fontSize: 12),
+        ),
+        child: Stack(
+          children: [
+            Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  text,
+                  style: TextStyle(color: Colors.white, fontSize: 19),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-            ],
-          ),
+            ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(
+                  icon,
+                  size: 40,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
+  }
+}

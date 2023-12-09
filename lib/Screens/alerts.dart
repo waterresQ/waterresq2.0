@@ -20,6 +20,7 @@ class _alertsState extends State<alerts> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 11, 51, 83),
           title: Text("Alerts"),
         ),
         body:FirebaseAnimatedList(

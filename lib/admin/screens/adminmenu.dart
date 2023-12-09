@@ -21,7 +21,7 @@ class _adminmenuState extends State<adminmenu> {
               EdgeInsets.only(left: screenWidth * 0.05, right: screenWidth * 0.05),
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Row(
@@ -29,15 +29,15 @@ class _adminmenuState extends State<adminmenu> {
                   buildContainer(
                       screenWidth * 0.55,
                       screenHeight * 0.15,
-                      'Evacuation Centers',
+                      ' Add Evacuation Centers',
                       admincenters(),
-                      Icons.home_work_outlined),
+                      Icons.night_shelter_outlined),
                   Spacer(),
                   buildContainer(screenWidth * 0.30, screenHeight * 0.15,
                       'New Alert', newAlert(), Icons.emergency_outlined),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Row(
@@ -47,6 +47,22 @@ class _adminmenuState extends State<adminmenu> {
                   Spacer(),
                   buildContainer(
                       screenWidth * 0.55, screenHeight * 0.15, 'Community request', newAlert(),Icons.holiday_village_sharp),
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: [
+                  buildContainer(
+                      screenWidth * 0.55,
+                      screenHeight * 0.15,
+                      ' Add Evacuation Centers',
+                      admincenters(),
+                      Icons.home_work_outlined),
+                  Spacer(),
+                  buildContainer(screenWidth * 0.30, screenHeight * 0.15,
+                      'View centers', newAlert(), Icons.emergency_outlined),
                 ],
               ),
             ],
