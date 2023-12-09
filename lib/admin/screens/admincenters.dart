@@ -44,7 +44,7 @@ class _admincentersState extends State<admincenters> {
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                      title: Text('Marker Description'),
+                      title: Text('Description of the evacuation center'),
                       content: Text(description),
                       actions: [
                         TextButton(
