@@ -13,7 +13,17 @@ class admincenters extends StatefulWidget {
 }
 
 class _admincentersState extends State<admincenters> {
-  List<Marker> markers = [];
+  List<Marker> markers = [
+    Marker(
+      point: lt.LatLng(13.078547, 80.292314),
+      width: 80,
+      height: 80,
+      child: Icon(
+        Icons.location_on,
+        size: 50,
+      ),
+    ),
+  ];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -26,6 +36,17 @@ class _admincentersState extends State<admincenters> {
             initialCenter: lt.LatLng(13.078547, 80.292314),
             initialZoom: 13.2,
             onTap: (tapPosition, point) {
+              setState(() {
+                markers.add(
+                  new Marker(
+                      point: point,
+                      child: Icon(
+                        Icons.location_on,
+                        size: 50,
+                      )),
+                );
+              });
+
               print(point);
             },
           ),
@@ -44,14 +65,7 @@ class _admincentersState extends State<admincenters> {
               ],
             ),
             MarkerLayer(
-              markers: [
-                Marker(
-                  point: lt.LatLng(13.078547, 80.292314),
-                  width: 80,
-                  height: 80,
-                  child: Icon(Icons.location_on),
-                ),
-              ],
+              markers: markers,
             ),
           ],
         ),
