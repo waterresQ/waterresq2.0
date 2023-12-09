@@ -1,9 +1,12 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlng/latlng.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart' as lt;
+import 'package:sihwaterresq/admin/screens/adminhome.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class admincenters extends StatefulWidget {
@@ -13,6 +16,9 @@ class admincenters extends StatefulWidget {
 }
 
 class _admincentersState extends State<admincenters> {
+  bool _isProcessing = false;
+  TextEditingController descriptionController = TextEditingController();
+  final databaseReference = FirebaseDatabase.instance.reference();
   List<Marker> markers = [
     Marker(
       point: lt.LatLng(13.078547, 80.292314),
@@ -46,6 +52,96 @@ class _admincentersState extends State<admincenters> {
                       )),
                 );
               });
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title:
+                        Text('Enter Description about the Evacuation center'),
+                    content: TextField(
+                      controller: descriptionController,
+                      maxLines: 4,
+                      maxLength: 250,
+                      decoration: InputDecoration(
+                        labelText: 'Description of the center',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    actions: <Widget>[
+                      _isProcessing
+                          ? CircularProgressIndicator(color: Colors.red)
+                          : Container(),
+                      TextButton(
+                        child: Text('Post center location'),
+                        onPressed: () async {
+                          setState(() {
+                            _isProcessing = true;
+                          });
+                          databaseReference.child('centers').push().set({
+                            'latitude': point.latitude.toString(),
+                            'longitude': point.longitude.toString(),
+                            'description': descriptionController.text,
+                          });
+                          /// SEND NOTIFICATION
+                          final serverKey =
+                          'AAAAZViK83M:APA91bEfsM2-_JxLO8R4zo9r670fy92mP5YZ7lyIeDq6yyyrdeWnCC4PM3o2uN6e6-KaDxs1wcYZBAk13bQ2NUfZo7i4jGxuUx9vjCmtaP2yOMbN144OtL0YiSWVuLTYKZp4dPY13B4Z';
+                      final url =
+                          Uri.parse('https://fcm.googleapis.com/fcm/send');
+                      final headers = <String, String>{
+                        'Content-Type': 'application/json',
+                        'Authorization': 'key=$serverKey',
+                      };
+                      final databaseRef = FirebaseDatabase.instance.reference();
+                      final event =
+                          await databaseReference.child('usertokens').once();
+                      final snapshot = event.snapshot;
+
+                      if (snapshot.value != null) {
+                        final tokens = Map<String, dynamic>.from(
+                            snapshot.value as Map<dynamic, dynamic>);
+                        // Send a notification to each token
+                        for (final token in tokens.values) {
+                          print(token);
+                          final body = jsonEncode(<String, dynamic>{
+                            'notification': <String, dynamic>{
+                              'body': descriptionController.text,
+                              'title': 'NEW EVACUATION added',
+                            },
+                            'priority': 'high',
+                            'data': <String, dynamic>{
+                              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+                              'id': '1',
+                              'status': 'done'
+                            },
+                            'to': token,
+                          });
+
+                          final response = await http.post(url,
+                              headers: headers, body: body);
+
+                          if (response.statusCode == 200) {
+                            print('Notification sent successfully to $token');
+                          } else {
+                            print('Notification not sent to $token');
+                          }
+                        }
+                      }
+
+                          ///SEND NOTIFICATION END
+                          setState(() {
+                            _isProcessing = false;
+                          });
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => adminhome()),
+                          );
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
 
               print(point);
             },
