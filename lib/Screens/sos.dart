@@ -2,7 +2,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:sihwaterresq/Screens/centers.dart';
-// import 'package:flutter_sms/flutter_sms.dart';
 
 class sosuser extends StatefulWidget {
   sosuser({required this.username, super.key});
@@ -19,6 +18,9 @@ class _sosuserState extends State<sosuser> {
   double? _longitude;
   String? phonenumber;
   List<String> resquenumbers = [];
+  DateTime now = DateTime.now();
+  String? formattedDate;
+  String? formattedTime;
 
   @override
   void initState() {
@@ -27,6 +29,10 @@ class _sosuserState extends State<sosuser> {
   }
 
   Future<void> _loadMarkersFromDatabase() async {
+    setState(() {
+      formattedDate = "${now.day}-${now.month}-${now.year}";
+      formattedTime = "${now.hour}:${now.minute}:${now.second}";
+    });
     bool serviceEnabled;
     LocationPermission permission;
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -69,10 +75,14 @@ class _sosuserState extends State<sosuser> {
 
         // Define the data
         Map<String, dynamic> data = {
+          'timestamp': ServerValue.timestamp,
+          'Date':formattedDate,
+          'time':formattedTime,
           'latitude': _latitude,
           'longitude': _longitude,
           'username': widget.username,
           'phone': phonenumber,
+          'Status': 'no',
         };
 
         // Add the data under the child "sos"
@@ -98,16 +108,18 @@ class _sosuserState extends State<sosuser> {
   }
 
   // void _sendSMS(List<String> recipients) async {
-  //   print("hello");
-  //   print(recipients);
-  //   String message = "this is the test message";
-  //   String result = await sendSMS(message: message, recipients: recipients)
-  //       .catchError((onError) {
-  //     print(onError);
-  //     return 'Error sending SMS';
+  //   print("hello this is sms function");
+  //   SmsSender sender = new SmsSender();
+  //   SmsMessage message =
+  //       new SmsMessage('9840891040', 'Hello, this is a test message!');
+  //   message.onStateChanged.listen((state) {
+  //     if (state == SmsMessageState.Sent) {
+  //       print("SMS is sent!");
+  //     } else if (state == SmsMessageState.Delivered) {
+  //       print("SMS is delivered!");
+  //     }
   //   });
-  //   print(result);
-  //   print("hello");
+  //   sender.sendSms(message);
   // }
 
   @override

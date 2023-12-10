@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sihwaterresq/Screens/sos.dart';
 import 'package:sihwaterresq/admin/screens/admincenters.dart';
 import 'package:sihwaterresq/admin/screens/adminfloodmap.dart';
+import 'package:sihwaterresq/admin/screens/adminsos.dart';
 import 'package:sihwaterresq/admin/screens/newalert.dart';
 
 class adminmenu extends StatefulWidget {
@@ -18,10 +20,71 @@ class _adminmenuState extends State<adminmenu> {
     return SafeArea(
       child: SingleChildScrollView(
         child: Padding(
-          padding:
-              EdgeInsets.only(left: screenWidth * 0.05, right: screenWidth * 0.05),
+          padding: EdgeInsets.only(
+              left: screenWidth * 0.05, right: screenWidth * 0.05),
           child: Column(
             children: [
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => adminsos(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      width: screenWidth * 0.90,
+                      height: screenHeight * 0.15,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: const LinearGradient(
+                          colors: [
+                            Color.fromARGB(255, 197, 0, 0),
+                            Color.fromARGB(255, 132, 0, 0),
+                            Color.fromARGB(255, 197, 0, 0),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                      ),
+                      child: const Stack(
+                        children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                'SOS REQUESTS',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 19),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(
+                                Icons.sos,
+                                size: 100,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               const SizedBox(
                 height: 10,
               ),
@@ -43,11 +106,15 @@ class _adminmenuState extends State<adminmenu> {
               ),
               Row(
                 children: [
-                  buildContainer(screenWidth * 0.30, screenHeight * 0.15, 'Community',
-                      newAlert(), Icons.holiday_village_sharp),
+                  buildContainer(screenWidth * 0.30, screenHeight * 0.15,
+                      'Community', newAlert(), Icons.holiday_village_sharp),
                   Spacer(),
                   buildContainer(
-                      screenWidth * 0.55, screenHeight * 0.15, 'Community request', newAlert(),Icons.holiday_village_sharp),
+                      screenWidth * 0.55,
+                      screenHeight * 0.15,
+                      'Community request',
+                      newAlert(),
+                      Icons.holiday_village_sharp),
                 ],
               ),
               const SizedBox(
@@ -88,7 +155,10 @@ class _adminmenuState extends State<adminmenu> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           gradient: LinearGradient(
-            colors: [ const Color.fromARGB(255, 11, 51, 83),Color.fromARGB(255, 101, 103, 2)],
+            colors: [
+              const Color.fromARGB(255, 11, 51, 83),
+              Color.fromARGB(255, 101, 103, 2)
+            ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -101,7 +171,7 @@ class _adminmenuState extends State<adminmenu> {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   text,
-                  style: TextStyle(color: Colors.white,fontSize: 19),
+                  style: TextStyle(color: Colors.white, fontSize: 19),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
