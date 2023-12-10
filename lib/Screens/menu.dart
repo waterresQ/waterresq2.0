@@ -1,13 +1,9 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:sihwaterresq/Screens/Usermaps.dart';
 import 'package:sihwaterresq/Screens/alerts.dart';
 import 'package:sihwaterresq/Screens/centers.dart';
 import 'package:sihwaterresq/Screens/floodmap.dart';
 import 'package:sihwaterresq/Screens/menuicons/emergency.dart';
-import 'package:sihwaterresq/Screens/menuicons/precautions.dart';
-import 'package:sihwaterresq/Screens/menuicons/report.dart';
 import 'package:sihwaterresq/Screens/menuicons/weather.dart';
 import 'package:sihwaterresq/Screens/sos.dart';
 
@@ -20,7 +16,6 @@ class menupage extends StatefulWidget {
 }
 
 class _menupageState extends State<menupage> {
-  
   void sospressed() {
     showDialog(
       context: context,
@@ -63,7 +58,9 @@ class _menupageState extends State<menupage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => sosuser(username: widget.username,),
+                        builder: (context) => sosuser(
+                          username: widget.username,
+                        ),
                       ),
                     );
                   },
@@ -87,7 +84,7 @@ class _menupageState extends State<menupage> {
     double screenWidth = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color.fromARGB(255, 252, 252, 252),
+        backgroundColor: const Color.fromARGB(255, 252, 252, 252),
         body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.only(
@@ -144,7 +141,7 @@ class _menupageState extends State<menupage> {
                         screenWidth * 0.55,
                         screenHeight * 0.15,
                         'Evacuation Center',
-                        centers(),
+                        const centers(),
                         Icons.night_shelter_outlined),
                     Spacer(),
                     buildContainer(screenWidth * 0.30, screenHeight * 0.15,
@@ -204,10 +201,10 @@ class _menupageState extends State<menupage> {
         height: height,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
             colors: [
-              const Color.fromARGB(255, 0, 0, 0),
-              const Color.fromARGB(255, 11, 51, 83),
+              Color.fromARGB(255, 0, 0, 0),
+              Color.fromARGB(255, 11, 51, 83),
               Colors.blue,
             ],
             begin: Alignment.topLeft,
@@ -222,7 +219,7 @@ class _menupageState extends State<menupage> {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   text,
-                  style: TextStyle(color: Colors.white, fontSize: 19),
+                  style: const TextStyle(color: Colors.white, fontSize: 19),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),

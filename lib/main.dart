@@ -40,12 +40,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       routes: {
         '/emergency': (context) => emergency(),
-        '/report': (context) => report(),
-        '/precautions': (context) => precautions(),
-        '/weather': (context) => WeatherApp(),
-        '/feed': (context) => feedscreen(),
-        '/map': (context) => usermaps(),
-        '/alerts': (context) => alerts(),
+        '/report': (context) => const report(),
+        '/precautions': (context) => const precautions(),
+        '/weather': (context) => const WeatherApp(),
+        '/feed': (context) => const feedscreen(),
+        '/map': (context) => const usermaps(),
+        '/alerts': (context) => const alerts(),
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -55,12 +55,12 @@ class MyApp extends StatelessWidget {
         future: checkLoginStatus(),
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return LoadingScreen(); // Show loading screen while waiting
+            return const LoadingScreen(); // Show loading screen while waiting
           } else {
             if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else {
-              return snapshot.data == 'X' ? login() : home();
+              return snapshot.data == 'X' ? const login() : home();
             }
           }
         },
