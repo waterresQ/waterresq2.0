@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sihwaterresq/Screens/Usermaps.dart';
 import 'package:sihwaterresq/Screens/alerts.dart';
 import 'package:sihwaterresq/Screens/centers.dart';
+import 'package:sihwaterresq/Screens/floodmap.dart';
 import 'package:sihwaterresq/Screens/menuicons/emergency.dart';
 import 'package:sihwaterresq/Screens/menuicons/precautions.dart';
 import 'package:sihwaterresq/Screens/menuicons/report.dart';
@@ -96,11 +97,28 @@ class _menupageState extends State<menupage> {
                         screenHeight * 0.15,
                         'Precaution',
                         precautions(),
-                        Icons.phone_iphone_rounded),
+                        Icons.question_mark),
                     Spacer(),
                     buildContainer(screenWidth * 0.55, screenHeight * 0.15,
                         'Community', usermaps(), Icons.holiday_village_sharp),
                   ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    buildContainer(
+                        screenWidth * 0.90,
+                        screenHeight * 0.15,
+                        'Flooded areas',
+                        floodmap(),
+                        Icons.flood_outlined),
+                    
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
                 ),
               ],
             ),
@@ -154,7 +172,7 @@ class _menupageState extends State<menupage> {
                 padding: const EdgeInsets.all(8.0),
                 child: Icon(
                   icon,
-                  size: 40,
+                  size: 55,
                   color: Colors.white,
                 ),
               ),
