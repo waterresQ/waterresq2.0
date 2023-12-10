@@ -2,7 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:sihwaterresq/Screens/centers.dart';
-import 'package:flutter_sms/flutter_sms.dart';
+// import 'package:flutter_sms/flutter_sms.dart';
 
 class sosuser extends StatefulWidget {
   sosuser({required this.username, super.key});
@@ -90,25 +90,25 @@ class _sosuserState extends State<sosuser> {
         }
       });
       print(resquenumbers);
-      _sendSMS(resquenumbers);
+      // _sendSMS(resquenumbers);
     });
     setState(() {
       flag = 1;
     });
   }
 
-  void _sendSMS(List<String> recipients) async {
-    print("hello");
-    print(recipients);
-    String message = "this is the test message";
-    String result = await sendSMS(message: message, recipients: recipients)
-        .catchError((onError) {
-      print(onError);
-      return 'Error sending SMS';
-    });
-    print(result);
-    print("hello");
-  }
+  // void _sendSMS(List<String> recipients) async {
+  //   print("hello");
+  //   print(recipients);
+  //   String message = "this is the test message";
+  //   String result = await sendSMS(message: message, recipients: recipients)
+  //       .catchError((onError) {
+  //     print(onError);
+  //     return 'Error sending SMS';
+  //   });
+  //   print(result);
+  //   print("hello");
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -118,75 +118,83 @@ class _sosuserState extends State<sosuser> {
 
     return SafeArea(
       child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: const Color.fromARGB(255, 11, 51, 83),
-            title: const Text("SOS"),
-          ),
-          body: flag != null
-              ? Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 50),
-                  child: Center(
-                    child: Column(
-                      children: [
-                        SizedBox(height: 200,),
-                        const Text(
-                          "Your SOS request has been received",
-                          textAlign: TextAlign.center,
-                          maxLines: 3,
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
+        appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 11, 51, 83),
+          title: const Text("SOS"),
+        ),
+        body: flag != null
+            ? Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 50),
+                child: Center(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 200,
+                      ),
+                      const Text(
+                        "Your SOS request has been received",
+                        textAlign: TextAlign.center,
+                        maxLines: 3,
+                        style: TextStyle(
+                          fontSize: 20,
                         ),
-                        SizedBox(height: 30,),
-                        const Text(
-                          "Stay calm and remain in a safe location.",
-                          maxLines: 3,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 20,
-                            
-                          ),
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      const Text(
+                        "Stay calm and remain in a safe location.",
+                        maxLines: 3,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
                         ),
-                        SizedBox(height: 30,),
-                        Text(
-                          "Your Location is ${_latitude},${_longitude}",
-                          maxLines: 3,
-                          style: const TextStyle(
-                            fontSize: 15,
-                          ),
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Text(
+                        "Your Location is ${_latitude},${_longitude}",
+                        maxLines: 3,
+                        style: const TextStyle(
+                          fontSize: 15,
                         ),
-                        SizedBox(height: 30,),
-                        Text(
-                          "Your Phone number is ${phonenumber}",
-                          maxLines: 3,
-                          style: const TextStyle(
-                            fontSize: 15,
-                          ),
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Text(
+                        "Your Phone number is ${phonenumber}",
+                        maxLines: 3,
+                        style: const TextStyle(
+                          fontSize: 15,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                )
-              : Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 50),
-                  child: Center(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 200,
-                        ),
-                        Text(
-                          "${widget.username} Please wait...Sending message to ResQue Team ",
-                          maxLines: 3,
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        const CircularProgressIndicator(
-                          color: Color.fromARGB(255, 168, 0, 0),
-                        ),
-                      ],
-                    ),
+                ),
+              )
+            : Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 50),
+                child: Center(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 200,
+                      ),
+                      Text(
+                        "${widget.username} Please wait...Sending message to ResQue Team ",
+                        maxLines: 3,
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      const CircularProgressIndicator(
+                        color: Color.fromARGB(255, 168, 0, 0),
+                      ),
+                    ],
                   ),
-                )),
+                ),
+              ),
+      ),
     );
   }
 }
