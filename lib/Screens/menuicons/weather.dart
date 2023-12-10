@@ -73,7 +73,7 @@ class _WeatherAppState extends State<WeatherApp> {
               } else {
                 final weatherData = snapshot.data!;
                 return FutureBuilder<Map<String, dynamic>>(
-                  future: weatherApi.getWeatherForecast('Andhra Pradesh'),
+                  future: weatherApi.getWeatherForecast('delhi'),
                   builder: (context, forecastSnapshot) {
                     if (forecastSnapshot.connectionState ==
                         ConnectionState.waiting) {
@@ -138,15 +138,28 @@ class WeatherWidget extends StatelessWidget {
                 height: 500,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [
-                      Color.fromARGB(255, 250, 254, 255),
-                      Color.fromARGB(255, 208, 205, 205),
-                      Color.fromARGB(255, 197, 231, 243),
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.5),
+                      spreadRadius: 1,
+                      blurRadius: 1,
+                      offset: Offset(0, 1),
+                    ),
+                  ],
+                  border: Border.all(
+                    color: Colors.black,
+                    width: 2,
                   ),
+                  //   gradient: const LinearGradient(
+                  //     colors: [
+                  //       Color.fromARGB(255, 199, 201, 202),
+                  //       Color.fromARGB(255, 183, 181, 181),
+                  //       Color.fromARGB(255, 197, 231, 243),
+                  //     ],
+                  //     begin: Alignment.topLeft,
+                  //     end: Alignment.bottomRight,
+                  //   ),
+                  color: Colors.grey[350],
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: Column(
@@ -170,9 +183,9 @@ class WeatherWidget extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
-                      child: Image.network(
-                        'https://openweathermap.org/img/w/$iconCode.png',
-                        scale: 0.3,
+                      child: Icon(
+                        Icons.cloud,
+                        size: 160,
                       ),
                     ),
                     //SizedBox(height: 5),
@@ -286,6 +299,18 @@ class WeatherContainer extends StatelessWidget {
       height: 150,
       decoration: BoxDecoration(
         color: const Color.fromARGB(255, 177, 216, 255),
+        boxShadow: [
+          BoxShadow(
+            color: const Color.fromARGB(255, 155, 155, 155).withOpacity(0.1),
+            spreadRadius: 1,
+            blurRadius: 1,
+            offset: Offset(0, 1),
+          ),
+        ],
+        border: Border.all(
+          color: Colors.black,
+          width: 2,
+        ),
         borderRadius: BorderRadius.circular(30),
       ),
       child: Column(
