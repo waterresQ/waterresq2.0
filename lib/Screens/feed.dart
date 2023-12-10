@@ -21,7 +21,7 @@ class _feedscreenState extends State<feedscreen> {
 
       if (pickedFile != null) {
         var url = Uri.parse(
-            'https://37fe-2406-7400-bd-6e7e-9c40-8687-46a3-1348.ngrok.io/');
+            'https://37fe-2406-7400-bd-6e7e-9c40-8687-46a3-1348.ngrok.io/run_script');
         var request = http.MultipartRequest('POST', url);
 
         // this is to add image file to the request
