@@ -8,6 +8,7 @@ class emergency extends StatelessWidget {
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 177, 216, 255),
         appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 11, 51, 83),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios),
             onPressed: () {
