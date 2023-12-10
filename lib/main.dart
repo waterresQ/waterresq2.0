@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         useMaterial3: false,
-      ),6
+      ),
       home: FutureBuilder<String>(
         future: checkLoginStatus(),
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
