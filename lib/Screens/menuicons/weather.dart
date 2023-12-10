@@ -65,7 +65,7 @@ class _WeatherAppState extends State<WeatherApp> {
           padding:
               const EdgeInsets.only(top: 30, left: 20, right: 20, bottom: 10),
           child: FutureBuilder<Map<String, dynamic>>(
-            future: weatherApi.getWeatherData('Chennai'),
+            future: weatherApi.getWeatherData('chennai'),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const CircularProgressIndicator();
@@ -74,7 +74,7 @@ class _WeatherAppState extends State<WeatherApp> {
               } else {
                 final weatherData = snapshot.data!;
                 return FutureBuilder<Map<String, dynamic>>(
-                  future: weatherApi.getWeatherForecast('delhi'),
+                  future: weatherApi.getWeatherForecast('chennai'),
                   builder: (context, forecastSnapshot) {
                     if (forecastSnapshot.connectionState ==
                         ConnectionState.waiting) {
@@ -237,7 +237,7 @@ class WeatherWidget extends StatelessWidget {
                             height: 10,
                           ),
                           Text(
-                            'Prediction: $prediction',
+                            'Feels Like: $prediction',
                             style: const TextStyle(
                                 fontSize: 20, color: Colors.white),
                           ),
@@ -257,7 +257,7 @@ class WeatherWidget extends StatelessWidget {
                 forecast.length,
                 (index) => WeatherContainer(
                   day: getDayOfWeek(index),
-                  temperature: '${forecast[index]['main']['temp']}° C',
+                  temperature: '${forecast[index]['main']['temp_max']}° C',
                   condition: '${forecast[index]['weather'][0]['description']}',
                   humidity: '${forecast[index]['main']['humidity']}%',
                   iconCode: '${forecast[index]['weather'][0]['icon']}',
