@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sihwaterresq/Screens/Usermaps.dart';
 import 'package:sihwaterresq/Screens/feed.dart';
+import 'package:sihwaterresq/Screens/information.dart';
 import 'package:sihwaterresq/Screens/login.dart';
 import 'package:sihwaterresq/Screens/menu.dart';
 
@@ -46,6 +47,17 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                     backgroundColor: const Color.fromARGB(255, 11, 51, 83),
                     title: Text("WaterResQ"),
                     actions: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => information(),
+                            ),
+                          );
+                        },
+                        icon: Icon(Icons.info_outline),
+                      ),
                       IconButton(
                         onPressed: () async {
                           SharedPreferences prefs =

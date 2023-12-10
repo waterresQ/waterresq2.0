@@ -340,7 +340,7 @@ class WeatherContainer extends StatelessWidget {
           const SizedBox(height: 5),
           Image.network(
             'https://openweathermap.org/img/w/$iconCode.png',
-            scale: 1.3,
+            scale: 1.4,
           ),
         ],
       ),

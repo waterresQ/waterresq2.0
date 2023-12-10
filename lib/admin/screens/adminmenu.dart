@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sihwaterresq/admin/screens/admincenters.dart';
+import 'package:sihwaterresq/admin/screens/adminfloodmap.dart';
 import 'package:sihwaterresq/admin/screens/newalert.dart';
 
 class adminmenu extends StatefulWidget {
@@ -57,9 +58,9 @@ class _adminmenuState extends State<adminmenu> {
                   buildContainer(
                       screenWidth * 0.55,
                       screenHeight * 0.15,
-                      ' Add Evacuation Centers',
-                      admincenters(),
-                      Icons.home_work_outlined),
+                      'Mark Flooded Area',
+                      adminfloodmap(),
+                      Icons.flood_outlined),
                   Spacer(),
                   buildContainer(screenWidth * 0.30, screenHeight * 0.15,
                       'View centers', newAlert(), Icons.emergency_outlined),
@@ -87,7 +88,7 @@ class _adminmenuState extends State<adminmenu> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           gradient: LinearGradient(
-            colors: [ const Color.fromARGB(255, 11, 51, 83),Colors.blue],
+            colors: [ const Color.fromARGB(255, 11, 51, 83),Color.fromARGB(255, 101, 103, 2)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -112,7 +113,7 @@ class _adminmenuState extends State<adminmenu> {
                 padding: const EdgeInsets.all(8.0),
                 child: Icon(
                   icon,
-                  size: 40,
+                  size: 55,
                   color: Colors.white,
                 ),
               ),
