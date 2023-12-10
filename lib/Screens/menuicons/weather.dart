@@ -65,7 +65,7 @@ class _WeatherAppState extends State<WeatherApp> {
           padding:
               const EdgeInsets.only(top: 30, left: 20, right: 20, bottom: 10),
           child: FutureBuilder<Map<String, dynamic>>(
-            future: weatherApi.getWeatherData('chennai'),
+            future: weatherApi.getWeatherData('Chennai'),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const CircularProgressIndicator();
