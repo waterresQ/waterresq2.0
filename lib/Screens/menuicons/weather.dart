@@ -54,6 +54,7 @@ class _WeatherAppState extends State<WeatherApp> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 11, 51, 83),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_rounded),
             onPressed: () => Navigator.of(context).pop(),
@@ -143,7 +144,7 @@ class WeatherWidget extends StatelessWidget {
                       color: Colors.black.withOpacity(0.5),
                       spreadRadius: 1,
                       blurRadius: 1,
-                      offset: Offset(0, 1),
+                      offset: const Offset(0, 1),
                     ),
                   ],
                   border: Border.all(
@@ -176,13 +177,14 @@ class WeatherWidget extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      condition,
+                      condition.toUpperCase(),
                       style: const TextStyle(
                         fontSize: 20,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 10),
+                      // ignore: prefer_const_constructors
                       child: Icon(
                         Icons.cloud,
                         size: 160,
@@ -304,7 +306,7 @@ class WeatherContainer extends StatelessWidget {
             color: const Color.fromARGB(255, 155, 155, 155).withOpacity(0.1),
             spreadRadius: 1,
             blurRadius: 1,
-            offset: Offset(0, 1),
+            offset: const Offset(0, 1),
           ),
         ],
         border: Border.all(
@@ -317,28 +319,28 @@ class WeatherContainer extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            day,
+            day.toUpperCase(),
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 5),
           Text(
-            temperature,
+            temperature.toUpperCase(),
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 5),
           Text(
-            condition,
+            condition.toUpperCase(),
             style: const TextStyle(fontSize: 14),
           ),
           const SizedBox(height: 5),
           Text(
-            humidity,
+            humidity.toUpperCase(),
             style: const TextStyle(fontSize: 14),
           ),
           const SizedBox(height: 5),
           Image.network(
             'https://openweathermap.org/img/w/$iconCode.png',
-            scale: 1.5,
+            scale: 1.3,
           ),
         ],
       ),

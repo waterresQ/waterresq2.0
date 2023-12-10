@@ -22,14 +22,14 @@ class _menupageState extends State<menupage> {
     double screenWidth = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color.fromARGB(255, 252, 252, 252),
+        backgroundColor: const Color.fromARGB(255, 252, 252, 252),
         body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.only(
                 left: screenWidth * 0.05, right: screenWidth * 0.05),
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Text(
@@ -44,10 +44,10 @@ class _menupageState extends State<menupage> {
                 Row(
                   children: [
                     buildContainer(screenWidth * 0.55, screenHeight * 0.15,
-                        ' Reports', report(), Icons.report_outlined),
-                    Spacer(),
+                        ' Reports', const report(), Icons.report_outlined),
+                    const Spacer(),
                     buildContainer(screenWidth * 0.30, screenHeight * 0.15,
-                        'Alerts', alerts(), Icons.warning_amber_outlined),
+                        'Alerts', const alerts(), Icons.warning_amber_outlined),
                   ],
                 ),
                 const SizedBox(
@@ -59,14 +59,14 @@ class _menupageState extends State<menupage> {
                         screenWidth * 0.30,
                         screenHeight * 0.15,
                         'Raise Complaint',
-                        alerts(),
+                        const alerts(),
                         Icons.phone_iphone_rounded),
-                    Spacer(),
+                    const Spacer(),
                     buildContainer(
                         screenWidth * 0.55,
                         screenHeight * 0.15,
                         'Evacuation Center',
-                        centers(),
+                        const centers(),
                         Icons.night_shelter_outlined),
                   ],
                 ),
@@ -76,8 +76,8 @@ class _menupageState extends State<menupage> {
                 Row(
                   children: [
                     buildContainer(screenWidth * 0.55, screenHeight * 0.15,
-                        ' Weather', WeatherApp(), Icons.cloud_outlined),
-                    Spacer(),
+                        ' Weather', const WeatherApp(), Icons.cloud_outlined),
+                    const Spacer(),
                     buildContainer(
                         screenWidth * 0.30,
                         screenHeight * 0.15,
@@ -95,11 +95,15 @@ class _menupageState extends State<menupage> {
                         screenWidth * 0.30,
                         screenHeight * 0.15,
                         'Precaution',
-                        precautions(),
+                        const precautions(),
                         Icons.phone_iphone_rounded),
-                    Spacer(),
-                    buildContainer(screenWidth * 0.55, screenHeight * 0.15,
-                        'Community', usermaps(), Icons.holiday_village_sharp),
+                    const Spacer(),
+                    buildContainer(
+                        screenWidth * 0.55,
+                        screenHeight * 0.15,
+                        'Community',
+                        const usermaps(),
+                        Icons.holiday_village_sharp),
                   ],
                 ),
               ],
@@ -124,10 +128,10 @@ class _menupageState extends State<menupage> {
         height: height,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
             colors: [
-              const Color.fromARGB(255, 0, 0, 0),
-              const Color.fromARGB(255, 11, 51, 83),
+              Color.fromARGB(255, 0, 0, 0),
+              Color.fromARGB(255, 11, 51, 83),
               Colors.blue,
             ],
             begin: Alignment.topLeft,
@@ -142,7 +146,7 @@ class _menupageState extends State<menupage> {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   text,
-                  style: TextStyle(color: Colors.white, fontSize: 19),
+                  style: const TextStyle(color: Colors.white, fontSize: 19),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
