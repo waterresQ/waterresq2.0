@@ -14,6 +14,7 @@ class admincommunityrequest extends StatefulWidget {
 class _admincommunityrequestState extends State<admincommunityrequest> {
   final databaseReference =
       FirebaseDatabase.instance.reference().child('community request');
+  final databaseRef = FirebaseDatabase.instance.reference();
   final dateFormat = DateFormat('dd-MM-yyyy HH:mm:ss');
   @override
   Widget build(BuildContext context) {
@@ -54,21 +55,24 @@ class _admincommunityrequestState extends State<admincommunityrequest> {
                           title: const Text('Details',
                               style:
                                   TextStyle(color: Colors.blue, fontSize: 24)),
-                          content: Column(
-                            children: <Widget>[
-                              Text('Phone: ${value['phone']}',
-                                  style: TextStyle(fontSize: 18)),
-                              Text('Aadhaar: ${value['aadhaar']}',
-                                  style: TextStyle(fontSize: 18)),
-                              Text('Community Name: ${value['communityname']}',
-                                  style: TextStyle(fontSize: 18)),
-                              Text('Name: ${value['name']}',
-                                  style: TextStyle(fontSize: 18)),
-                              Text('Description: ${value['description']}',
-                                  style: TextStyle(fontSize: 18)),
-                              Text('Username: ${value['username']}',
-                                  style: TextStyle(fontSize: 18)),
-                            ],
+                          content: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text('Phone: ${value['phone']}',
+                                    style: TextStyle(fontSize: 18)),
+                                Text('Aadhaar: ${value['aadhaar']}',
+                                    style: TextStyle(fontSize: 18)),
+                                Text('Community Name: ${value['communityname']}',
+                                    style: TextStyle(fontSize: 18)),
+                                Text('Name: ${value['name']}',
+                                    style: TextStyle(fontSize: 18)),
+                                Text('Description: ${value['description']}',
+                                    style: TextStyle(fontSize: 18)),
+                                Text('Username: ${value['username']}',
+                                    style: TextStyle(fontSize: 18)),
+                              ],
+                            ),
                           ),
                           actions: <Widget>[
                             TextButton(
@@ -76,6 +80,19 @@ class _admincommunityrequestState extends State<admincommunityrequest> {
                                   style: TextStyle(
                                       color: Colors.green, fontSize: 18)),
                               onPressed: () {
+                                if (snapshot.key != null) {
+                                  databaseRef.child('community').push().set({
+                                    'phone': value['phone'],
+                                    'aadhaar': value['aadhaar'],
+                                    'communityname': value['communityname'],
+                                    'name': value['name'],
+                                    'description': value['description'],
+                                    'username': value['username'],
+                                  });
+                                  databaseReference
+                                      .child(snapshot.key!)
+                                      .remove();
+                                }
                                 Navigator.of(context).pop();
                               },
                             ),
@@ -92,6 +109,15 @@ class _admincommunityrequestState extends State<admincommunityrequest> {
                                 } else {
                                   // Handle the case when snapshot.key is null
                                 }
+                              },
+                            ),
+                            TextButton(
+                              child: const Text('Close',
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 0, 128, 255),
+                                      fontSize: 18)),
+                              onPressed: () {
+                                Navigator.of(context).pop();
                               },
                             ),
                           ],

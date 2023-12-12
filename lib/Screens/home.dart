@@ -6,6 +6,7 @@ import 'package:sihwaterresq/Screens/feed.dart';
 import 'package:sihwaterresq/Screens/information.dart';
 import 'package:sihwaterresq/Screens/login.dart';
 import 'package:sihwaterresq/Screens/menu.dart';
+import 'package:sihwaterresq/Screens/test.dart';
 
 class home extends StatefulWidget {
   home({Key? key}) : super(key: key);
@@ -53,7 +54,20 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => information(username: checkResult,),
+                              builder: (context) =>test(),
+                            ),
+                          );
+                        },
+                        icon: Icon(Icons.text_rotation_angleup_sharp),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => information(
+                                username: checkResult,
+                              ),
                             ),
                           );
                         },
