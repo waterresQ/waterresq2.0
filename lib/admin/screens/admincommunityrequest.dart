@@ -15,6 +15,7 @@ class _admincommunityrequestState extends State<admincommunityrequest> {
   final databaseReference =
       FirebaseDatabase.instance.reference().child('community request');
   final databaseRef = FirebaseDatabase.instance.reference();
+
   final dateFormat = DateFormat('dd-MM-yyyy HH:mm:ss');
   @override
   Widget build(BuildContext context) {
@@ -63,7 +64,8 @@ class _admincommunityrequestState extends State<admincommunityrequest> {
                                     style: TextStyle(fontSize: 18)),
                                 Text('Aadhaar: ${value['aadhaar']}',
                                     style: TextStyle(fontSize: 18)),
-                                Text('Community Name: ${value['communityname']}',
+                                Text(
+                                    'Community Name: ${value['communityname']}',
                                     style: TextStyle(fontSize: 18)),
                                 Text('Name: ${value['name']}',
                                     style: TextStyle(fontSize: 18)),
