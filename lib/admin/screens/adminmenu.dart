@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sihwaterresq/Screens/sos.dart';
 import 'package:sihwaterresq/admin/screens/admincenters.dart';
+import 'package:sihwaterresq/admin/screens/admincommunityrequest.dart';
 import 'package:sihwaterresq/admin/screens/adminfloodmap.dart';
 import 'package:sihwaterresq/admin/screens/adminsos.dart';
 import 'package:sihwaterresq/admin/screens/newalert.dart';
@@ -113,7 +114,7 @@ class _adminmenuState extends State<adminmenu> {
                       screenWidth * 0.55,
                       screenHeight * 0.15,
                       'Community request',
-                      newAlert(),
+                      admincommunityrequest(),
                       Icons.holiday_village_sharp),
                 ],
               ),

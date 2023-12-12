@@ -16,11 +16,14 @@ class addnewpost extends StatefulWidget {
 
 class _addnewpostState extends State<addnewpost> {
   final TextEditingController _desc = TextEditingController();
+  String selectedValue = 'Option 1';
+  List<String> options = ['Option 1', 'Option 2', 'Option 3'];
   void dispose() {
     _desc.dispose();
     super.dispose();
   }
 
+  String? picallowed;
   double? _latitude;
   double? _longitude;
   String address = "";
@@ -92,6 +95,30 @@ class _addnewpostState extends State<addnewpost> {
             SizedBox(
               height: 20,
             ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                children: [
+                  Text("Specify your category"),
+                  Spacer(),
+                  DropdownButton<String>(
+                    value: selectedValue,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        selectedValue = newValue!;
+                      });
+                    },
+                    items: options.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 20),
             Padding(
               padding: EdgeInsets.only(left: 20, right: 20),
               child: TextFormField(

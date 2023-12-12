@@ -79,6 +79,7 @@ class _feedcardState extends State<feedcard> {
                 maxLines: 2,
               ),
             ),
+            
           ],
         ),
       ),
