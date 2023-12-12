@@ -42,10 +42,16 @@ class _addnewpostState extends State<addnewpost> {
                 : Padding(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                     child: Container(
-                        width: screenWidth * 0.8, child: Image.file(PickedFile)),
+                        width: screenWidth * 0.8,
+                        child: Image.file(PickedFile)),
                   ),
-                  SizedBox(height: 10,),
-            Text("Your Location will be taken when you take a photo",maxLines: 2,),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              "Your Location will be taken when you take a photo",
+              maxLines: 2,
+            ),
             Padding(
               padding: EdgeInsets.only(top: 20, left: 20),
               child: Align(
@@ -95,8 +101,8 @@ class _addnewpostState extends State<addnewpost> {
                 decoration: InputDecoration(
                   hintText: "Describe the problem here",
                   border: OutlineInputBorder(
-                    borderRadius:
-                        BorderRadius.circular(20.0), // Set the border radius here
+                    borderRadius: BorderRadius.circular(
+                        20.0), // Set the border radius here
                   ),
                   filled: true,
                   fillColor: Colors.white,
@@ -105,28 +111,31 @@ class _addnewpostState extends State<addnewpost> {
                     borderSide: const BorderSide(
                       color: Colors.black, // Color of border when not focused
                     ),
-                    borderRadius:
-                        BorderRadius.circular(20.0), // Set the border radius here
+                    borderRadius: BorderRadius.circular(
+                        20.0), // Set the border radius here
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: const BorderSide(
                       color: Colors.black, // Color of border when focused
                     ),
-                    borderRadius:
-                        BorderRadius.circular(20.0), // Set the border radius here
+                    borderRadius: BorderRadius.circular(
+                        20.0), // Set the border radius here
                   ),
                 ),
               ),
             ),
-            _latitude==null?Container():ElevatedButton(onPressed: (){
-
-            }, child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.send),
-                      Text("Post"),
-                    ],
-                  ),),
+            _latitude == null
+                ? Container()
+                : ElevatedButton(
+                    onPressed: () {},
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.send),
+                        Text("Post"),
+                      ],
+                    ),
+                  ),
           ],
         ),
       ),
@@ -178,5 +187,4 @@ class _addnewpostState extends State<addnewpost> {
 
     print(address);
   }
-  
 }
