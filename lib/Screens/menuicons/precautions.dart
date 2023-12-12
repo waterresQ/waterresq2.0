@@ -18,7 +18,7 @@ class _PrecautionsState extends State<Precautions> {
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 177, 216, 255),
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             'Precaution', // You need to define 'category'
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
@@ -42,7 +42,7 @@ class _PrecautionsState extends State<Precautions> {
 
                 child: Text(
                   categories[index]['name'] as String,
-                  style: TextStyle(fontSize: 25, color: Colors.black),
+                  style: const TextStyle(fontSize: 25, color: Colors.black),
                 ),
                 // style: ElevatedButton.styleFrom(
                 //   minimumSize: Size(350, 130),
@@ -193,7 +193,7 @@ class SecondPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Precaution - $category',
-          style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+          style: const TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
         ),
         backgroundColor: const Color.fromARGB(255, 11, 51, 83),
       ),
@@ -205,7 +205,7 @@ class SecondPage extends StatelessWidget {
             return Card(
               // color: const Color.fromARGB(255, 177, 216, 255),
               elevation: 3,
-              margin: EdgeInsets.all(15),
+              margin: const EdgeInsets.all(15),
               child: ListTile(
                 //tileColor: Color.fromARGB(255, 176, 192, 208),
                 leading: Image.network(
@@ -217,14 +217,14 @@ class SecondPage extends StatelessWidget {
                 ),
                 title: Text(
                   videos[index]['title']!,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                   ),
                 ),
                 subtitle: Text(
                   videos[index]['des'] ?? 'tellod', // Use your own description
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                     fontStyle: FontStyle.italic,
                     color: Colors.grey,
@@ -283,7 +283,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     super.initState();
     _controller = YoutubePlayerController(
       initialVideoId: widget.videoId,
-      flags: YoutubePlayerFlags(
+      flags: const YoutubePlayerFlags(
         autoPlay: true,
         mute: false,
       ),
@@ -294,7 +294,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Video Player'),
+        title: const Text('Video Player'),
       ),
       body: Center(
         child: YoutubePlayerBuilder(
