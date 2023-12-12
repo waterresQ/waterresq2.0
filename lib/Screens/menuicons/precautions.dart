@@ -16,10 +16,11 @@ class _PrecautionsState extends State<Precautions> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: const Color.fromARGB(255, 177, 216, 255),
         appBar: AppBar(
           title: Text(
             'Precaution', // You need to define 'category'
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.white, fontSize: 20),
           ),
           backgroundColor: const Color.fromARGB(255, 11, 51, 83),
         ),
@@ -27,7 +28,9 @@ class _PrecautionsState extends State<Precautions> {
           itemCount: categories.length,
           itemBuilder: (context, index) {
             return Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 15.0),
+              // padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
               child: ElevatedButton(
                 onPressed: () {
                   _navigateToSecondPage(
@@ -36,12 +39,21 @@ class _PrecautionsState extends State<Precautions> {
                     categories[index]['videos'] as List<Map<String, String>>,
                   );
                 },
+
                 child: Text(
                   categories[index]['name'] as String,
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 25, color: Colors.black),
                 ),
+                // style: ElevatedButton.styleFrom(
+                //   minimumSize: Size(350, 130),
+                // ),
                 style: ElevatedButton.styleFrom(
-                  minimumSize: Size(350, 130),
+                  backgroundColor: Colors.white,
+                  minimumSize: const Size(double.infinity, 60),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 ),
               ),
             );
@@ -181,45 +193,50 @@ class SecondPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Precaution - $category',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
         ),
         backgroundColor: const Color.fromARGB(255, 11, 51, 83),
       ),
-      body: ListView.builder(
-        itemCount: videos.length,
-        itemBuilder: (context, index) {
-          return Card(
-            elevation: 3,
-            margin: EdgeInsets.all(8),
-            child: ListTile(
-              leading: Image.network(
-                videos[index]['imageUrl'] ??
-                    'https://cdn.oneesports.gg/cdn-data/2022/03/GenshinImpact_Mtashed_Son_featured-1.jpg',
-                width: 80,
-                height: 80,
-                fit: BoxFit.cover,
-              ),
-              title: Text(
-                videos[index]['title']!,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
+      body: Container(
+        color: const Color.fromARGB(255, 177, 216, 255),
+        child: ListView.builder(
+          itemCount: videos.length,
+          itemBuilder: (context, index) {
+            return Card(
+              // color: const Color.fromARGB(255, 177, 216, 255),
+              elevation: 3,
+              margin: EdgeInsets.all(15),
+              child: ListTile(
+                //tileColor: Color.fromARGB(255, 176, 192, 208),
+                leading: Image.network(
+                  videos[index]['imageUrl'] ??
+                      'https://cdn.oneesports.gg/cdn-data/2022/03/GenshinImpact_Mtashed_Son_featured-1.jpg',
+                  width: 90,
+                  height: 90,
+                  fit: BoxFit.cover,
                 ),
-              ),
-              subtitle: Text(
-                videos[index]['des'] ?? 'tellod', // Use your own description
-                style: TextStyle(
-                  fontSize: 10,
-                  fontStyle: FontStyle.italic,
-                  color: Colors.grey,
+                title: Text(
+                  videos[index]['title']!,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
                 ),
+                subtitle: Text(
+                  videos[index]['des'] ?? 'tellod', // Use your own description
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontStyle: FontStyle.italic,
+                    color: Colors.grey,
+                  ),
+                ),
+                onTap: () {
+                  _playVideo(context, videos[index]['videoUrl']!);
+                },
               ),
-              onTap: () {
-                _playVideo(context, videos[index]['videoUrl']!);
-              },
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
