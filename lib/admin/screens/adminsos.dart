@@ -35,7 +35,6 @@ class _adminsosState extends State<adminsos> {
         final username = value['username'];
         final phone = value['phone'];
         final time = value['time'];
-
         setState(() {
           markers.add(
             Marker(

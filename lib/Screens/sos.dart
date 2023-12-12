@@ -107,20 +107,6 @@ class _sosuserState extends State<sosuser> {
     });
   }
 
-  // void _sendSMS(List<String> recipients) async {
-  //   print("hello this is sms function");
-  //   SmsSender sender = new SmsSender();
-  //   SmsMessage message =
-  //       new SmsMessage('9840891040', 'Hello, this is a test message!');
-  //   message.onStateChanged.listen((state) {
-  //     if (state == SmsMessageState.Sent) {
-  //       print("SMS is sent!");
-  //     } else if (state == SmsMessageState.Delivered) {
-  //       print("SMS is delivered!");
-  //     }
-  //   });
-  //   sender.sendSms(message);
-  // }
 
   @override
   Widget build(BuildContext context) {
