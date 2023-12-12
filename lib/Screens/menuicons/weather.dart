@@ -58,13 +58,13 @@ class _WeatherAppState extends State<WeatherApp> {
             icon: const Icon(Icons.arrow_back_rounded),
             onPressed: () => Navigator.of(context).pop(),
           ),
-          title: const Text("W E A T H E R"),
+          title: const Text("Clear Cast"),
         ),
         body: Padding(
           padding:
               const EdgeInsets.only(top: 30, left: 20, right: 20, bottom: 10),
           child: FutureBuilder<Map<String, dynamic>>(
-            future: weatherApi.getWeatherData('chennai'), //change location
+            future: weatherApi.getWeatherData('Vijayawada'), //change location
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const CircularProgressIndicator();
@@ -74,7 +74,7 @@ class _WeatherAppState extends State<WeatherApp> {
                 final weatherData = snapshot.data!;
                 return FutureBuilder<Map<String, dynamic>>(
                   future: weatherApi
-                      .getWeatherForecast('chennai'), //change location
+                      .getWeatherForecast('Vijayawada'), //change location
                   builder: (context, forecastSnapshot) {
                     if (forecastSnapshot.connectionState ==
                         ConnectionState.waiting) {
@@ -328,9 +328,12 @@ class WeatherContainer extends StatelessWidget {
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 5),
-          Text(
-            condition.toUpperCase(),
-            style: const TextStyle(fontSize: 14),
+          Padding(
+            padding: const EdgeInsets.only(left: 7),
+            child: Text(
+              condition.toUpperCase(),
+              style: const TextStyle(fontSize: 14),
+            ),
           ),
           const SizedBox(height: 5),
           Text(

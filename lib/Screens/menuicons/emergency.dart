@@ -8,9 +8,10 @@ class emergency extends StatelessWidget {
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 177, 216, 255),
         appBar: AppBar(
+          title: const Text("Emergency Reach"),
           backgroundColor: const Color.fromARGB(255, 11, 51, 83),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -24,12 +25,12 @@ class emergency extends StatelessWidget {
                 "NOTE:",
                 style: TextStyle(
                     color: Colors.black,
-                    fontSize: 40,
+                    fontSize: 30,
                     fontWeight: FontWeight.bold),
               ),
               const Text(
                 "These contact numbers remain accessible even when there is no signal",
-                style: TextStyle(fontSize: 25),
+                style: TextStyle(fontSize: 23),
               ),
               ContactWidget('Police', '100'),
               ContactWidget('Ambulance', '108'),
