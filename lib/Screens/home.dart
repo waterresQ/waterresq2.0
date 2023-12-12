@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sihwaterresq/Screens/Usermaps.dart';
+import 'package:sihwaterresq/Screens/community.dart';
 import 'package:sihwaterresq/Screens/feed.dart';
 import 'package:sihwaterresq/Screens/information.dart';
 import 'package:sihwaterresq/Screens/login.dart';
@@ -78,7 +79,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                       indicatorColor: Colors.white,
                       tabs: const [
                         Tab(
-                          text: "MAPS",
+                          text: "COMMUNITY",
                         ),
                         Tab(
                           text: "MENU",
@@ -92,7 +93,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                   body: TabBarView(
                     controller: _controller,
                     children: [
-                      usermaps(),
+                      Community(username: checkResult),
                       menupage(
                         username: checkResult,
                       ),

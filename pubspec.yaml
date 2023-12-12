@@ -58,6 +58,8 @@ dependencies:
   geolocator: ^10.1.0
   geocoding: ^2.1.1
   image_picker: ^1.0.4
+  transparent_image: ^2.0.1
+  youtube_player_flutter: ^8.0.0
   
   
   
@@ -100,6 +102,7 @@ flutter:
     - lib\widgets\menuimages\precaution.png
     - lib\widgets\menuimages\weather.png
     - assets/notify.mp3
+    - assets/earthpic.jpg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

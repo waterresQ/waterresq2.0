@@ -5,8 +5,7 @@ import 'package:intl/intl.dart';
 class WeatherApi {
   final Dio _dio = Dio();
   static const String baseUrl = 'https://api.openweathermap.org/data/2.5/';
-  static const String apiKey =
-      '89a03b522d55b4358857591de2d34a81'; // Replace with your API key
+  static const String apiKey = '89a03b522d55b4358857591de2d34a81';
 
   Future<Map<String, dynamic>> getWeatherData(String location) async {
     try {
@@ -65,7 +64,7 @@ class _WeatherAppState extends State<WeatherApp> {
           padding:
               const EdgeInsets.only(top: 30, left: 20, right: 20, bottom: 10),
           child: FutureBuilder<Map<String, dynamic>>(
-            future: weatherApi.getWeatherData('chennai'),
+            future: weatherApi.getWeatherData('chennai'), //change location
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const CircularProgressIndicator();
@@ -74,7 +73,8 @@ class _WeatherAppState extends State<WeatherApp> {
               } else {
                 final weatherData = snapshot.data!;
                 return FutureBuilder<Map<String, dynamic>>(
-                  future: weatherApi.getWeatherForecast('chennai'),
+                  future: weatherApi
+                      .getWeatherForecast('chennai'), //change location
                   builder: (context, forecastSnapshot) {
                     if (forecastSnapshot.connectionState ==
                         ConnectionState.waiting) {

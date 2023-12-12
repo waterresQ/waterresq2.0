@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sihwaterresq/Screens/Usermaps.dart';
 import 'package:sihwaterresq/Screens/alerts.dart';
 import 'package:sihwaterresq/Screens/centers.dart';
 import 'package:sihwaterresq/Screens/floodmap.dart';
 import 'package:sihwaterresq/Screens/menuicons/emergency.dart';
+import 'package:sihwaterresq/Screens/menuicons/precautions.dart';
 import 'package:sihwaterresq/Screens/menuicons/weather.dart';
 import 'package:sihwaterresq/Screens/sos.dart';
 
@@ -77,7 +77,6 @@ class _menupageState extends State<menupage> {
       },
     );
   }
-
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -165,8 +164,12 @@ class _menupageState extends State<menupage> {
                 ),
                 Row(
                   children: [
-                    buildContainer(screenWidth * 0.55, screenHeight * 0.15,
-                        ' Community', usermaps(), Icons.holiday_village_sharp),
+                    buildContainer(
+                        screenWidth * 0.55,
+                        screenHeight * 0.15,
+                        'Precautions',
+                        Precautions(),
+                        Icons.local_hospital_outlined),
                     Spacer(),
                     buildContainer(
                         screenWidth * 0.30,
