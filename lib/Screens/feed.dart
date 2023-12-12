@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:sihwaterresq/Screens/Usermaps.dart';
+import 'package:sihwaterresq/Screens/addnewpost.dart';
 import 'package:sihwaterresq/Screens/menuicons/report.dart';
 import 'package:sihwaterresq/common/feedcard.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -80,10 +81,8 @@ class _feedscreenState extends State<feedscreen> {
                     },
                     child: Stack(
                       children: [
-                        FadeInImage(
-                          placeholder: MemoryImage(kTransparentImage),
-                          image: const NetworkImage(
-                              "https://i.pinimg.com/originals/33/93/f7/3393f75429d460dd5c5d277ddbfad29a.jpg"),
+                        Image.asset(
+                          'assets/earthpic.jpg',
                           fit: BoxFit.cover,
                           height: 125,
                           width: double.infinity,
@@ -135,7 +134,8 @@ class _feedscreenState extends State<feedscreen> {
                     address: 'a',
                     date: 'a',
                     description: 'a',
-                    imageurl: "https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510_640.jpg",
+                    imageurl:
+                        "https://www.weather.gov/images/safety/170405_flood-During.png",
                     time: "a",
                     usernamepost: "a"),
               ],
@@ -169,7 +169,7 @@ class _feedscreenState extends State<feedscreen> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => usermaps()),
+                          MaterialPageRoute(builder: (context) => addnewpost()),
                         );
                       },
                       icon: const Icon(
