@@ -77,7 +77,6 @@ class _menupageState extends State<menupage> {
       },
     );
   }
-
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -168,9 +167,9 @@ class _menupageState extends State<menupage> {
                     buildContainer(
                         screenWidth * 0.55,
                         screenHeight * 0.15,
-                        ' Community',
+                        'Precautions',
                         Precautions(),
-                        Icons.holiday_village_sharp),
+                        Icons.local_hospital_outlined),
                     Spacer(),
                     buildContainer(
                         screenWidth * 0.30,
