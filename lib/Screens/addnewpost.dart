@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http; //sethu
 import 'package:image_picker/image_picker.dart';
 
 class addnewpost extends StatefulWidget {
@@ -23,6 +24,7 @@ class _addnewpostState extends State<addnewpost> {
     super.dispose();
   }
 
+  String prediction = ""; //sethu
   String? picallowed;
   double? _latitude;
   double? _longitude;
@@ -48,15 +50,41 @@ class _addnewpostState extends State<addnewpost> {
                         width: screenWidth * 0.8,
                         child: Image.file(PickedFile)),
                   ),
-            SizedBox(
-              height: 10,
+
+            //sethu start
+
+            const SizedBox(
+              height: 3,
             ),
-            Text(
-              "Your Location will be taken when you take a photo",
-              maxLines: 2,
-            ),
+            prediction == ""
+                ? const Text(
+                    "Your Location will be taken when you take a photo",
+                    maxLines: 2,
+                  )
+                : prediction == "VERIFIED"
+                    ? Text(
+                        "   $prediction",
+                        style: const TextStyle(color: Colors.green),
+                      )
+                    : Text(
+                        "   $prediction",
+                        style: const TextStyle(color: Colors.red),
+                      ),
+
+            //sethu end
+
+            //commented sanjith code start
+            // SizedBox(
+            //   height: 10,
+            // ),
+            // Text(
+            //   "Your Location will be taken when you take a photo",
+            //   maxLines: 2,
+            // ),
+            //commented sanjith code end
+
             Padding(
-              padding: EdgeInsets.only(top: 20, left: 20),
+              padding: EdgeInsets.only(top: 10, left: 20),
               child: Align(
                 alignment: Alignment.center,
                 child: ElevatedButton(
@@ -108,7 +136,8 @@ class _addnewpostState extends State<addnewpost> {
                         selectedValue = newValue!;
                       });
                     },
-                    items: options.map<DropdownMenuItem<String>>((String value) {
+                    items:
+                        options.map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
@@ -177,6 +206,42 @@ class _addnewpostState extends State<addnewpost> {
       setState(() {
         PickedFile = File(pickedFile.path); // Convert XFile to File
       });
+      //sethu start
+
+      try {
+        if (pickedFile != null) {
+          prediction = "";
+          var url = Uri.parse(
+              'https://da3c-2401-4900-6341-87f8-7824-8acf-9d01-d373.ngrok.io/run_script');
+          var request = http.MultipartRequest('POST', url);
+
+          // this is to add image file to the request
+          request.files
+              .add(await http.MultipartFile.fromPath('image', pickedFile.path));
+
+          // send the request and get the response
+          var response = await request.send();
+
+          // gets the results from the response
+          var results = await http.Response.fromStream(response);
+
+          // use the results
+          print('Results: ${results.body}');
+
+          // to parse the JSON response that comes from the api.py (flask server)
+          var data = jsonDecode(results.body);
+
+          // updates the state of the app
+          setState(() {
+            prediction = data['result'];
+          });
+        } else {
+          print('No image selected.');
+        }
+      } catch (e) {
+        print('Error: $e');
+      }
+      //sethu end
     }
     bool serviceEnabled;
     LocationPermission permission;
