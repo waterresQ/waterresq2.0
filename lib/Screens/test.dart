@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 
 class test extends StatefulWidget {
   const test({super.key});
@@ -21,7 +21,7 @@ class _testState extends State<test> {
 
       if (pickedFile != null) {
         var url = Uri.parse(
-            'https://dd18-2406-7400-bd-8b0d-dc8c-e2ba-839f-d50b.ngrok.io/run_script');
+            'https://a486-2406-7400-bd-8b0d-dc8c-e2ba-839f-d50b.ngrok.io/run_script');
         var request = http.MultipartRequest('POST', url);
 
         // this is to add image file to the request
