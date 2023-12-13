@@ -1,4 +1,9 @@
+
+
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class communitychat extends StatefulWidget {
   communitychat(
@@ -16,6 +21,10 @@ class communitychat extends StatefulWidget {
 }
 
 class _communitychatState extends State<communitychat> {
+  final _database =
+      FirebaseDatabase.instance.reference().child('communitychat');
+
+  final _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -27,6 +36,34 @@ class _communitychatState extends State<communitychat> {
         ),
         body: Stack(
           children: [
+            
+            Expanded(
+              child: FirebaseAnimatedList(
+                query:
+                    _database.child(widget.Communityname), // Provide the query
+                itemBuilder: (BuildContext context, DataSnapshot snapshot,
+                    Animation<double> animation, int index) {
+                  Map<dynamic, dynamic>? value =
+                      snapshot.value as Map<dynamic, dynamic>?;
+                  if (value != null) {
+                    DateTime date =
+                        DateTime.fromMillisecondsSinceEpoch(value['timestamp']);
+                    String formattedDate = DateFormat('dd-MM-yyyy – kk:mm')
+                        .format(date); // Format the date as you want
+                    print(snapshot);
+                    return SizeTransition(
+                      sizeFactor: animation,
+                      child: ListTile(
+                        title: Text(value['message']),
+                        subtitle: Text(formattedDate),
+                      ),
+                    );
+                  } else {
+                    return SizedBox.shrink();
+                  }
+                },
+              ),
+            ),
             Positioned(
               top: 0,
               child: Container(
@@ -57,8 +94,9 @@ class _communitychatState extends State<communitychat> {
                     // Changed from Column to Row
                     mainAxisSize: MainAxisSize.min, // Set to min
                     children: [
-                      const Flexible(
+                      Flexible(
                         child: TextField(
+                          controller: _controller,
                           maxLines: null, // Set to null
                           style: TextStyle(
                               color:
@@ -67,13 +105,26 @@ class _communitychatState extends State<communitychat> {
                             border: OutlineInputBorder(),
                             hintText: 'Enter your message',
                             hintStyle: TextStyle(
-                                color: Color.fromARGB(255, 255, 255, 255)), // Change hint text color to grey
+                                color: Color.fromARGB(255, 255, 255,
+                                    255)), // Change hint text color to grey
                           ),
                         ),
                       ),
                       IconButton(
                         onPressed: () {
                           // Handle the send button press
+                          String message = _controller.text;
+
+                          // Write the message to the Realtime Database
+                          _database.child(widget.Communityname).push().set({
+                            'message': message,
+                            'timestamp': ServerValue.timestamp,
+                            // You can also add a timestamp
+                            // Add any other fields you need
+                          });
+
+                          // Clear the TextField
+                          _controller.clear();
                         },
                         icon: Icon(Icons.send,
                             color: Colors.white), // Use send icon
