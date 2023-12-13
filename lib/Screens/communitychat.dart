@@ -1,5 +1,3 @@
-
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
@@ -36,9 +34,9 @@ class _communitychatState extends State<communitychat> {
         ),
         body: Stack(
           children: [
-            
             Expanded(
               child: FirebaseAnimatedList(
+                reverse: true,
                 query:
                     _database.child(widget.Communityname), // Provide the query
                 itemBuilder: (BuildContext context, DataSnapshot snapshot,
@@ -53,9 +51,22 @@ class _communitychatState extends State<communitychat> {
                     print(snapshot);
                     return SizeTransition(
                       sizeFactor: animation,
-                      child: ListTile(
-                        title: Text(value['message']),
-                        subtitle: Text(formattedDate),
+                      child: IntrinsicWidth(
+                        child: Container(
+                          margin: EdgeInsets.all(
+                              5.0), // Add some margin if you want
+                          decoration: BoxDecoration(
+                            color: Colors.white, // Choose the color of the tile
+                            borderRadius: BorderRadius.circular(
+                                15.0), // Add border radius
+                            border: Border.all(
+                                color: Colors.grey), // Add border color
+                          ),
+                          child: ListTile(
+                            title: Text(value['message']),
+                            subtitle: Text(formattedDate),
+                          ),
+                        ),
                       ),
                     );
                   } else {
@@ -90,47 +101,57 @@ class _communitychatState extends State<communitychat> {
                 width: MediaQuery.of(context).size.width, // Takes full width
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  child: Row(
-                    // Changed from Column to Row
-                    mainAxisSize: MainAxisSize.min, // Set to min
-                    children: [
-                      Flexible(
-                        child: TextField(
-                          controller: _controller,
-                          maxLines: null, // Set to null
-                          style: TextStyle(
-                              color:
-                                  Colors.white), // Change text color to white
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'Enter your message',
-                            hintStyle: TextStyle(
-                                color: Color.fromARGB(255, 255, 255,
-                                    255)), // Change hint text color to grey
+                  child: widget.username == widget.Communityusername
+                      ? Row(
+                          // Changed from Column to Row
+                          mainAxisSize: MainAxisSize.min, // Set to min
+                          children: [
+                            Flexible(
+                              child: TextField(
+                                controller: _controller,
+                                maxLines: null, // Set to null
+                                style: TextStyle(
+                                    color: Colors
+                                        .white), // Change text color to white
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  hintText: 'Enter your message',
+                                  hintStyle: TextStyle(
+                                      color: Color.fromARGB(255, 255, 255,
+                                          255)), // Change hint text color to grey
+                                ),
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                // Handle the send button press
+                                String message = _controller.text;
+
+                                // Write the message to the Realtime Database
+                                _database
+                                    .child(widget.Communityname)
+                                    .push()
+                                    .set({
+                                  'message': message,
+                                  'timestamp': ServerValue.timestamp,
+                                  // You can also add a timestamp
+                                  // Add any other fields you need
+                                });
+
+                                // Clear the TextField
+                                _controller.clear();
+                              },
+                              icon: Icon(Icons.send,
+                                  color: Colors.white), // Use send icon
+                            ),
+                          ],
+                        )
+                      : Center(
+                          child: Text(
+                            "Only Admins are allowed to text",
+                            style: TextStyle(color: Colors.white),
                           ),
                         ),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          // Handle the send button press
-                          String message = _controller.text;
-
-                          // Write the message to the Realtime Database
-                          _database.child(widget.Communityname).push().set({
-                            'message': message,
-                            'timestamp': ServerValue.timestamp,
-                            // You can also add a timestamp
-                            // Add any other fields you need
-                          });
-
-                          // Clear the TextField
-                          _controller.clear();
-                        },
-                        icon: Icon(Icons.send,
-                            color: Colors.white), // Use send icon
-                      ),
-                    ],
-                  ),
                 ),
               ),
             )
