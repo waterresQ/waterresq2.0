@@ -37,7 +37,7 @@ class _addnewpostState extends State<addnewpost> {
     double screenWidth = MediaQuery.of(context).size.width;
     return SafeArea(
         child: Scaffold(
-      backgroundColor: const Color.fromARGB(255, 177, 216, 255),
+      backgroundColor: Color.fromARGB(255, 232, 233, 235),
       appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 11, 51, 83),
           title: const Text(
@@ -63,32 +63,44 @@ class _addnewpostState extends State<addnewpost> {
               height: 3,
             ),
             prediction == ""
-                ? Container(
-                    height: 70,
-                    width: 300,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.white60,
-                      border: Border.all(
-                        color: const Color.fromARGB(
-                            153, 22, 22, 22), // You can change the border color
-                        width: 2.0, // You can change the border width
+                ? Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Container(
+                      height: 70,
+                      width: 320,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.white60,
+                        border: Border.all(
+                          color: const Color.fromARGB(153, 22, 22,
+                              22), // You can change the border color
+                          width: 2.0, // You can change the border width
+                        ),
                       ),
-                    ),
-                    child: const Text(
-                      "Your Location will be taken when you take a photo",
-                      maxLines: 2,
-                      style: TextStyle(fontSize: 20),
+                      child: const Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: const Text(
+                          "Your Location will be taken when you take a photo",
+                          maxLines: 2,
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
                     ),
                   )
                 : prediction == "VERIFIED"
                     ? Text(
                         "   $prediction",
-                        style: const TextStyle(color: Colors.green),
+                        style: const TextStyle(
+                            color: Colors.green,
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold),
                       )
                     : Text(
                         "   $prediction",
-                        style: const TextStyle(color: Colors.red),
+                        style: const TextStyle(
+                            color: Colors.red,
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold),
                       ),
 
             //sethu end
@@ -107,27 +119,34 @@ class _addnewpostState extends State<addnewpost> {
               padding: EdgeInsets.only(top: 10, left: 20),
               child: Align(
                 alignment: Alignment.center,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                        const Color.fromARGB(255, 11, 51, 83)),
-                  ),
-                  onPressed: () async {
-                    setState(() {
-                      _isProcessing = true;
-                    });
-                    await _pickImageFromCamera();
-                    await Future.delayed(Duration(seconds: 5));
-                    setState(() {
-                      _isProcessing = false;
-                    });
-                  },
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.camera_alt_rounded),
-                      Text("Add photo"),
-                    ],
+                child: Container(
+                  height: 40,
+                  width: 140,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                          const Color.fromARGB(255, 11, 51, 83)),
+                    ),
+                    onPressed: () async {
+                      setState(() {
+                        _isProcessing = true;
+                      });
+                      await _pickImageFromCamera();
+                      await Future.delayed(Duration(seconds: 5));
+                      setState(() {
+                        _isProcessing = false;
+                      });
+                    },
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.camera_alt_rounded),
+                        Text(
+                          " Add photo",
+                          style: TextStyle(fontSize: 17),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -139,7 +158,11 @@ class _addnewpostState extends State<addnewpost> {
                 ? Container()
                 : Column(
                     children: [
-                      Text("Your Approximate location is"),
+                      Text(
+                        "Your Approximate location is",
+                        style: TextStyle(
+                            fontSize: 20, fontStyle: FontStyle.normal),
+                      ),
                       Text(address),
                       Text("${_latitude},${_longitude}"),
                     ],
@@ -151,7 +174,10 @@ class _addnewpostState extends State<addnewpost> {
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 children: [
-                  Text("Specify your category"),
+                  Text(
+                    "Specify your category",
+                    style: TextStyle(fontSize: 20),
+                  ),
                   Spacer(),
                   DropdownButton<String>(
                     value: selectedValue,
@@ -164,7 +190,10 @@ class _addnewpostState extends State<addnewpost> {
                         options.map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value),
+                        child: Text(
+                          value,
+                          style: TextStyle(fontSize: 17),
+                        ),
                       );
                     }).toList(),
                   ),
@@ -216,7 +245,10 @@ class _addnewpostState extends State<addnewpost> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(Icons.send),
-                        Text("Post"),
+                        Text(
+                          "Post",
+                          style: TextStyle(fontSize: 15),
+                        ),
                       ],
                     ),
                   ),

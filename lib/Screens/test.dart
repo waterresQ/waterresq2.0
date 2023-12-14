@@ -1,6 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_ble_peripheral/flutter_ble_peripheral.dart';
-import 'dart:typed_data';
 
 class Test extends StatefulWidget {
   const Test({Key? key}) : super(key: key);
@@ -11,7 +12,7 @@ class Test extends StatefulWidget {
 
 class _TestState extends State<Test> {
   final AdvertiseData advertiseData = AdvertiseData(
-    serviceUuid: 'bf27730d-860a-4e09-889c-2d8b6a9e0fe7',
+    serviceUuid: 'aaaa',
     manufacturerId: 1234,
     manufacturerData: Uint8List.fromList([1, 2, 3, 4, 5, 6]),
   );
@@ -72,9 +73,10 @@ class _TestState extends State<Test> {
                 onPressed: _toggleAdvertise,
                 child: Text(
                   _isAdvertising ? 'Stop Advertising' : 'Start Advertising',
-                  style: Theme.of(context).primaryTextTheme.labelLarge!.copyWith(
-                        color: Colors.blue,
-                      ),
+                  style:
+                      Theme.of(context).primaryTextTheme.labelLarge!.copyWith(
+                            color: Colors.blue,
+                          ),
                 ),
               ),
             ],
