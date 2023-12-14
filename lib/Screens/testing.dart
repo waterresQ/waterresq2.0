@@ -20,19 +20,15 @@ class _testingState extends State<testing> {
             ElevatedButton(
               child: Text('find'),
               onPressed: () async {
-                // Replace 'your_service_uuid' with the actual UUID you're looking for
-                String targetServiceUuid = 'bf27730d-860a-4e09-889c-2d8b6a9e0fe7';
-
                 FlutterBluePlus.startScan(timeout: Duration(seconds: 10));
                 var subscription =
                     FlutterBluePlus.scanResults.listen((results) {
                   for (ScanResult r in results) {
-                    // Check if the device has the target service UUID in its advertisement data
-                    if (r.advertisementData.serviceUuids
-                        .contains(targetServiceUuid)) {
-                      print('${r.device.name} found! rssi: ${r.rssi}');
-                      // You can perform additional actions with the advertising device here
+                    print('${r.device.name} found! rssi: ${r.rssi}');
+                    for (Guid uuid in r.advertisementData.serviceUuids) {
+                      print('Service UUID: ${uuid.toString()}');
                     }
+                    // You can perform additional actions with the advertising device here
                   }
                 });
 
