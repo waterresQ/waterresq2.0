@@ -37,7 +37,13 @@ class _addnewpostState extends State<addnewpost> {
     double screenWidth = MediaQuery.of(context).size.width;
     return SafeArea(
         child: Scaffold(
-      appBar: AppBar(title: const Text("Add new post")),
+      backgroundColor: const Color.fromARGB(255, 177, 216, 255),
+      appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 11, 51, 83),
+          title: const Text(
+            "Add new post",
+            style: TextStyle(fontSize: 0),
+          )),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -57,9 +63,23 @@ class _addnewpostState extends State<addnewpost> {
               height: 3,
             ),
             prediction == ""
-                ? const Text(
-                    "Your Location will be taken when you take a photo",
-                    maxLines: 2,
+                ? Container(
+                    height: 70,
+                    width: 300,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white60,
+                      border: Border.all(
+                        color: const Color.fromARGB(
+                            153, 22, 22, 22), // You can change the border color
+                        width: 2.0, // You can change the border width
+                      ),
+                    ),
+                    child: const Text(
+                      "Your Location will be taken when you take a photo",
+                      maxLines: 2,
+                      style: TextStyle(fontSize: 20),
+                    ),
                   )
                 : prediction == "VERIFIED"
                     ? Text(
@@ -88,6 +108,10 @@ class _addnewpostState extends State<addnewpost> {
               child: Align(
                 alignment: Alignment.center,
                 child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        const Color.fromARGB(255, 11, 51, 83)),
+                  ),
                   onPressed: () async {
                     setState(() {
                       _isProcessing = true;
@@ -183,6 +207,10 @@ class _addnewpostState extends State<addnewpost> {
             _latitude == null
                 ? Container()
                 : ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                          const Color.fromARGB(255, 11, 51, 83)),
+                    ),
                     onPressed: () {},
                     child: const Row(
                       mainAxisSize: MainAxisSize.min,
