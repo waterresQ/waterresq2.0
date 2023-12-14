@@ -60,10 +60,9 @@ dependencies:
   image_picker: ^1.0.4
   transparent_image: ^2.0.1
   youtube_player_flutter: ^8.0.0
-  flutter_blue_plus: ^1.30.3
-  flutter_ble_peripheral: ^1.2.3
-  dependencies:
-  platform_device_id: ^1.0.1
+  flutter_p2p_connection: ^2.0.1
+  filesystem_picker: ^4.1.0
+
 
   
  

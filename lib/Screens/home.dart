@@ -6,8 +6,7 @@ import 'package:sihwaterresq/Screens/feed.dart';
 import 'package:sihwaterresq/Screens/information.dart';
 import 'package:sihwaterresq/Screens/login.dart';
 import 'package:sihwaterresq/Screens/menu.dart';
-import 'package:sihwaterresq/Screens/test.dart';
-import 'package:sihwaterresq/Screens/test1.dart';
+
 import 'package:sihwaterresq/Screens/testing.dart';
 
 class home extends StatefulWidget {
@@ -56,33 +55,11 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => test1(),
-                            ),
-                          );
-                        },
-                        icon: Icon(Icons.telegram),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
                               builder: (context) => testing(),
                             ),
                           );
                         },
                         icon: Icon(Icons.wifi),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Test(),
-                            ),
-                          );
-                        },
-                        icon: Icon(Icons.text_rotation_angleup_sharp),
                       ),
                       IconButton(
                         onPressed: () {
