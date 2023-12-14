@@ -1,10 +1,9 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:latlng/latlng.dart';
-import 'package:flutter_map/flutter_map.dart';
+import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart' as lt;
 import 'package:sihwaterresq/admin/screens/adminhome.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -39,7 +38,6 @@ class _admincentersState extends State<admincenters> {
               point: lt.LatLng(latitude, longitude),
               width: 80,
               height: 80,
-
               builder: (ctx) => GestureDetector(
                 onTap: () {
                   showDialog(
@@ -85,15 +83,14 @@ class _admincentersState extends State<admincenters> {
   bool _isProcessing = false;
   TextEditingController descriptionController = TextEditingController();
   final databaseReference = FirebaseDatabase.instance.reference();
-  List<Marker> markers = [
-    
-  ];
+  List<Marker> markers = [];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Evacuation centers'),
+          backgroundColor: const Color.fromARGB(255, 11, 51, 83),
         ),
         body: FlutterMap(
           options: MapOptions(
