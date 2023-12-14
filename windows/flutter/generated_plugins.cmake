@@ -7,6 +7,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   file_selector_windows
   firebase_auth
   firebase_core
+  flutter_ble_peripheral
   geolocator_windows
   url_launcher_windows
 )
