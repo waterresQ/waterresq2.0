@@ -22,6 +22,8 @@ class _admincommunityrequestState extends State<admincommunityrequest> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          //backgroundColor: const Color.fromARGB(255, 11, 51, 83),
+          backgroundColor: const Color.fromARGB(255, 11, 51, 83),
           title: Text("Community Request"),
         ),
         body: FirebaseAnimatedList(

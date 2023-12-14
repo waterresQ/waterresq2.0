@@ -26,6 +26,7 @@ class _newAlertState extends State<newAlert> {
       child: Scaffold(
         appBar: AppBar(
           title: Text("NewAlert"),
+          backgroundColor: const Color.fromARGB(255, 11, 51, 83),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),

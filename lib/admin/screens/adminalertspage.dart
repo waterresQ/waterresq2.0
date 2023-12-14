@@ -1,12 +1,9 @@
-import 'dart:async';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-import 'package:sihwaterresq/admin/screens/newalert.dart';
-import 'package:sihwaterresq/common/alert.dart';
-import 'package:sihwaterresq/common/alertcard.dart';
 import 'package:intl/intl.dart';
+import 'package:sihwaterresq/admin/screens/newalert.dart';
+import 'package:sihwaterresq/common/alertcard.dart';
 
 class adminalert extends StatefulWidget {
   const adminalert({super.key});
@@ -26,6 +23,7 @@ class _adminalertState extends State<adminalert> {
     double screenWidth = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
+        //appBar: AppBar(backgroundColor: const Color.fromARGB(255, 11, 51, 83),),
         body: Column(
           children: [
             Padding(

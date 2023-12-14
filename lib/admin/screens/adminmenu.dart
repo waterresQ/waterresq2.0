@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sihwaterresq/Screens/sos.dart';
 import 'package:sihwaterresq/admin/screens/admincenters.dart';
+import 'package:sihwaterresq/admin/screens/admincommunity.dart';
 import 'package:sihwaterresq/admin/screens/admincommunityrequest.dart';
 import 'package:sihwaterresq/admin/screens/adminfloodmap.dart';
 import 'package:sihwaterresq/admin/screens/adminsos.dart';
@@ -107,8 +107,14 @@ class _adminmenuState extends State<adminmenu> {
               ),
               Row(
                 children: [
-                  buildContainer(screenWidth * 0.30, screenHeight * 0.15,
-                      'Community', newAlert(), Icons.holiday_village_sharp),
+                  buildContainer(
+                      screenWidth * 0.30,
+                      screenHeight * 0.15,
+                      'Community',
+                      AdminCommunity(
+                        username: '',
+                      ),
+                      Icons.holiday_village_sharp),
                   Spacer(),
                   buildContainer(
                       screenWidth * 0.55,
@@ -124,14 +130,11 @@ class _adminmenuState extends State<adminmenu> {
               Row(
                 children: [
                   buildContainer(
-                      screenWidth * 0.55,
+                      screenWidth * 0.90,
                       screenHeight * 0.15,
                       'Mark Flooded Area',
                       adminfloodmap(),
                       Icons.flood_outlined),
-                  Spacer(),
-                  buildContainer(screenWidth * 0.30, screenHeight * 0.15,
-                      'View centers', newAlert(), Icons.emergency_outlined),
                 ],
               ),
             ],
