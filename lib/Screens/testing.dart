@@ -10,60 +10,37 @@ class testing extends StatefulWidget {
 }
 
 class _testingState extends State<testing> {
+  String _connectionStatus = 'Not Connected';
+  String _deviceName = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Central'),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Text('Connection Status: $_connectionStatus'),
+            Text('Device Name: $_deviceName'),
             ElevatedButton(
-              child: Text('find'),
+              child: Text('Scan and Connect'),
               onPressed: () async {
                 FlutterBluePlus.startScan(timeout: Duration(seconds: 10));
                 var subscription =
                     FlutterBluePlus.scanResults.listen((results) async {
                   for (ScanResult r in results) {
-                    print('${r.device.name} found! rssi: ${r.rssi}');
-
-                    // Connect to the device
-                    await r.device.connect();
-
-                    // Discover the services
-                    List<BluetoothService> services =
-                        await r.device.discoverServices();
-
-                    // Iterate over all services
-                    for (BluetoothService service in services) {
-                      print('Service: ${service.uuid.toString()}');
-
-                      // Iterate over all characteristics of the service
-                      for (BluetoothCharacteristic characteristic
-                          in service.characteristics) {
-                        print(
-                            'Characteristic: ${characteristic.uuid.toString()}');
-
-                        // Write to the characteristic
-                        List<int> value = [
-                          1,
-                          2,
-                          3,
-                          4,
-                          5
-                        ]; // Replace with the data you want to send
-                        try {
-                          await characteristic.write(value);
-                          print(
-                              'Wrote to characteristic: ${characteristic.uuid.toString()}');
-                        } catch (e) {
-                          print(
-                              'Failed to write to characteristic: ${characteristic.uuid.toString()}');
-                        }
-                      }
+                    print('Device found: ${r.device.name}');
+                    if (r.device.name == "Your Device Name") {
+                      await r.device.connect();
+                      print('Device connected');
+                      setState(() {
+                        _connectionStatus = 'Connected';
+                        _deviceName = r.device.name;
+                      });
                     }
-
-                    // Disconnect from the device when done
-                    await r.device.disconnect();
                   }
                 });
               },

@@ -62,6 +62,9 @@ dependencies:
   youtube_player_flutter: ^8.0.0
   flutter_blue_plus: ^1.30.3
   flutter_ble_peripheral: ^1.2.3
+  dependencies:
+  platform_device_id: ^1.0.1
+
   
  
   
