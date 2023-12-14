@@ -7,6 +7,7 @@ import 'package:sihwaterresq/Screens/information.dart';
 import 'package:sihwaterresq/Screens/login.dart';
 import 'package:sihwaterresq/Screens/menu.dart';
 import 'package:sihwaterresq/Screens/test.dart';
+import 'package:sihwaterresq/Screens/test1.dart';
 import 'package:sihwaterresq/Screens/testing.dart';
 
 class home extends StatefulWidget {
@@ -50,6 +51,17 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                     backgroundColor: const Color.fromARGB(255, 11, 51, 83),
                     title: Text("WaterResQ"),
                     actions: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => test1(),
+                            ),
+                          );
+                        },
+                        icon: Icon(Icons.telegram),
+                      ),
                       IconButton(
                         onPressed: () {
                           Navigator.push(
