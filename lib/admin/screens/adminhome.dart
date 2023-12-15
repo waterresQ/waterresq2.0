@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sihwaterresq/admin/adminisssues.dart';
 import 'package:sihwaterresq/admin/screens/adminalertspage.dart';
 import 'package:sihwaterresq/admin/screens/adminlogin.dart';
 import 'package:sihwaterresq/admin/screens/adminmenu.dart';
@@ -71,7 +72,8 @@ class _adminhomeState extends State<adminhome> {
           body: TabBarView(
             children: [
               // Replace these widgets with your actual tab content
-              Container(child: Center(child: Text('Home Tab'))),
+              // Container(child: Center(child: Text('Home Tab'))),
+              adminissues(),
               adminmenu(),
               adminalert(),
             ],
