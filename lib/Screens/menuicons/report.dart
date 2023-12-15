@@ -46,14 +46,62 @@ class _reportState extends State<report> {
               print('Data: ${snapshot.value}');
               return SizeTransition(
                 sizeFactor: animation,
-                child: complaintcard(
-                  date: value['date'].toString(),
-                  imageurl: value['photoUrl'].toString(),
-                  time: value['time'].toString(),
-                  repostcount: value['repostcount'].toString(),
-                  cat: value['selectedValue'],
-                  status: value['solved'],
-                  address: value['address'].toString(),
+                child: GestureDetector(
+                  onTap: () async {
+                    if (value['solved'].toString() == 'true') {
+                      DateTime now = DateTime.now();
+                      String formattedDate =
+                          "${now.day}-${now.month}-${now.year}";
+                      String formattedTime =
+                          "${now.hour}:${now.minute}:${now.second}";
+                      await showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Repost this complaint?'),
+                            content: const Text(
+                                'Is the issue solved?'),
+                            actions: <Widget>[
+                              ElevatedButton(
+                                child: const Text('Cancel'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                              ElevatedButton(
+                                child: const Text('Repost'),
+                                onPressed: () async {
+                                  Navigator.of(context).pop();
+                                  int newRepostCount =
+                                      int.parse(value['repostcount']) + 1;
+                                  await FirebaseDatabase.instance
+                                      .reference()
+                                      .child('feed')
+                                      .child(snapshot.key!)
+                                      .update({
+                                    'timestamp': ServerValue.timestamp,
+                                    'date': formattedDate,
+                                    'time': formattedTime,
+                                    'solved': 'false',
+                                    'repostcount': newRepostCount.toString(),
+                                  });
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                  },
+                  child: complaintcard(
+                    date: value['date'].toString(),
+                    imageurl: value['photoUrl'].toString(),
+                    time: value['time'].toString(),
+                    repostcount: value['repostcount'].toString(),
+                    cat: value['selectedValue'],
+                    status: value['solved'],
+                    address: value['address'].toString(),
+                  ),
                 ),
               );
             } else {
