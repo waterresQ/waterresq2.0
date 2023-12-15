@@ -63,6 +63,7 @@ dependencies:
   flutter_p2p_connection: ^2.0.1
   filesystem_picker: ^4.1.0
   connectivity_plus: ^5.0.2
+  firebase_storage: ^11.5.6
 
 
   
@@ -117,6 +118,7 @@ flutter:
     - assets\drainage.png
     - assets\flood.png
     - assets\infra.png
+    - assets\Rhombus.gif
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

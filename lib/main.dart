@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
         '/report': (context) => const report(),
         '/precautions': (context) => Precautions(),
         '/weather': (context) => const WeatherApp(),
-        '/feed': (context) => const feedscreen(),
+        '/feed': (context) => feedscreen(username: '',),
         '/map': (context) => const usermaps(),
         '/alerts': (context) => const alerts(),
       },

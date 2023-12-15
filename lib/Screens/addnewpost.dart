@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -10,36 +12,40 @@ import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
 class addnewpost extends StatefulWidget {
-  const addnewpost({super.key});
-
+  addnewpost({required this.username, super.key});
+  String username;
   @override
   State<addnewpost> createState() => _addnewpostState();
 }
 
 class _addnewpostState extends State<addnewpost> {
   final databaseReference = FirebaseDatabase.instance.reference();
-String? urlString;
+  String? urlString;
+  bool _isProcessing2 = false;
+  void initState() {
+    super.initState();
+    _loadMarkersFromDatabase();
+  }
 
-void initState() {
-  super.initState();
-  _loadMarkersFromDatabase();
-}
-
-Future<void> _loadMarkersFromDatabase() async {
-  DatabaseReference urlRef = databaseReference.child('urls/url1');
-  // Use DataSnapshot type to fix the error
-  DataSnapshot snapshot = (await urlRef.once()).snapshot;
-  setState(() {
-    urlString=snapshot.value?.toString() ?? "";
-  });
-  // Access the value property of DataSnapshot
-  String value = snapshot.value?.toString() ?? "";
-  print('Data : $value');
-}
+  Future<void> _loadMarkersFromDatabase() async {
+    DatabaseReference urlRef = databaseReference.child('urls/url1');
+    // Use DataSnapshot type to fix the error
+    DataSnapshot snapshot = (await urlRef.once()).snapshot;
+    setState(() {
+      urlString = snapshot.value?.toString() ?? "";
+    });
+    // Access the value property of DataSnapshot
+    String value = snapshot.value?.toString() ?? "";
+    print('Data : $value');
+  }
 
   final TextEditingController _desc = TextEditingController();
-  String selectedValue = 'Option 1';
-  List<String> options = ['Option 1', 'Option 2', 'Option 3'];
+  String selectedValue = 'Water Stagnated & Flooded Areas';
+  List<String> options = [
+    'Water Stagnated & Flooded Areas',
+    'Drainage Leakage Detected',
+    'Infrastructure Damages'
+  ];
   void dispose() {
     _desc.dispose();
     super.dispose();
@@ -97,7 +103,7 @@ Future<void> _loadMarkersFromDatabase() async {
                       ),
                       child: const Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: const Text(
+                        child: Text(
                           "Your Location will be taken when you take a photo",
                           maxLines: 2,
                           style: TextStyle(fontSize: 20),
@@ -105,7 +111,7 @@ Future<void> _loadMarkersFromDatabase() async {
                       ),
                     ),
                   )
-                : prediction == "VERIFIED"
+                : prediction == "verified"
                     ? Text(
                         "   $prediction",
                         style: const TextStyle(
@@ -175,34 +181,28 @@ Future<void> _loadMarkersFromDatabase() async {
             SizedBox(
               height: 20,
             ),
+            Text(
+              "Specify your category",
+              style: TextStyle(fontSize: 20),
+            ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                children: [
-                  Text(
-                    "Specify your category",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  Spacer(),
-                  DropdownButton<String>(
-                    value: selectedValue,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        selectedValue = newValue!;
-                      });
-                    },
-                    items:
-                        options.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: TextStyle(fontSize: 17),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ],
+              child: DropdownButton<String>(
+                value: selectedValue,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    selectedValue = newValue!;
+                  });
+                },
+                items: options.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(
+                      value,
+                      style: TextStyle(fontSize: 17),
+                    ),
+                  );
+                }).toList(),
               ),
             ),
             SizedBox(height: 20),
@@ -238,6 +238,10 @@ Future<void> _loadMarkersFromDatabase() async {
                 ),
               ),
             ),
+            if (_isProcessing2)
+              CircularProgressIndicator(
+                color: Colors.red,
+              ),
             _latitude == null
                 ? Container()
                 : ElevatedButton(
@@ -245,7 +249,9 @@ Future<void> _loadMarkersFromDatabase() async {
                       backgroundColor: MaterialStateProperty.all(
                           const Color.fromARGB(255, 11, 51, 83)),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      pressedsend();
+                    },
                     child: const Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -261,6 +267,55 @@ Future<void> _loadMarkersFromDatabase() async {
         ),
       ),
     ));
+  }
+
+  void pressedsend() async {
+    setState(() {
+      _isProcessing2 = true;
+    });
+    DateTime now = DateTime.now();
+    String formattedDate = "${now.day}-${now.month}-${now.year}";
+    String formattedTime = "${now.hour}:${now.minute}:${now.second}";
+    if (prediction == "") {
+      prediction = 'notverified';
+    }
+    print(widget.username);
+    print(PickedFile.path);
+    print(address);
+    print(_latitude);
+    print(_longitude);
+    print(_desc.text);
+    print(prediction.toLowerCase());
+    print(selectedValue);
+    print(formattedDate);
+    print(formattedTime);
+    //store the photo to firebase storage and getting the access url for it
+    final String filePath =
+        'user_photos/${widget.username}_${DateTime.now().toIso8601String()}.jpg';
+    final ref = FirebaseStorage.instance.ref().child(filePath);
+    final uploadTask = ref.putFile(PickedFile);
+    final snapshot = await uploadTask.whenComplete(() => null);
+    final photoUrl = await snapshot.ref.getDownloadURL();
+    //data to the database
+    final dbRef = FirebaseDatabase.instance.reference().child('feed').push();
+    dbRef.set({
+      'timestamp': ServerValue.timestamp,
+      'username': widget.username,
+      'photoUrl': photoUrl,
+      'address': address,
+      'latitude': _latitude,
+      'longitude': _longitude,
+      'description': _desc.text,
+      'prediction': prediction.toLowerCase(),
+      'selectedValue': selectedValue,
+      'date': formattedDate,
+      'time': formattedTime,
+      'solved': 'false',
+      'repostcount': '0',
+    });
+    setState(() {
+      _isProcessing2 = false;
+    });
   }
 
   Future<void> _pickImageFromCamera() async {

@@ -112,7 +112,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                       menupage(
                         username: checkResult,
                       ),
-                      feedscreen(),
+                      feedscreen(username:checkResult),
                     ],
                   ),
                 ),

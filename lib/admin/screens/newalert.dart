@@ -93,7 +93,6 @@ class _newAlertState extends State<newAlert> {
                       // Create a new child under "alerts" with the title as the child
                       DatabaseReference alertReference =
                           databaseReference.child('alerts');
-
                       // Set the data under the alertReference
                       alertReference.child(title).update({
                         'timestamp': ServerValue.timestamp,
