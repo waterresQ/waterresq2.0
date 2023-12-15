@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       routes: {
         '/emergency': (context) => emergency(),
-        '/report': (context) => const report(),
+        '/report': (context) =>  report(username: '',),
         '/precautions': (context) => Precautions(),
         '/weather': (context) => const WeatherApp(),
         '/feed': (context) => feedscreen(username: '',),

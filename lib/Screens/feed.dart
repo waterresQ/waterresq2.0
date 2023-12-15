@@ -129,7 +129,8 @@ class _feedscreenState extends State<feedscreen> {
                             time: value['time'].toString(),
                             usernamepost: value['username'].toString(),
                             repostcount: value['repostcount'].toString(),
-                            prediction: value['prediction'].toString(), cat: value['selectedValue'],
+                            prediction: value['prediction'].toString(),
+                            cat: value['selectedValue'],
                           ),
                         );
                       } else {
@@ -154,7 +155,11 @@ class _feedscreenState extends State<feedscreen> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => report()),
+                          MaterialPageRoute(
+                            builder: (context) => report(
+                              username: widget.username,
+                            ),
+                          ),
                         );
                       },
                       icon: const Icon(
@@ -171,9 +176,10 @@ class _feedscreenState extends State<feedscreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => addnewpost(
-                                    username: widget.username,
-                                  )),
+                            builder: (context) => addnewpost(
+                              username: widget.username,
+                            ),
+                          ),
                         );
                       },
                       icon: const Icon(
