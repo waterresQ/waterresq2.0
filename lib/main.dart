@@ -12,13 +12,24 @@ import 'package:sihwaterresq/Screens/menuicons/emergency.dart';
 import 'package:sihwaterresq/Screens/menuicons/precautions.dart';
 import 'package:sihwaterresq/Screens/menuicons/report.dart';
 import 'package:sihwaterresq/Screens/menuicons/weather.dart';
+import 'package:sihwaterresq/Screens/nointernetpage.dart';
 import 'package:sihwaterresq/firebase_api.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  await FirebaseApi().initNotification();
-  runApp(MyApp());
+  // await Firebase.initializeApp();
+  // await FirebaseApi().initNotification();
+  // runApp(MyApp());
+  var connectivityResult = await (Connectivity().checkConnectivity());
+  if (connectivityResult == ConnectivityResult.none) {
+    runApp(nointernetpage());
+  } else {
+    // WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
+    await FirebaseApi().initNotification();
+    runApp(MyApp());
+  }
 }
 
 class MyApp extends StatelessWidget {

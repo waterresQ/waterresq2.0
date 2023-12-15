@@ -1,11 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http; //sethu
+import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
 class addnewpost extends StatefulWidget {
@@ -16,6 +17,26 @@ class addnewpost extends StatefulWidget {
 }
 
 class _addnewpostState extends State<addnewpost> {
+  final databaseReference = FirebaseDatabase.instance.reference();
+String? urlString;
+
+void initState() {
+  super.initState();
+  _loadMarkersFromDatabase();
+}
+
+Future<void> _loadMarkersFromDatabase() async {
+  DatabaseReference urlRef = databaseReference.child('urls/url1');
+  // Use DataSnapshot type to fix the error
+  DataSnapshot snapshot = (await urlRef.once()).snapshot;
+  setState(() {
+    urlString=snapshot.value?.toString() ?? "";
+  });
+  // Access the value property of DataSnapshot
+  String value = snapshot.value?.toString() ?? "";
+  print('Data : $value');
+}
+
   final TextEditingController _desc = TextEditingController();
   String selectedValue = 'Option 1';
   List<String> options = ['Option 1', 'Option 2', 'Option 3'];
@@ -24,7 +45,7 @@ class _addnewpostState extends State<addnewpost> {
     super.dispose();
   }
 
-  String prediction = ""; //sethu
+  String prediction = "";
   String? picallowed;
   double? _latitude;
   double? _longitude;
@@ -56,9 +77,6 @@ class _addnewpostState extends State<addnewpost> {
                         width: screenWidth * 0.8,
                         child: Image.file(PickedFile)),
                   ),
-
-            //sethu start
-
             const SizedBox(
               height: 3,
             ),
@@ -102,19 +120,6 @@ class _addnewpostState extends State<addnewpost> {
                             fontSize: 17,
                             fontWeight: FontWeight.bold),
                       ),
-
-            //sethu end
-
-            //commented sanjith code start
-            // SizedBox(
-            //   height: 10,
-            // ),
-            // Text(
-            //   "Your Location will be taken when you take a photo",
-            //   maxLines: 2,
-            // ),
-            //commented sanjith code end
-
             Padding(
               padding: EdgeInsets.only(top: 10, left: 20),
               child: Align(
@@ -271,8 +276,9 @@ class _addnewpostState extends State<addnewpost> {
       try {
         if (pickedFile != null) {
           prediction = "";
-          var url = Uri.parse(
-              'https://da3c-2401-4900-6341-87f8-7824-8acf-9d01-d373.ngrok.io/run_script');
+          String path = '/run_script';
+          var url = Uri.parse(urlString! + path);
+          print(url);
           var request = http.MultipartRequest('POST', url);
 
           // this is to add image file to the request
