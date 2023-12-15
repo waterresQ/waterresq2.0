@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -5,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sihwaterresq/Screens/home.dart';
 import 'package:sihwaterresq/Screens/signup.dart';
 import 'package:sihwaterresq/admin/screens/adminlogin.dart';
+import 'package:sihwaterresq/firebase_api.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 import 'package:flutter/services.dart';
@@ -17,6 +19,7 @@ class login extends StatefulWidget {
 }
 
 class _loginState extends State<login> {
+
   final TextEditingController _username = TextEditingController();
   final TextEditingController _password = TextEditingController();
   final DatabaseReference _databaseReference =
@@ -260,7 +263,8 @@ class _loginState extends State<login> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>const adminlogin(),
+                                        builder: (context) =>
+                                            const adminlogin(),
                                       ),
                                     );
                                   },

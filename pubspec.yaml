@@ -62,6 +62,7 @@ dependencies:
   youtube_player_flutter: ^8.0.0
   flutter_p2p_connection: ^2.0.1
   filesystem_picker: ^4.1.0
+  connectivity_plus: ^5.0.2
 
 
   
