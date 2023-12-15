@@ -29,7 +29,10 @@ class _communityrequestcardState extends State<communityrequestcard> {
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [Color.fromARGB(255, 95, 183, 255), Color.fromARGB(255, 14, 78, 99)],
+          colors: [
+            Color.fromARGB(255, 14, 78, 99),
+            Color.fromARGB(255, 95, 183, 255),
+          ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -47,16 +50,24 @@ class _communityrequestcardState extends State<communityrequestcard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Name: ${widget.name}',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          Text('Name: ${widget.name}'.toUpperCase(),
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white)),
           SizedBox(height: 10),
-          Text('Phone: ${widget.Phone}', style: TextStyle(fontSize: 16)),
-          Text('Aadhaar: ${widget.aadhar}', style: TextStyle(fontSize: 16)),
+          Text(
+            'Phone: ${widget.Phone}',
+            style: TextStyle(fontSize: 16, color: Colors.white),
+          ),
+          Text('Aadhaar: ${widget.aadhar}',
+              style: TextStyle(fontSize: 16, color: Colors.white)),
           Text('Community Name: ${widget.communityname}',
-              style: TextStyle(fontSize: 16)),
+              style: TextStyle(fontSize: 16, color: Colors.white)),
           Text('Description: ${widget.description}',
-              style: TextStyle(fontSize: 16)),
-          Text('Username: ${widget.username}', style: TextStyle(fontSize: 16)),
+              style: TextStyle(fontSize: 16, color: Colors.white)),
+          Text('Username: ${widget.username}',
+              style: TextStyle(fontSize: 16, color: Colors.white)),
         ],
       ),
     );
