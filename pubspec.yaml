@@ -114,6 +114,9 @@ flutter:
     - lib\widgets\menuimages\weather.png
     - assets/notify.mp3
     - assets/earthpic.jpg
+    - assets\drainage.png
+    - assets\flood.png
+    - assets\infra.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
