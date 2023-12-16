@@ -55,13 +55,37 @@ class _reportState extends State<report> {
                       String formattedTime =
                           "${now.hour}:${now.minute}:${now.second}";
                       String timing = "Time";
-                      String time = timing + formattedTime;
+                      String time = formattedTime;
                       await showDialog(
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
                             title: const Text('Repost this complaint?'),
-                            content: const Text('Is the issue solved?'),
+                            content: Column(
+                              children: [
+                                Text("Issue not solved?"),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 6, horizontal: 6),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(
+                                        10), // border radius
+                                    child: Container(
+                                      height: 300,
+                                      // Set the height to the value you want
+                                      child: FadeInImage(
+                                        placeholder: const AssetImage(
+                                            'assets/Rhombus.gif'),
+                                        image: NetworkImage(value['adminphoto']), // Use NetworkImage instead of Image.network
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                             actions: <Widget>[
                               ElevatedButton(
                                 child: const Text('Cancel'),

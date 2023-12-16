@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:latlong2/latlong.dart' as lt;
 import 'package:sihwaterresq/admin/screens/adminpostcard.dart';
+import 'package:sihwaterresq/admin/screens/solvingpage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class adminmaps extends StatefulWidget {
@@ -26,9 +30,10 @@ class _adminmapsState extends State<adminmaps> {
     final DatabaseEvent event = await centersReference.once();
 
     if (event.snapshot.value != null) {
+      var PickedFile = null;
       final data = event.snapshot.value as Map<dynamic, dynamic>;
       data.forEach((key, value) {
-        if (value['selectedValue'].toString() == widget.cat.toString()) {
+        if (value['selectedValue'].toString() == widget.cat.toString() &&value['solved']=='false') {
           final latitude = double.parse(value['latitude'].toString());
           final longitude = double.parse(value['longitude'].toString());
           final status = value['Status'];
@@ -38,6 +43,7 @@ class _adminmapsState extends State<adminmaps> {
           final phone = value['phone'];
           final time = value['time'];
           final imageurl = value['photoUrl'];
+          final description = value['description'];
           setState(() {
             markers.add(
               Marker(
@@ -51,7 +57,7 @@ class _adminmapsState extends State<adminmaps> {
                       builder: (context) => AlertDialog(
                         title: Text('${widget.cat}'),
                         content: ConstrainedBox(
-                          constraints: BoxConstraints(maxHeight: 300),
+                          constraints: BoxConstraints(maxHeight: 400),
                           child: Container(
                               child: Align(
                             alignment: Alignment.centerLeft,
@@ -72,36 +78,57 @@ class _adminmapsState extends State<adminmaps> {
                                     child: Text(
                                         "Location: ${latitude},${longitude}")),
                                 Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 6, horizontal: 6),
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(
-                                          10), // border radius
-                                      child: Container(
-                                        height: 150,
-                                        width: double
-                                            .infinity, // Set the height to the value you want
-                                        child: FadeInImage.assetNetwork(
-                                          placeholder: 'assets/Rhombus.gif',
-                                          image: imageurl,
-                                          fit: BoxFit.cover,
-                                        ),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 6, horizontal: 6),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(
+                                        10), // border radius
+                                    child: Container(
+                                      height: 150,
+                                      width: double
+                                          .infinity, // Set the height to the value you want
+                                      child: FadeInImage.assetNetwork(
+                                        placeholder: 'assets/Rhombus.gif',
+                                        image: imageurl,
+                                        fit: BoxFit.cover,
                                       ),
-                                    )),
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           )),
                         ),
                         actions: [
                           TextButton(
-                            child: Text('Close'),
+                            child: Text(
+                              'Close',
+                              style: TextStyle(color: Colors.black),
+                            ),
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
                           ),
+                          TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => solvingpage(
+                                      description: description.toString(),
+                                      latitude: latitude.toString(),
+                                      longitude:longitude.toString(),
+                                      username: username.toString(), imageurl: imageurl.toString(),
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                "Solve the issue",
+                                style: TextStyle(color: Colors.green),
+                              )),
                           TextButton(
                             child: Text('Navigate'),
                             onPressed: () async {
@@ -198,7 +225,7 @@ class _adminmapsState extends State<adminmaps> {
                         snapshot.value as Map<dynamic, dynamic>?;
                     if (value != null &&
                         value['selectedValue'].toString() ==
-                            widget.cat.toString()) {
+                            widget.cat.toString() && value['solved']=='false') {
                       return SizeTransition(
                         sizeFactor: animation,
                         child: adminpostcard(

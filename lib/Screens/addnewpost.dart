@@ -12,6 +12,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:sihwaterresq/Screens/menuicons/report.dart';
 
 class addnewpost extends StatefulWidget {
   addnewpost({required this.username, super.key});
@@ -331,6 +332,14 @@ class _addnewpostState extends State<addnewpost> {
       'repostcount': '0',
       'adminphoto': '',
     });
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => report(
+          username: widget.username,
+        ),
+      ),
+    );
     setState(() {
       _isProcessing2 = false;
     });
