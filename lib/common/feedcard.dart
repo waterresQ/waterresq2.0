@@ -84,22 +84,23 @@ class _feedcardState extends State<feedcard> {
               ],
             ),
             Container(
-                padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10), // border radius
-                  child: Container(
-                    height: 350,
-                    width:
-                        double.infinity, // Set the height to the value you want
-                    child: FadeInImage.assetNetwork(
-                      placeholder: 'assets/Rhombus.gif',
-                      image: widget.imageurl,
-                      fit: BoxFit.cover,
-                    ),
+              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(20)),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10), // border radius
+                child: Container(
+                  height: 350,
+                  width:
+                      double.infinity, // Set the height to the value you want
+                  child: FadeInImage.assetNetwork(
+                    placeholder: 'assets/Rhombus.gif',
+                    image: widget.imageurl,
+                    fit: BoxFit.cover,
                   ),
-                )),
+                ),
+              ),
+            ),
             Text(
               '${widget.cat}',
               style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),

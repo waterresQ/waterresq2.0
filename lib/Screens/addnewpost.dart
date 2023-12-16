@@ -310,6 +310,7 @@ class _addnewpostState extends State<addnewpost> {
       'time': formattedTime,
       'solved': 'false',
       'repostcount': '0',
+      'adminphoto':'',
     });
     setState(() {
       _isProcessing2 = false;
