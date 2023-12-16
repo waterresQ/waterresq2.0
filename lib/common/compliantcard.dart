@@ -25,15 +25,15 @@ class _complaintcardState extends State<complaintcard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: Flexible(
         child: Container(
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 221, 235, 249),
+              color: const Color.fromARGB(255, 221, 235, 249),
               borderRadius: BorderRadius.circular(10), // border radius
               boxShadow: [
                 BoxShadow(
-                  color: Color.fromARGB(255, 0, 0, 0)
+                  color: const Color.fromARGB(255, 0, 0, 0)
                       .withOpacity(0.6), // shadow color
                   spreadRadius: 5, // shadow spread radius
                   blurRadius: 7, // shadow blur radius
@@ -44,7 +44,8 @@ class _complaintcardState extends State<complaintcard> {
             child: Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(20)),
                   child: ClipRRect(
@@ -60,54 +61,87 @@ class _complaintcardState extends State<complaintcard> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 3),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    
-                    children: [
-                      widget.status == 'false'
-                          ? const Text(
-                              'NOT SOLVED',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, color: Colors.red),
-                            )
-                          : const Text(
-                              "SOLVED",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.green),
+                  padding: const EdgeInsets.only(left: 3),
+                  child: Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        widget.status == 'false'
+                            ? const Text(
+                                'NOT SOLVED',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.red),
+                              )
+                            : const Text(
+                                "SOLVED",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.green),
+                              ),
+                        Row(
+                          children: [
+                            Text('${widget.date}'),
+                            const SizedBox(
+                              width: 30,
                             ),
-                      Row(
-                        children: [
-                          Text('${widget.date}'),
-                          SizedBox(
-                            width: 30,
+                            Text('Time: '),
+                            Text('${widget.time}'),
+                          ],
+                        ),
+                        const Text(
+                          "Category: ",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          height: 35,
+                          width: 150,
+                          child: Flexible(
+                            child: Text(
+                              '${widget.cat}',
+                              maxLines: 2,
+                            ),
                           ),
-                          Text('${widget.time}'),
-                        ],
-                      ),
-                      Text('${widget.cat}',maxLines: 2,),
-                      Text('${widget.address}',maxLines: 2,),
-                      Row(
-                        children: [
-                          const Icon(Icons.u_turn_right_outlined),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                right: 10, top: 3, bottom: 3),
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                '${widget.repostcount}',
-                                style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold),
+                        ),
+                        const Text(
+                          "Area: ",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          height: 35,
+                          width: 150,
+                          child: Flexible(
+                            child: Text(
+                              '${widget.address}',
+                              maxLines: 2,
+                            ),
+                          ),
+                        ),
+                        // Text(
+                        //   '${widget.address}',
+                        //   maxLines: 2,
+                        // ),
+                        Row(
+                          children: [
+                            const Icon(Icons.u_turn_right_outlined),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  right: 10, top: 3, bottom: 3),
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  '${widget.repostcount}',
+                                  style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      )
-                    ],
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ],

@@ -8,7 +8,10 @@ class emergency extends StatelessWidget {
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 177, 216, 255),
         appBar: AppBar(
-          title: const Text("Emergency Reach"),
+          title: const Text(
+            "Emergency Reach",
+            style: TextStyle(color: Colors.white),
+          ),
           backgroundColor: const Color.fromARGB(255, 11, 51, 83),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),

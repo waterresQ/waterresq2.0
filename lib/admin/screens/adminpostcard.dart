@@ -31,17 +31,17 @@ class _adminpostcardState extends State<adminpostcard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 10, left: 20, right: 20),
+      padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
       child: Container(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 221, 235, 249),
+          color: const Color.fromARGB(255, 221, 235, 249),
           borderRadius: BorderRadius.circular(10), // border radius
           boxShadow: [
             BoxShadow(
-              color:
-                  Color.fromARGB(255, 0, 0, 0).withOpacity(0.6), // shadow color
+              color: const Color.fromARGB(255, 0, 0, 0)
+                  .withOpacity(0.6), // shadow color
               spreadRadius: 5, // shadow spread radius
               blurRadius: 7, // shadow blur radius
               offset: const Offset(0, 0), // changes position of shadow
@@ -85,24 +85,86 @@ class _adminpostcardState extends State<adminpostcard> {
           ),
           Row(
             children: [
-              SizedBox(
+              const SizedBox(
                 width: 20,
               ),
-              Text(
+              const Text(
                 "Latitude & Longitude: ",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 6,
               ),
               Text(widget.latitude),
-              Text(" , "),
+              const Text(" , "),
               Text(widget.longitude),
             ],
           ),
-          Text(widget.username),
-          Text(widget.prediction),
-          Text(widget.description),
+          Row(
+            children: [
+              const SizedBox(
+                width: 20,
+              ),
+              const Text("Username: ",
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              Text(widget.username.toUpperCase()),
+              const SizedBox(
+                width: 73,
+              ),
+              const Text('Repost Count: ',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              Text(widget.repostcount),
+            ],
+          ),
+          Row(
+            children: [
+              const SizedBox(
+                width: 20,
+              ),
+              const Text("Status: ",
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              if (widget.prediction == 'verified')
+                Text(
+                  widget.prediction.toUpperCase(),
+                  style: const TextStyle(color: Colors.green),
+                )
+              else
+                Text(
+                  widget.prediction.toUpperCase(),
+                  style: const TextStyle(color: Colors.red),
+                ),
+            ],
+          ),
+          const SizedBox(
+            height: 3,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Row(
+                children: [
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Text("Description: ",
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                ],
+              ),
+              const SizedBox(
+                height: 3,
+              ),
+              Row(
+                children: [
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Flexible(
+                    child: Text(widget.description),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ]),
       ),
     );
