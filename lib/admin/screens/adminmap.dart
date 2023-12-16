@@ -1,11 +1,10 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart' as lt;
 import 'package:sihwaterresq/admin/screens/adminpostcard.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:latlong2/latlong.dart' as lt;
 
 class adminmaps extends StatefulWidget {
   adminmaps({required this.cat, super.key});
@@ -34,7 +33,7 @@ class _adminmapsState extends State<adminmaps> {
           final longitude = double.parse(value['longitude'].toString());
           final status = value['Status'];
           final timestamp = value['timestamp'];
-          final date = value['Date'];
+          final date = value['date'];
           final username = value['username'];
           final phone = value['phone'];
           final time = value['time'];
@@ -50,7 +49,7 @@ class _adminmapsState extends State<adminmaps> {
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
-                        title: Text('SOS REQUEST'),
+                        title: Text('${widget.cat}'),
                         content: ConstrainedBox(
                           constraints: BoxConstraints(maxHeight: 300),
                           child: Container(
@@ -61,10 +60,10 @@ class _adminmapsState extends State<adminmaps> {
                               children: [
                                 Align(
                                     alignment: Alignment.centerLeft,
-                                    child: Text("username: ${username}")),
+                                    child: Text("Username: ${username}")),
                                 Align(
                                     alignment: Alignment.centerLeft,
-                                    child: Text("date: ${date}")),
+                                    child: Text("Date: ${date}")),
                                 Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text("Time: ${time}")),
@@ -197,7 +196,9 @@ class _adminmapsState extends State<adminmaps> {
                       Animation<double> animation, int index) {
                     Map<dynamic, dynamic>? value =
                         snapshot.value as Map<dynamic, dynamic>?;
-                    if (value != null && value['selectedValue'].toString() == widget.cat.toString()) {
+                    if (value != null &&
+                        value['selectedValue'].toString() ==
+                            widget.cat.toString()) {
                       return SizeTransition(
                         sizeFactor: animation,
                         child: adminpostcard(

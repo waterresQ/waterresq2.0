@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 class feedcard extends StatefulWidget {
@@ -131,6 +129,7 @@ class _feedcardState extends State<feedcard> {
                               fontWeight: FontWeight.bold),
                         ),
                   Spacer(), // date
+                  Text("Time: "),
                   Text('${widget.time}',
                       style: const TextStyle(
                           color: Colors.black,

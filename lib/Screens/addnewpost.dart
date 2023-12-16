@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -172,7 +171,9 @@ class _addnewpostState extends State<addnewpost> {
                       Text(
                         "Your Approximate location is",
                         style: TextStyle(
-                            fontSize: 20, fontStyle: FontStyle.normal),
+                            fontSize: 20,
+                            fontStyle: FontStyle.normal,
+                            color: Color.fromARGB(255, 40, 144, 203)),
                       ),
                       Text(address),
                       Text("${_latitude},${_longitude}"),
@@ -183,7 +184,7 @@ class _addnewpostState extends State<addnewpost> {
             ),
             Text(
               "Specify your category",
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
@@ -310,7 +311,7 @@ class _addnewpostState extends State<addnewpost> {
       'time': formattedTime,
       'solved': 'false',
       'repostcount': '0',
-      'adminphoto':'',
+      'adminphoto': '',
     });
     setState(() {
       _isProcessing2 = false;

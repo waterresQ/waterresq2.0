@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 
 class adminpostcard extends StatefulWidget {
   adminpostcard(
@@ -68,12 +67,40 @@ class _adminpostcardState extends State<adminpostcard> {
                 ),
               )),
           Text(widget.address),
-          Text(widget.date),
-          Text(widget.time),
-          Text(widget.latitude),
-          Text(widget.longitude),
+          Row(
+            children: [
+              const SizedBox(
+                width: 20,
+              ),
+              const Text("Date: ",
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              Text(widget.date),
+              const SizedBox(
+                width: 110,
+              ),
+              const Text("Time: ",
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              Text(widget.time),
+            ],
+          ),
+          Row(
+            children: [
+              SizedBox(
+                width: 20,
+              ),
+              Text(
+                "Latitude & Longitude: ",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 6,
+              ),
+              Text(widget.latitude),
+              Text(" , "),
+              Text(widget.longitude),
+            ],
+          ),
           Text(widget.username),
-          Text(widget.repostcount),
           Text(widget.prediction),
           Text(widget.description),
         ]),

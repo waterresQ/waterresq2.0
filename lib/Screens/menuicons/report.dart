@@ -54,13 +54,14 @@ class _reportState extends State<report> {
                           "${now.day}-${now.month}-${now.year}";
                       String formattedTime =
                           "${now.hour}:${now.minute}:${now.second}";
+                      String timing = "Time";
+                      String time = timing + formattedTime;
                       await showDialog(
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
                             title: const Text('Repost this complaint?'),
-                            content: const Text(
-                                'Is the issue solved?'),
+                            content: const Text('Is the issue solved?'),
                             actions: <Widget>[
                               ElevatedButton(
                                 child: const Text('Cancel'),
@@ -81,7 +82,7 @@ class _reportState extends State<report> {
                                       .update({
                                     'timestamp': ServerValue.timestamp,
                                     'date': formattedDate,
-                                    'time': formattedTime,
+                                    'time': time,
                                     'solved': 'false',
                                     'repostcount': newRepostCount.toString(),
                                   });
