@@ -164,7 +164,8 @@ class _adminmapsState extends State<adminmaps> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.cat),
+          backgroundColor: const Color.fromARGB(255, 11, 51, 83),
+          title: Text(widget.cat, style: TextStyle(color: Colors.white)),
         ),
         body: Stack(
           children: [
