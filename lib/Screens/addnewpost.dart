@@ -289,14 +289,12 @@ class _addnewpostState extends State<addnewpost> {
     print(selectedValue);
     print(formattedDate);
     print(formattedTime);
-    //store the photo to firebase storage and getting the access url for it
     final String filePath =
         'user_photos/${widget.username}_${DateTime.now().toIso8601String()}.jpg';
     final ref = FirebaseStorage.instance.ref().child(filePath);
     final uploadTask = ref.putFile(PickedFile);
     final snapshot = await uploadTask.whenComplete(() => null);
     final photoUrl = await snapshot.ref.getDownloadURL();
-    //data to the database
     final dbRef = FirebaseDatabase.instance.reference().child('feed').push();
     dbRef.set({
       'timestamp': ServerValue.timestamp,
@@ -362,7 +360,6 @@ class _addnewpostState extends State<addnewpost> {
       } catch (e) {
         print('Error: $e');
       }
-      //sethu end
     }
     bool serviceEnabled;
     LocationPermission permission;

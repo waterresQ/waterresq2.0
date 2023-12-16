@@ -57,7 +57,10 @@ class _adminissuesState extends State<adminissues> {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => adminmaps()),
+            MaterialPageRoute(
+                builder: (context) => adminmaps(
+                      cat: title,
+                    )),
           );
         },
         child: Stack(
