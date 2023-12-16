@@ -64,6 +64,8 @@ dependencies:
   filesystem_picker: ^4.1.0
   connectivity_plus: ^5.0.2
   firebase_storage: ^11.5.6
+  image: ^4.1.3
+  
 
 
   

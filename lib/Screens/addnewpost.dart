@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
-
+import 'dart:io';
+import 'dart:typed_data';
+import 'package:image/image.dart' as IMG;
+import 'package:path_provider/path_provider.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -293,7 +296,22 @@ class _addnewpostState extends State<addnewpost> {
     final String filePath =
         'user_photos/${widget.username}_${DateTime.now().toIso8601String()}.jpg';
     final ref = FirebaseStorage.instance.ref().child(filePath);
-    final uploadTask = ref.putFile(PickedFile);
+
+    File imageFile = File(PickedFile.path);
+    List<int> imageBytes = await imageFile.readAsBytes();
+
+    Uint8List uint8list = Uint8List.fromList(imageBytes);
+
+    IMG.Image? img = IMG.decodeImage(uint8list);
+
+    IMG.Image resized = IMG.copyResize(img!, width: 200, height: 200);
+
+    Directory tempDir = await getTemporaryDirectory();
+    String tempPath = tempDir.path;
+    File resizedFile = File('$tempPath/resized.jpg')
+      ..writeAsBytesSync(IMG.encodeJpg(resized));
+
+    final uploadTask = ref.putFile(resizedFile);
     final snapshot = await uploadTask.whenComplete(() => null);
     final photoUrl = await snapshot.ref.getDownloadURL();
     final dbRef = FirebaseDatabase.instance.reference().child('feed').push();
@@ -340,10 +358,8 @@ class _addnewpostState extends State<addnewpost> {
           request.files
               .add(await http.MultipartFile.fromPath('image', pickedFile.path));
 
-          // send the request and get the response
           var response = await request.send();
 
-          // gets the results from the response
           var results = await http.Response.fromStream(response);
 
           // use the results
