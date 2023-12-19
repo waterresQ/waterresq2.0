@@ -39,7 +39,7 @@ class _adminissuesState extends State<adminissues> {
     final gsheets = GSheets(_credentials);
     final ss = await gsheets.spreadsheet(_spreadsheetId);
     var sheet = ss.worksheetByTitle('Sheet1');
-    if (sheet == null){
+    if (sheet == null) {
       sheet = await ss.addWorksheet('e');
     }
     final dbRef = FirebaseDatabase.instance.reference().child('feed');
@@ -117,7 +117,14 @@ class _adminissuesState extends State<adminissues> {
                     onPressed: () {
                       getdata();
                     },
-                    child: Text("get data"),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                        Color.fromARGB(255, 11, 51, 83),
+                      ),
+                    ),
+                    child: Text(
+                      "Get Data",
+                    ),
                   ),
                   flag == 0 ? Container() : Text(pathoffile),
                 ],
