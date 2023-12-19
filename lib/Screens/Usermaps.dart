@@ -1,10 +1,9 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:http/http.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:latlong2/latlong.dart' as lt;
+import 'package:url_launcher/url_launcher.dart';
+
 class usermaps extends StatefulWidget {
   const usermaps({super.key});
 
@@ -20,11 +19,25 @@ class _usermapsState extends State<usermaps> {
   }
 
   Future<void> _loadMarkersFromDatabase() async {
-    getmarkers(Icon(Icons.water,size: 60,color: Colors.blue,),"Water Stagnated & Flooded Areas");
-    getmarkers(Icon(Icons.business_sharp,size: 60),"Drainage Leakage Detected");
-    getmarkers(Icon(Icons.close_outlined,size: 60,color: Colors.red,),"Infrastructure Damages");
+    getmarkers(
+        const Icon(
+          Icons.water,
+          size: 60,
+          color: Colors.blue,
+        ),
+        "Water Stagnated & Flooded Areas");
+    getmarkers(const Icon(Icons.business_sharp, size: 60),
+        "Drainage Leakage Detected");
+    getmarkers(
+        const Icon(
+          Icons.close_outlined,
+          size: 60,
+          color: Colors.red,
+        ),
+        "Infrastructure Damages");
   }
-  Future<void> getmarkers(Icon icondata,String cat) async {
+
+  Future<void> getmarkers(Icon icondata, String cat) async {
     final databaseReference = FirebaseDatabase.instance.reference();
     final centersReference = databaseReference.child('feed');
     final DatabaseEvent event = await centersReference.once();
@@ -55,7 +68,7 @@ class _usermapsState extends State<usermaps> {
                       builder: (context) => AlertDialog(
                         title: Text(cat),
                         content: ConstrainedBox(
-                          constraints: BoxConstraints(maxHeight: 300),
+                          constraints: const BoxConstraints(maxHeight: 300),
                           child: Container(
                               child: Align(
                             alignment: Alignment.centerLeft,
@@ -101,13 +114,13 @@ class _usermapsState extends State<usermaps> {
                         ),
                         actions: [
                           TextButton(
-                            child: Text('Close'),
+                            child: const Text('Close'),
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
                           ),
                           TextButton(
-                            child: Text('Navigate'),
+                            child: const Text('Navigate'),
                             onPressed: () async {
                               final url =
                                   'https://www.google.com/maps/dir/?api=1&destination=$latitude,$longitude';
@@ -131,19 +144,21 @@ class _usermapsState extends State<usermaps> {
       });
     }
   }
+
   List<Marker> markers = [];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("maps"),
+          title: const Text("Crowd Sourced Maps"),
+          backgroundColor: const Color.fromARGB(255, 11, 51, 83),
         ),
-        body:Stack(
+        body: Stack(
           children: [
             FlutterMap(
               options: MapOptions(
-                center: lt.LatLng(13.078547, 80.292314),
+                center: const lt.LatLng(13.078547, 80.292314),
                 // center: lt.LatLng(13.078547, 80.292314),
                 zoom: 13.2,
                 maxZoom: 18,
@@ -174,11 +189,16 @@ class _usermapsState extends State<usermaps> {
                 color: const Color.fromARGB(255, 11, 51, 83),
                 height: 50,
                 width: MediaQuery.of(context).size.width,
-                child: Center(child: Text("This data is crowdsourced",style: TextStyle(color: Colors.white),)),
+                child: const Center(
+                    child: Text(
+                  "This data is crowdsourced",
+                  style: TextStyle(color: Colors.white),
+                )),
               ),
             ),
           ],
-        ),),);
-     
+        ),
+      ),
+    );
   }
 }
