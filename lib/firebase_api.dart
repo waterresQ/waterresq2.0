@@ -102,34 +102,3 @@ Future<void> handleBackgroungMessage(RemoteMessage message) async {
 
 
 
-
-// class FirebaseApi {
-//   final _firebaseMessaging = FirebaseMessaging.instance;
-//   final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-//   final _databaseReference = FirebaseDatabase.instance.reference();
-
-//   Future<void> initNotification() async {
-//     await _firebaseMessaging.requestPermission();
-//     FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-//       alert: true, // Required to display a heads up notification
-//       badge: true, // Required to update the app badge count
-//       sound: true, // Required to play a sound
-//     );
-//     final fCMToken = await _firebaseMessaging.getToken();
-
-//     // Update the token in the database
-//     _databaseReference.child('usertokens').push().set(fCMToken);
-
-//     print('Token $fCMToken');
-//     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-//       print("Foreground Message: $message");
-//       // Handle the message when the app is in the foreground
-//       // You can add your custom logic to display a notification or update the UI
-//     });
-//     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-//       print("Background Message: $message");
-//       // Handle the message when the app is opened from a terminated state
-//       // You can add your custom logic here
-//     });
-//   }
-// }

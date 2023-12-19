@@ -33,7 +33,8 @@ class _adminmapsState extends State<adminmaps> {
       var PickedFile = null;
       final data = event.snapshot.value as Map<dynamic, dynamic>;
       data.forEach((key, value) {
-        if (value['selectedValue'].toString() == widget.cat.toString() &&value['solved']=='false') {
+        if (value['selectedValue'].toString() == widget.cat.toString() &&
+            value['solved'] == 'false') {
           final latitude = double.parse(value['latitude'].toString());
           final longitude = double.parse(value['longitude'].toString());
           final status = value['Status'];
@@ -119,13 +120,14 @@ class _adminmapsState extends State<adminmaps> {
                                     builder: (context) => solvingpage(
                                       description: description.toString(),
                                       latitude: latitude.toString(),
-                                      longitude:longitude.toString(),
-                                      username: username.toString(), imageurl: imageurl.toString(),
+                                      longitude: longitude.toString(),
+                                      username: username.toString(),
+                                      imageurl: imageurl.toString(),
                                     ),
                                   ),
                                 );
                               },
-                              child: Text(
+                              child: const Text(
                                 "Solve the issue",
                                 style: TextStyle(color: Colors.green),
                               )),
@@ -226,20 +228,64 @@ class _adminmapsState extends State<adminmaps> {
                         snapshot.value as Map<dynamic, dynamic>?;
                     if (value != null &&
                         value['selectedValue'].toString() ==
-                            widget.cat.toString() && value['solved']=='false') {
+                            widget.cat.toString() &&
+                        value['solved'] == 'false') {
                       return SizeTransition(
                         sizeFactor: animation,
-                        child: adminpostcard(
-                            description: value['description'].toString(),
-                            address: value['address'].toString(),
-                            date: value['date'].toString(),
-                            latitude: value['latitude'].toString(),
-                            longitude: value['longitude'].toString(),
-                            prediction: value['prediction'].toString(),
-                            repostcount: value['repostcount'].toString(),
-                            time: value['time'].toString(),
-                            username: value['username'].toString(),
-                            imageurl: value['photoUrl'].toString()),
+                        child: GestureDetector(
+                          onTap: () {
+                            if (value['prediction'] == 'notverified') {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text('Confirm Action'),
+                                    content: const Text(
+                                        'Would you like to verify or delete this post?'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: const Text('Verify'),
+                                        onPressed: () async {
+                                          // Update the 'prediction' value in the database
+                                          if (snapshot.key != null) {
+                                            await dat
+                                                .child(snapshot.key!)
+                                                .update(
+                                                    {'prediction': 'verified'});
+                                          }
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                      TextButton(
+                                        child: const Text('Delete'),
+                                        onPressed: () async {
+                                          // Delete the post from the database
+                                          if (snapshot.key != null) {
+                                            await dat
+                                                .child(snapshot.key!)
+                                                .remove();
+                                          }
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
+                          },
+                          child: adminpostcard(
+                              description: value['description'].toString(),
+                              address: value['address'].toString(),
+                              date: value['date'].toString(),
+                              latitude: value['latitude'].toString(),
+                              longitude: value['longitude'].toString(),
+                              prediction: value['prediction'].toString(),
+                              repostcount: value['repostcount'].toString(),
+                              time: value['time'].toString(),
+                              username: value['username'].toString(),
+                              imageurl: value['photoUrl'].toString()),
+                        ),
                       );
                     } else {
                       return SizedBox

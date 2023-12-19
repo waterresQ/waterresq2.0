@@ -116,7 +116,7 @@ flutter:
     - lib\widgets\menuimages\map.png
     - lib\widgets\menuimages\precaution.png
     - lib\widgets\menuimages\weather.png
-    - assets/notify.mp3
+    - assets\notify.mp3
     - assets/earthpic.jpg
     - assets\drainage.png
     - assets\flood.png

@@ -114,7 +114,7 @@ class _addnewpostState extends State<addnewpost> {
                       ),
                     ),
                   )
-                : prediction != "verified"
+                : prediction != 'verified'
                     ? Text(
                         "$prediction",
                         style: const TextStyle(
