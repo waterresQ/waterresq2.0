@@ -154,7 +154,7 @@ class _newAlertState extends State<newAlert> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const adminhome(),
+                          builder: (context) => adminhome(adminusername: '',),
                         ),
                       );
                     }

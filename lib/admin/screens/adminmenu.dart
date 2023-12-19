@@ -1,3 +1,5 @@
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:sihwaterresq/admin/screens/admincenters.dart';
 import 'package:sihwaterresq/admin/screens/admincommunity.dart';
@@ -7,13 +9,16 @@ import 'package:sihwaterresq/admin/screens/adminsos.dart';
 import 'package:sihwaterresq/admin/screens/newalert.dart';
 
 class adminmenu extends StatefulWidget {
-  const adminmenu({super.key});
-
+  adminmenu({required this.adminname, super.key});
+  String adminname;
   @override
   State<adminmenu> createState() => _adminmenuState();
 }
 
 class _adminmenuState extends State<adminmenu> {
+  final DatabaseReference databaseReference =
+      FirebaseDatabase.instance.reference();
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -136,6 +141,36 @@ class _adminmenuState extends State<adminmenu> {
                       adminfloodmap(),
                       Icons.flood_outlined),
                 ],
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 10),
+                child: Container(
+                  height: 200,
+                  width: double.infinity,
+                  decoration: BoxDecoration(color: const Color.fromARGB(255, 255, 255, 255)),
+                  child: FirebaseAnimatedList(
+                    query: databaseReference.child('adminactivity'),
+                    itemBuilder: (BuildContext context, DataSnapshot snapshot,
+                        Animation<double> animation, int index) {
+                      var value = snapshot.value;
+                      if (value is Map) {
+                        Map<String, dynamic> adminActivity =
+                            value.cast<String, dynamic>();
+
+                        return ListTile(
+                          leading: (adminActivity['status'] == 'true')
+                              ? Icon(Icons.check_circle, color: Colors.green)
+                              : Icon(Icons.cancel, color: Colors.red),
+                          title: Text(adminActivity['username']),
+                          subtitle: Text('Status: ${adminActivity['status']}'),
+                        );
+                      } else {
+                        return SizedBox
+                            .shrink(); // return an empty widget if snapshot.value is null
+                      }
+                    },
+                  ),
+                ),
               ),
             ],
           ),

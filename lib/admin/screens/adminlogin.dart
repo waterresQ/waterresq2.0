@@ -273,7 +273,7 @@ class _adminloginState extends State<adminlogin> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => adminhome(),
+            builder: (context) => adminhome(adminusername: username,),
           ),
         );
         setState(() {

@@ -195,7 +195,7 @@ class _admincentersState extends State<admincenters> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => adminhome()),
+                                builder: (context) => adminhome(adminusername: '',)),
                           );
                         },
                       ),

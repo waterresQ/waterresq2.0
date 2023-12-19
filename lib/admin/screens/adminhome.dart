@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:sihwaterresq/admin/adminisssues.dart';
 import 'package:sihwaterresq/admin/screens/adminalertspage.dart';
@@ -5,13 +8,82 @@ import 'package:sihwaterresq/admin/screens/adminlogin.dart';
 import 'package:sihwaterresq/admin/screens/adminmenu.dart';
 
 class adminhome extends StatefulWidget {
-  const adminhome({super.key});
-
+  adminhome({required this.adminusername, super.key});
+  String adminusername;
   @override
   State<adminhome> createState() => _adminhomeState();
 }
 
 class _adminhomeState extends State<adminhome> {
+  void initState() {
+    super.initState();
+    _loadMarkersFromDatabase();
+  }
+
+  Future<void> _loadMarkersFromDatabase() async {
+    final databaseReference = FirebaseDatabase.instance.reference();
+
+// Get the username from the widget
+    final username = widget.adminusername;
+
+// Check if the username already exists
+    try {
+      DatabaseEvent event = await databaseReference
+          .child('adminactivity')
+          .orderByChild('username')
+          .equalTo(username)
+          .once();
+      DataSnapshot snapshot = event.snapshot;
+      var value = snapshot.value;
+      if (value is Map) {
+        Map<String, dynamic> data = new Map<String, dynamic>.from(value);
+        data.forEach((key, values) async {
+          await databaseReference.child('adminactivity/$key').update({
+            'timestamp': ServerValue.timestamp,
+            'username': username,
+            'status': 'true',
+          });
+        });
+      } else {
+        // The username does not exist, create it
+        await databaseReference.child('adminactivity').push().set({
+          'timestamp': ServerValue.timestamp,
+          'username': username,
+          'status': 'true',
+        });
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+    DatabaseReference databaseRef = FirebaseDatabase.instance.reference();
+
+    Timer.periodic(Duration(hours: 1), (Timer t) async {
+      databaseRef.child('adminactivity').onValue.listen((event) {
+        DataSnapshot snapshot = event.snapshot;
+
+        if (snapshot.value is Map) {
+          Map<String, dynamic> data = Map.from(snapshot.value as Map);
+          data.forEach((key, value) {
+            // Get timestamp from the database
+            final timestampFromDatabase = value['timestamp'];
+
+            // Calculate the timestamp difference in milliseconds
+            final timestampDifference =
+                DateTime.now().millisecondsSinceEpoch - timestampFromDatabase;
+
+            // If the difference is greater than 1 hour (in milliseconds)
+            if (timestampDifference > Duration(hours: 1).inMilliseconds) {
+              // Update the status to false
+              databaseRef
+                  .child('adminactivity/$key')
+                  .update({'status': 'false'});
+            }
+          });
+        }
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -74,7 +146,9 @@ class _adminhomeState extends State<adminhome> {
               // Replace these widgets with your actual tab content
               // Container(child: Center(child: Text('Home Tab'))),
               adminissues(),
-              adminmenu(),
+              adminmenu(
+                adminname: '',
+              ),
               adminalert(),
             ],
           ),

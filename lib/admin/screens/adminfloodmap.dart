@@ -152,7 +152,7 @@ class _adminfloodmapState extends State<adminfloodmap> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  adminhome()), // Navigate to the next screen
+                                                  adminhome(adminusername: '',)), // Navigate to the next screen
                                         );
                                       },
                                     ),
