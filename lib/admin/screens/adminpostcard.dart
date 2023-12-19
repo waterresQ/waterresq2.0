@@ -70,13 +70,13 @@ class _adminpostcardState extends State<adminpostcard> {
           Row(
             children: [
               const SizedBox(
-                width: 20,
+                width: 10,
               ),
               const Text("Date: ",
                   style: TextStyle(fontWeight: FontWeight.bold)),
               Text(widget.date),
               const SizedBox(
-                width: 110,
+                width: 50,
               ),
               const Text("Time: ",
                   style: TextStyle(fontWeight: FontWeight.bold)),
@@ -92,11 +92,11 @@ class _adminpostcardState extends State<adminpostcard> {
                 "Latitude & Longitude: ",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              const SizedBox(
-                height: 6,
-              ),
+              // const SizedBox(
+              //   height: 6,
+              // ),
               Text(widget.latitude),
-              const Text(" , "),
+              const Text(","),
               Text(widget.longitude),
             ],
           ),
@@ -109,7 +109,7 @@ class _adminpostcardState extends State<adminpostcard> {
                   style: TextStyle(fontWeight: FontWeight.bold)),
               Text(widget.username.toUpperCase()),
               const SizedBox(
-                width: 73,
+                width: 25,
               ),
               const Text('Repost Count: ',
                   style: TextStyle(fontWeight: FontWeight.bold)),
