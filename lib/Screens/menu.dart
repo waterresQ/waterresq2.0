@@ -1,4 +1,6 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:sihwaterresq/Screens/alerts.dart';
 import 'package:sihwaterresq/Screens/centers.dart';
 import 'package:sihwaterresq/Screens/floodmap.dart';
@@ -16,6 +18,48 @@ class menupage extends StatefulWidget {
 }
 
 class _menupageState extends State<menupage> {
+  double? _latitude;
+  double? _longitude;
+
+  void initState() {
+    super.initState();
+    _loadMarkersFromDatabase();
+  }
+
+  Future<void> _loadMarkersFromDatabase() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return;
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return;
+      }
+    }
+    try {
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+      setState(() {
+        _latitude = position.latitude;
+        _longitude = position.longitude;
+        print(_latitude);
+        print(_longitude);
+      });
+    } catch (e) {
+      print(e);
+    }
+    final databaseReference = FirebaseDatabase.instance.reference();
+    databaseReference.child('livelocations/${widget.username}').set({
+      'latitude': _latitude,
+      'longitude': _longitude,
+    });
+  }
+
   void sospressed() {
     showDialog(
       context: context,
@@ -77,6 +121,7 @@ class _menupageState extends State<menupage> {
       },
     );
   }
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -85,106 +130,122 @@ class _menupageState extends State<menupage> {
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 252, 252, 252),
         body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.only(
-                left: screenWidth * 0.05, right: screenWidth * 0.05),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    InkWell(
-                      onLongPress: sospressed,
-                      child: Container(
-                        height: screenWidth * 0.4,
-                        width: screenWidth * 0.4,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(40),
-                            gradient: const RadialGradient(colors: [
-                              Colors.red,
-                              Color.fromARGB(255, 205, 37, 25),
-                              Color.fromARGB(255, 156, 1, 1)
-                            ])),
-                        child: const Stack(children: [
-                          Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              "SOS",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 50),
+          child: _latitude == null
+              ? Padding(
+                  padding: EdgeInsets.only(top: 300),
+                  child: Center(child: CircularProgressIndicator()))
+              : Padding(
+                  padding: EdgeInsets.only(
+                      left: screenWidth * 0.05, right: screenWidth * 0.05),
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          InkWell(
+                            onLongPress: sospressed,
+                            child: Container(
+                              height: screenWidth * 0.4,
+                              width: screenWidth * 0.4,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(40),
+                                  gradient: const RadialGradient(colors: [
+                                    Colors.red,
+                                    Color.fromARGB(255, 205, 37, 25),
+                                    Color.fromARGB(255, 156, 1, 1)
+                                  ])),
+                              child: const Stack(children: [
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "SOS",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 50),
+                                  ),
+                                ),
+                              ]),
                             ),
                           ),
-                        ]),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          const Expanded(
+                            child: Text(
+                              "Use this SOS feature responsibly and only in life-threatening situations.Long press to activate",
+                              maxLines: 5,
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    const Expanded(
-                      child: Text(
-                        "Use this SOS feature responsibly and only in life-threatening situations.Long press to activate",
-                        maxLines: 5,
-                        style: TextStyle(fontSize: 20),
+                      const SizedBox(
+                        height: 15,
                       ),
-                    ),
-                  ],
+                      Row(
+                        children: [
+                          buildContainer(
+                              screenWidth * 0.55,
+                              screenHeight * 0.15,
+                              'Evacuation Center',
+                              const centers(),
+                              Icons.night_shelter_outlined),
+                          Spacer(),
+                          buildContainer(
+                              screenWidth * 0.30,
+                              screenHeight * 0.15,
+                              'Alerts',
+                              alerts(),
+                              Icons.warning_amber_outlined),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        children: [
+                          buildContainer(
+                              screenWidth * 0.30,
+                              screenHeight * 0.15,
+                              'Weather',
+                              WeatherApp(),
+                              Icons.cloud_outlined),
+                          Spacer(),
+                          buildContainer(
+                              screenWidth * 0.55,
+                              screenHeight * 0.15,
+                              'Flooded Areas',
+                              floodmap(),
+                              Icons.flood_outlined),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        children: [
+                          buildContainer(
+                              screenWidth * 0.55,
+                              screenHeight * 0.15,
+                              'Precautions',
+                              Precautions(),
+                              Icons.local_hospital_outlined),
+                          Spacer(),
+                          buildContainer(
+                              screenWidth * 0.30,
+                              screenHeight * 0.15,
+                              'Emergency Contact',
+                              emergency(),
+                              Icons.emergency_outlined),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Row(
-                  children: [
-                    buildContainer(
-                        screenWidth * 0.55,
-                        screenHeight * 0.15,
-                        'Evacuation Center',
-                        const centers(),
-                        Icons.night_shelter_outlined),
-                    Spacer(),
-                    buildContainer(screenWidth * 0.30, screenHeight * 0.15,
-                        'Alerts', alerts(), Icons.warning_amber_outlined),
-                  ],
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Row(
-                  children: [
-                    buildContainer(screenWidth * 0.30, screenHeight * 0.15,
-                        'Weather', WeatherApp(), Icons.cloud_outlined),
-                    Spacer(),
-                    buildContainer(screenWidth * 0.55, screenHeight * 0.15,
-                        'Flooded Areas', floodmap(), Icons.flood_outlined),
-                  ],
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Row(
-                  children: [
-                    buildContainer(
-                        screenWidth * 0.55,
-                        screenHeight * 0.15,
-                        'Precautions',
-                        Precautions(),
-                        Icons.local_hospital_outlined),
-                    Spacer(),
-                    buildContainer(
-                        screenWidth * 0.30,
-                        screenHeight * 0.15,
-                        'Emergency Contact',
-                        emergency(),
-                        Icons.emergency_outlined),
-                  ],
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-              ],
-            ),
-          ),
         ),
       ),
     );

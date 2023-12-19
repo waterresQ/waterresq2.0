@@ -67,7 +67,7 @@ class _addnewpostState extends State<addnewpost> {
     double screenWidth = MediaQuery.of(context).size.width;
     return SafeArea(
         child: Scaffold(
-      backgroundColor: Color.fromARGB(255, 232, 233, 235),
+      backgroundColor:const Color.fromARGB(255, 232, 233, 235),
       appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 11, 51, 83),
           title: const Text(
@@ -77,7 +77,7 @@ class _addnewpostState extends State<addnewpost> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            if (_isProcessing) CircularProgressIndicator(),
+            if (_isProcessing) const CircularProgressIndicator(),
             PickedFile == null
                 ? Container()
                 : Padding(
@@ -105,7 +105,7 @@ class _addnewpostState extends State<addnewpost> {
                         ),
                       ),
                       child: const Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(8.0),
                         child: Text(
                           "Your Location will be taken when you take a photo",
                           maxLines: 2,
@@ -114,23 +114,23 @@ class _addnewpostState extends State<addnewpost> {
                       ),
                     ),
                   )
-                : prediction == "verified"
+                : prediction != "verified"
                     ? Text(
-                        "   $prediction",
+                        "$prediction",
                         style: const TextStyle(
                             color: Colors.green,
                             fontSize: 17,
                             fontWeight: FontWeight.bold),
                       )
                     : Text(
-                        "   $prediction",
+                        "$prediction",
                         style: const TextStyle(
                             color: Colors.red,
                             fontSize: 17,
                             fontWeight: FontWeight.bold),
                       ),
             Padding(
-              padding: EdgeInsets.only(top: 10, left: 20),
+              padding: const EdgeInsets.only(top: 10, left: 20),
               child: Align(
                 alignment: Alignment.center,
                 child: Container(
@@ -165,14 +165,14 @@ class _addnewpostState extends State<addnewpost> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             _latitude == null
                 ? Container()
                 : Column(
                     children: [
-                      Text(
+                      const Text(
                         "Your Approximate location is",
                         style: TextStyle(
                             fontSize: 20,
@@ -183,10 +183,10 @@ class _addnewpostState extends State<addnewpost> {
                       Text("${_latitude},${_longitude}"),
                     ],
                   ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            Text(
+            const Text(
               "Specify your category",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
@@ -210,7 +210,7 @@ class _addnewpostState extends State<addnewpost> {
                 }).toList(),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Padding(
               padding: EdgeInsets.only(left: 20, right: 20),
               child: TextFormField(
@@ -243,8 +243,8 @@ class _addnewpostState extends State<addnewpost> {
                 ),
               ),
             ),
-            if (_isProcessing2)
-              CircularProgressIndicator(
+            if(_isProcessing2)
+              const CircularProgressIndicator(
                 color: Colors.red,
               ),
             _latitude == null
@@ -299,20 +299,22 @@ class _addnewpostState extends State<addnewpost> {
     final ref = FirebaseStorage.instance.ref().child(filePath);
 
     File imageFile = File(PickedFile.path);
-    List<int> imageBytes = await imageFile.readAsBytes();
+    IMG.Image? img = IMG.decodeImage(await imageFile.readAsBytes());
 
-    Uint8List uint8list = Uint8List.fromList(imageBytes);
-
-    IMG.Image? img = IMG.decodeImage(uint8list);
-
+// Resize the image to a smaller width and height
     IMG.Image resized = IMG.copyResize(img!, width: 200, height: 200);
+    List<int> compressedBytes = IMG.encodeJpg(resized,
+        quality:
+            75); // You can adjust the quality parameter (0-100) to your desired level
 
+// Save the compressed image
     Directory tempDir = await getTemporaryDirectory();
     String tempPath = tempDir.path;
-    File resizedFile = File('$tempPath/resized.jpg')
-      ..writeAsBytesSync(IMG.encodeJpg(resized));
+    File compressedFile = File('$tempPath/compressed.jpg')
+      ..writeAsBytesSync(compressedBytes);
 
-    final uploadTask = ref.putFile(resizedFile);
+// Upload the compressed image to Firebase Storage
+    final uploadTask = ref.putFile(compressedFile);
     final snapshot = await uploadTask.whenComplete(() => null);
     final photoUrl = await snapshot.ref.getDownloadURL();
     final dbRef = FirebaseDatabase.instance.reference().child('feed').push();

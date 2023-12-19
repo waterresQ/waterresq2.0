@@ -25,6 +25,33 @@ class _floodmapState extends State<floodmap> {
   }
 
   Future<void> _loadMarkersFromDatabase() async {
+    final databaseReference = FirebaseDatabase.instance.reference();
+    final liveLocationsReference = databaseReference.child('livelocations');
+
+    final DatabaseEvent event = await liveLocationsReference.once();
+
+    if (event.snapshot.value != null) {
+      final data = event.snapshot.value as Map<dynamic, dynamic>;
+      data.forEach((key, value) {
+        final latitude = double.parse(value['latitude'].toString());
+        final longitude = double.parse(value['longitude'].toString());
+
+        setState(() {
+          markers.add(
+            Marker(
+              point: lt.LatLng(latitude, longitude),
+              width: 80,
+              height: 80,
+              builder: (ctx) => Icon(
+                Icons.circle,
+                size: 50,
+              ),
+            ),
+          );
+        });
+      });
+    }
+
     // Fetch the data from Firebase in initState
     databaseRef.child('flooded areas').once().then((DatabaseEvent event) {
       DataSnapshot snapshot = event.snapshot;
