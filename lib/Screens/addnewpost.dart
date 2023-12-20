@@ -333,6 +333,7 @@ class _addnewpostState extends State<addnewpost> {
       'solved': 'false',
       'repostcount': '0',
       'adminphoto': '',
+      'adminusername':'0',
     });
     Navigator.push(
       context,

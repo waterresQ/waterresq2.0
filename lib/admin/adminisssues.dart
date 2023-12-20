@@ -6,10 +6,11 @@ import 'package:gsheets/gsheets.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:sihwaterresq/admin/screens/adminmap.dart';
+import 'package:sihwaterresq/admin/screens/adminmyjobs.dart';
 
 class adminissues extends StatefulWidget {
-  const adminissues({super.key});
-
+  adminissues({required this.adminusername, super.key});
+  String adminusername;
   @override
   State<adminissues> createState() => _adminissuesState();
 }
@@ -113,6 +114,34 @@ class _adminissuesState extends State<adminissues> {
                     description:
                         'Identified infrastructure damages in these areas!',
                   ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 40),
+                    child: Center(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => adminmyjobs(
+                                    adminusername: widget.adminusername)),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.blue, // This is the button color
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(Icons.work), // This is where the logo goes
+                            SizedBox(
+                                width:
+                                    10), // Give some spacing between the logo and the text
+                            Text('My Jobs'),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                   ElevatedButton(
                     onPressed: () {
                       getdata();
@@ -155,6 +184,7 @@ class _adminissuesState extends State<adminissues> {
             MaterialPageRoute(
                 builder: (context) => adminmaps(
                       cat: title,
+                      adminusername: widget.adminusername,
                     )),
           );
         },

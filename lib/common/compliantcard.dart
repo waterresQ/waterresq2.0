@@ -25,9 +25,10 @@ class _complaintcardState extends State<complaintcard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
       child: Flexible(
         child: Container(
+          padding: EdgeInsets.only(top: 10,bottom: 10),
             decoration: BoxDecoration(
               color: const Color.fromARGB(255, 221, 235, 249),
               borderRadius: BorderRadius.circular(10), // border radius
@@ -66,19 +67,40 @@ class _complaintcardState extends State<complaintcard> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        widget.status == 'false'
-                            ? const Text(
+                        if(widget.status=='false')
+                        const Text(
                                 'NOT SOLVED',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.red),
                               )
-                            : const Text(
+                        else if(widget.status=='processing')
+                        const Text(
+                                'PROCESSING',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromARGB(255, 0, 76, 252)),
+                              )
+                        else
+                        const Text(
                                 "SOLVED",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.green),
                               ),
+                        // widget.status == 'false'
+                        //     ? const Text(
+                        //         'NOT SOLVED',
+                        //         style: TextStyle(
+                        //             fontWeight: FontWeight.bold,
+                        //             color: Colors.red),
+                        //       )
+                        //     : const Text(
+                        //         "SOLVED",
+                        //         style: TextStyle(
+                        //             fontWeight: FontWeight.bold,
+                        //             color: Colors.green),
+                        //       ),
                         Row(
                           children: [
                             Text('${widget.date}'),

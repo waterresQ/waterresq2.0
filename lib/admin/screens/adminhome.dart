@@ -145,9 +145,11 @@ class _adminhomeState extends State<adminhome> {
             children: [
               // Replace these widgets with your actual tab content
               // Container(child: Center(child: Text('Home Tab'))),
-              adminissues(),
+              adminissues(
+                adminusername: widget.adminusername,
+              ),
               adminmenu(
-                adminname: '',
+                adminname: widget.adminusername,
               ),
               adminalert(),
             ],

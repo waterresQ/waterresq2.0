@@ -39,6 +39,36 @@ class _adminfloodmapState extends State<adminfloodmap> {
         });
       });
     });
+    _loadMarkersFromDatabase();
+  }
+
+  Future<void> _loadMarkersFromDatabase() async {
+    final databaseReference = FirebaseDatabase.instance.reference();
+    final liveLocationsReference = databaseReference.child('livelocations');
+
+    final DatabaseEvent event = await liveLocationsReference.once();
+
+    if (event.snapshot.value != null) {
+      final data = event.snapshot.value as Map<dynamic, dynamic>;
+      data.forEach((key, value) {
+        final latitude = double.parse(value['latitude'].toString());
+        final longitude = double.parse(value['longitude'].toString());
+
+        setState(() {
+          markers.add(
+            Marker(
+              point: lt.LatLng(latitude, longitude),
+              width: 80,
+              height: 80,
+              builder: (ctx) => Icon(
+                Icons.circle,
+                size: 50,
+              ),
+            ),
+          );
+        });
+      });
+    }
   }
 
   @override
@@ -151,8 +181,9 @@ class _adminfloodmapState extends State<adminfloodmap> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) =>
-                                                  adminhome(adminusername: '',)), // Navigate to the next screen
+                                              builder: (context) => adminhome(
+                                                    adminusername: '',
+                                                  )), // Navigate to the next screen
                                         );
                                       },
                                     ),

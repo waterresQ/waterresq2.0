@@ -11,8 +11,9 @@ import 'package:sihwaterresq/admin/screens/solvingpage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class adminmaps extends StatefulWidget {
-  adminmaps({required this.cat, super.key});
+  adminmaps({required this.adminusername, required this.cat, super.key});
   String cat;
+  String adminusername;
   @override
   State<adminmaps> createState() => _adminmapsState();
 }
@@ -33,8 +34,9 @@ class _adminmapsState extends State<adminmaps> {
       var PickedFile = null;
       final data = event.snapshot.value as Map<dynamic, dynamic>;
       data.forEach((key, value) {
+        String complaintKey = key;
         if (value['selectedValue'].toString() == widget.cat.toString() &&
-            value['solved'] == 'false') {
+            value['solved'] == 'false' && value['adminusername']=='0') {
           final latitude = double.parse(value['latitude'].toString());
           final longitude = double.parse(value['longitude'].toString());
           final status = value['Status'];
@@ -60,51 +62,53 @@ class _adminmapsState extends State<adminmaps> {
                         content: ConstrainedBox(
                           constraints: BoxConstraints(maxHeight: 400),
                           child: Container(
-                              child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text("Username: ${username}")),
-                                Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text("Date: ${date}")),
-                                Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text("Time: ${time}")),
-                                Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                        "Location: ${latitude},${longitude}")),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 6, horizontal: 6),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20)),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(
-                                        10), // border radius
-                                    child: Container(
-                                      height: 150,
-                                      width: double
-                                          .infinity, // Set the height to the value you want
-                                      child: FadeInImage.assetNetwork(
-                                        placeholder: 'assets/Rhombus.gif',
-                                        image: imageurl,
-                                        fit: BoxFit.cover,
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text("Username: ${username}")),
+                                  Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text("Date: ${date}")),
+                                  Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text("Time: ${time}")),
+                                  Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                          "Location: ${latitude},${longitude}")),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 6, horizontal: 6),
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(
+                                          10), // border radius
+                                      child: Container(
+                                        height: 150,
+                                        width: double
+                                            .infinity, // Set the height to the value you want
+                                        child: FadeInImage.assetNetwork(
+                                          placeholder: 'assets/Rhombus.gif',
+                                          image: imageurl,
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          )),
+                          ),
                         ),
                         actions: [
                           TextButton(
-                            child: Text(
+                            child: const Text(
                               'Close',
                               style: TextStyle(color: Colors.black),
                             ),
@@ -112,25 +116,43 @@ class _adminmapsState extends State<adminmaps> {
                               Navigator.of(context).pop();
                             },
                           ),
+                          // TextButton(
+                          //   onPressed: () {
+                          //     Navigator.push(
+                          //       context,
+                          //       MaterialPageRoute(
+                          //         builder: (context) => solvingpage(
+                          //           description: description.toString(),
+                          //           latitude: latitude.toString(),
+                          //           longitude: longitude.toString(),
+                          //           username: username.toString(),
+                          //           imageurl: imageurl.toString(),
+                          //         ),
+                          //       ),
+                          //     );
+                          //   },
+                          //   child: const Text(
+                          //     "Solve the issue",
+                          //     style: TextStyle(color: Colors.green),
+                          //   ),
+                          // ),
                           TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => solvingpage(
-                                      description: description.toString(),
-                                      latitude: latitude.toString(),
-                                      longitude: longitude.toString(),
-                                      username: username.toString(),
-                                      imageurl: imageurl.toString(),
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: const Text(
-                                "Solve the issue",
-                                style: TextStyle(color: Colors.green),
-                              )),
+                            child: const Text(
+                              'Accept Complaint',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            onPressed: () async {
+                              Map<String, dynamic> updateData = {
+                                'adminusername': widget
+                                    .adminusername, 
+                                'solved':'processing',// Replace 'exampleField' and 'newValue' with your actual field and value
+                              };
+                              await centersReference
+                                  .child(complaintKey)
+                                  .update(updateData);
+                              Navigator.of(context).pop();
+                            },
+                          ),
                           TextButton(
                             child: Text('Navigate'),
                             onPressed: () async {
@@ -229,7 +251,7 @@ class _adminmapsState extends State<adminmaps> {
                     if (value != null &&
                         value['selectedValue'].toString() ==
                             widget.cat.toString() &&
-                        value['solved'] == 'false') {
+                        value['solved'] == 'false' && value['adminusername'].toString()=='0') {
                       return SizeTransition(
                         sizeFactor: animation,
                         child: GestureDetector(
