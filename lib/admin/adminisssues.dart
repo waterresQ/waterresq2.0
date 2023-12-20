@@ -111,8 +111,7 @@ class _adminissuesState extends State<adminissues> {
                   buildCard(
                     imagePath: 'assets/infra.png',
                     title: 'Infrastructure Damages',
-                    description:
-                        'Identified infrastructure damages in these areas!',
+                    description: 'Designated zones show identified damages!',
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 40),
