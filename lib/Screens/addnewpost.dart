@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:image/image.dart' as IMG;
 import 'package:path_provider/path_provider.dart';
@@ -366,7 +365,6 @@ class _addnewpostState extends State<addnewpost> {
           print(url);
           var request = http.MultipartRequest('POST', url);
 
-          // this is to add image file to the request
           request.files
               .add(await http.MultipartFile.fromPath('image', pickedFile.path));
 
@@ -374,13 +372,13 @@ class _addnewpostState extends State<addnewpost> {
 
           var results = await http.Response.fromStream(response);
 
-          // use the results
+        
           print('Results: ${results.body}');
 
-          // to parse the JSON response that comes from the api.py (flask server)
+       
           var data = jsonDecode(results.body);
 
-          // updates the state of the app
+          
           setState(() {
             prediction = data['result'];
           });
