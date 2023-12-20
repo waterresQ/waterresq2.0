@@ -21,10 +21,7 @@ class menupage extends StatefulWidget {
 }
 
 class _menupageState extends State<menupage> {
-
-  
-
-  String abcd='';
+  String abcd = '';
 
   double? _latitude;
   double? _longitude;
@@ -66,22 +63,6 @@ class _menupageState extends State<menupage> {
       'latitude': _latitude,
       'longitude': _longitude,
     });
-    final response = await http.post(
-      Uri.parse('https://10d1-202-53-81-82.ngrok-free.app/predict'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-    );
-
-    if (response.statusCode == 200) {
-      Map<String, dynamic> result = jsonDecode(response.body);
-      print('Prediction: ${result['prediction']}');
-      setState(() {
-        abcd=result['prediction'];
-      });
-    } else {
-      throw Exception('Failed to load prediction');
-    }
   }
 
   void sospressed() {
@@ -267,7 +248,35 @@ class _menupageState extends State<menupage> {
                       const SizedBox(
                         height: 15,
                       ),
-                      Center(child: Text('Chances of Flood : ${abcd}',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)),
+                      ElevatedButton(
+                          onPressed: () async {
+                            final response = await http.post(
+                              Uri.parse(
+                                  'https://10d1-202-53-81-82.ngrok-free.app/predict'),
+                              headers: <String, String>{
+                                'Content-Type':
+                                    'application/json; charset=UTF-8',
+                              },
+                            );
+
+                            if (response.statusCode == 200) {
+                              Map<String, dynamic> result =
+                                  jsonDecode(response.body);
+                              print('Prediction: ${result['prediction']}');
+                              setState(() {
+                                abcd = result['prediction'];
+                              });
+                            } else {
+                              throw Exception('Failed to load prediction');
+                            }
+                          },
+                          child: Text("Flood Forecast")),
+                      Center(
+                          child: Text(
+                        'Chances of Flood : ${abcd}',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
+                      )),
                     ],
                   ),
                 ),
