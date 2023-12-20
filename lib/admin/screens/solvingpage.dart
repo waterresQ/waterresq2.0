@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 class solvingpage extends StatefulWidget {
   solvingpage(
       {super.key,
+      required this.adminusername,
       required this.description,
       required this.latitude,
       required this.longitude,
@@ -20,6 +21,7 @@ class solvingpage extends StatefulWidget {
   String username;
   String latitude;
   String longitude;
+  String adminusername;
   String imageurl;
   @override
   State<solvingpage> createState() => _solvingpageState();
@@ -127,40 +129,31 @@ class _solvingpageState extends State<solvingpage> {
 
     File imageFile = File(PickedFile.path);
     IMG.Image? img = IMG.decodeImage(await imageFile.readAsBytes());
-
-// Resize the image to a smaller width and height
     IMG.Image resized = IMG.copyResize(img!, width: 200, height: 200);
 
-// Compress the image
-    List<int> compressedBytes = IMG.encodeJpg(resized,
-        quality:
-            75); // You can adjust the quality parameter (0-100) to your desired level
+    List<int> compressedBytes = IMG.encodeJpg(resized, quality: 75);
 
-// Save the compressed image
     Directory tempDir = await getTemporaryDirectory();
     String tempPath = tempDir.path;
     File compressedFile = File('$tempPath/compressed.jpg')
       ..writeAsBytesSync(compressedBytes);
 
-// Upload the compressed image to Firebase Storage
     final uploadTask = ref.putFile(compressedFile);
     final snapshot = await uploadTask.whenComplete(() => null);
     final photoUrl = await snapshot.ref.getDownloadURL();
 
-    // Get a reference to the database
     final dbRef = FirebaseDatabase.instance.reference().child('feed');
 
-// Query the database for the specific data
     dbRef.once().then((DatabaseEvent event) {
       DataSnapshot snapshot = event.snapshot;
       Map<dynamic, dynamic> values = snapshot.value as Map<dynamic, dynamic>;
       values.forEach((key, values) {
-        print("hellllllllllo"+values['description']);
+        print("hellllllllllo" + values['description']);
         if (values['description'].toString() == widget.description &&
             values['username'].toString() == widget.username &&
             values['latitude'].toString() == widget.latitude &&
             values['longitude'].toString() == widget.longitude) {
-              print("hellllllllllollo"+values['description']);
+          print("hellllllllllollo" + values['description']);
           dbRef.child(key).update({
             'description': widget.description,
             'username': widget.username,
@@ -176,6 +169,36 @@ class _solvingpageState extends State<solvingpage> {
     }).catchError((error) {
       print('Failed to read data: $error');
     });
+    final databaseReference = FirebaseDatabase.instance.reference();
+    final username = widget.adminusername;
+    try {
+      DatabaseEvent event = await databaseReference
+          .child('adminpoints')
+          .orderByChild('username')
+          .equalTo(username)
+          .once();
+      DataSnapshot snapshot = event.snapshot;
+      var value = snapshot.value;
+      if (value is Map) {
+        Map<String, dynamic> data = new Map<String, dynamic>.from(value);
+        data.forEach((key, values) async {
+          int currentPoints = int.parse(values['points']);
+          int newPoints = currentPoints + 5;
+          await databaseReference.child('adminpoints/$key').update({
+            'username': username,
+            'points': newPoints.toString(),
+          });
+        });
+      } else {
+        await databaseReference.child('adminpoints').push().set({
+          'username': username,
+          'points': '5',
+        });
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+
     setState(() {
       _isProcessing = false;
     });

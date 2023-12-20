@@ -31,8 +31,7 @@ class _adminmyjobsState extends State<adminmyjobs> {
             int? aValue = aValueMap != null ? aValueMap['timestamp'] : null;
             int? bValue = bValueMap != null ? bValueMap['timestamp'] : null;
             if (aValue != null && bValue != null) {
-              return aValue.compareTo(
-                  bValue);
+              return aValue.compareTo(bValue);
             } else {
               return 0;
             }
@@ -124,6 +123,7 @@ class _adminmyjobsState extends State<adminmyjobs> {
                                     longitude: value['longitude'].toString(),
                                     username: value['username'].toString(),
                                     imageurl: value['photoUrl'].toString(),
+                                    adminusername: widget.adminusername,
                                   ),
                                 ),
                               );

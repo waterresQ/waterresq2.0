@@ -79,7 +79,7 @@ class _admincentersState extends State<admincenters> {
       });
     }
   }
-  
+
   bool _isProcessing = false;
   TextEditingController descriptionController = TextEditingController();
   final databaseReference = FirebaseDatabase.instance.reference();
@@ -102,7 +102,7 @@ class _admincentersState extends State<admincenters> {
                 markers.add(
                   Marker(
                     point: point,
-                    builder: (context) => Icon(
+                    builder: (context) =>const Icon(
                       Icons.location_on,
                       size: 50,
                     ),

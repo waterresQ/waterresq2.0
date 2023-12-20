@@ -15,18 +15,43 @@ class adminhome extends StatefulWidget {
 }
 
 class _adminhomeState extends State<adminhome> {
+  String points='0';
   void initState() {
     super.initState();
     _loadMarkersFromDatabase();
   }
 
   Future<void> _loadMarkersFromDatabase() async {
+    final dat = FirebaseDatabase.instance.reference();
+    final adminusername =
+        widget.adminusername; // use the username you want to display points for
+    try {
+      DatabaseEvent event = await dat
+          .child('adminpoints')
+          .orderByChild('username')
+          .equalTo(adminusername)
+          .once();
+      DataSnapshot snapshot = event.snapshot;
+      var value = snapshot.value;
+      if (value is Map) {
+        Map<String, dynamic> data = new Map<String, dynamic>.from(value);
+        data.forEach((key, values) {
+          // assuming 'points' is a string
+          setState(() {
+            points = values['points'];
+          });
+
+          print('Points for $adminusername: $points');
+        });
+      } else {
+        print('No points found for $adminusername');
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+
     final databaseReference = FirebaseDatabase.instance.reference();
-
-// Get the username from the widget
     final username = widget.adminusername;
-
-// Check if the username already exists
     try {
       DatabaseEvent event = await databaseReference
           .child('adminactivity')
@@ -45,7 +70,6 @@ class _adminhomeState extends State<adminhome> {
           });
         });
       } else {
-        // The username does not exist, create it
         await databaseReference.child('adminactivity').push().set({
           'timestamp': ServerValue.timestamp,
           'username': username,
@@ -56,7 +80,6 @@ class _adminhomeState extends State<adminhome> {
       print(e.toString());
     }
     DatabaseReference databaseRef = FirebaseDatabase.instance.reference();
-
     Timer.periodic(Duration(hours: 1), (Timer t) async {
       databaseRef.child('adminactivity').onValue.listen((event) {
         DataSnapshot snapshot = event.snapshot;
@@ -64,16 +87,12 @@ class _adminhomeState extends State<adminhome> {
         if (snapshot.value is Map) {
           Map<String, dynamic> data = Map.from(snapshot.value as Map);
           data.forEach((key, value) {
-            
             final timestampFromDatabase = value['timestamp'];
 
-           
             final timestampDifference =
                 DateTime.now().millisecondsSinceEpoch - timestampFromDatabase;
 
-     
             if (timestampDifference > Duration(hours: 1).inMilliseconds) {
-        
               databaseRef
                   .child('adminactivity/$key')
                   .update({'status': 'false'});
@@ -97,11 +116,8 @@ class _adminhomeState extends State<adminhome> {
                 Text("WaterResQ ADMIN"),
                 Spacer(),
                 Icon(Icons.monetization_on), // This is the coin logo
-                SizedBox(
-                    width:
-                        10),
-                Text(
-                    "points"),
+                SizedBox(width: 10),
+                Text(points),
               ],
             ),
             backgroundColor: const Color.fromARGB(255, 11, 51, 83),
