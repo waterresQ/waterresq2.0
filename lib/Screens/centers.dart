@@ -68,7 +68,7 @@ class _centersState extends State<centers> {
                     ),
                   );
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.location_on,
                   size: 50,
                 ),
@@ -81,7 +81,7 @@ class _centersState extends State<centers> {
 
     bool serviceEnabled;
     LocationPermission permission;
- 
+
     // Check if location services are enabled
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
@@ -108,7 +108,6 @@ class _centersState extends State<centers> {
       setState(() {
         _latitude = position.latitude;
         _longitude = position.longitude;
-        // Add current location marker
         markers.add(
           Marker(
             point: lt.LatLng(_latitude!, _longitude!),
@@ -116,7 +115,7 @@ class _centersState extends State<centers> {
             height: 80,
             builder: (ctx) => GestureDetector(
               onTap: () {},
-              child: Icon(
+              child:const Icon(
                 Icons.my_location,
                 size: 40,
                 color: Color.fromARGB(255, 251, 0, 0),

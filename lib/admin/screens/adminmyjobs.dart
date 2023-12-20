@@ -42,7 +42,7 @@ class _adminmyjobsState extends State<adminmyjobs> {
                 snapshot.value as Map<dynamic, dynamic>?;
             if (value != null &&
                 value['adminusername'].toString() ==
-                    widget.adminusername.toString()) {
+                    widget.adminusername.toString()&& value['solved']!='true') {
               return SizeTransition(
                 sizeFactor: animation,
                 child: GestureDetector(
