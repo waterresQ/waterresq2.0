@@ -267,7 +267,7 @@ class _menupageState extends State<menupage> {
                       const SizedBox(
                         height: 15,
                       ),
-                      Text('Flood prediction : ${abcd}'),
+                      Text('Chances of Flood : ${abcd}'),
                     ],
                   ),
                 ),
