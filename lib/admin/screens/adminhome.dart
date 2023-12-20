@@ -64,16 +64,16 @@ class _adminhomeState extends State<adminhome> {
         if (snapshot.value is Map) {
           Map<String, dynamic> data = Map.from(snapshot.value as Map);
           data.forEach((key, value) {
-            // Get timestamp from the database
+            
             final timestampFromDatabase = value['timestamp'];
 
-            // Calculate the timestamp difference in milliseconds
+           
             final timestampDifference =
                 DateTime.now().millisecondsSinceEpoch - timestampFromDatabase;
 
-            // If the difference is greater than 1 hour (in milliseconds)
+     
             if (timestampDifference > Duration(hours: 1).inMilliseconds) {
-              // Update the status to false
+        
               databaseRef
                   .child('adminactivity/$key')
                   .update({'status': 'false'});
@@ -91,7 +91,19 @@ class _adminhomeState extends State<adminhome> {
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(
-            title: Text("WaterResQ ADMIN"),
+            automaticallyImplyLeading: false,
+            title: Row(
+              children: <Widget>[
+                Text("WaterResQ ADMIN"),
+                Spacer(),
+                Icon(Icons.monetization_on), // This is the coin logo
+                SizedBox(
+                    width:
+                        10),
+                Text(
+                    "points"),
+              ],
+            ),
             backgroundColor: const Color.fromARGB(255, 11, 51, 83),
             actions: [
               IconButton(

@@ -79,7 +79,7 @@ class _admincentersState extends State<admincenters> {
       });
     }
   }
-
+  
   bool _isProcessing = false;
   TextEditingController descriptionController = TextEditingController();
   final databaseReference = FirebaseDatabase.instance.reference();
@@ -94,7 +94,7 @@ class _admincentersState extends State<admincenters> {
         ),
         body: FlutterMap(
           options: MapOptions(
-            center: lt.LatLng(13.078547, 80.292314),
+            center: lt.LatLng(16.515099, 80.632095),
             zoom: 13.2,
             maxZoom: 18,
             onTap: (tapPosition, point) {
@@ -141,54 +141,53 @@ class _admincentersState extends State<admincenters> {
                           });
 
                           /// SEND NOTIFICATION
-                          final serverKey =
-                              'AAAAZViK83M:APA91bEfsM2-_JxLO8R4zo9r670fy92mP5YZ7lyIeDq6yyyrdeWnCC4PM3o2uN6e6-KaDxs1wcYZBAk13bQ2NUfZo7i4jGxuUx9vjCmtaP2yOMbN144OtL0YiSWVuLTYKZp4dPY13B4Z';
-                          final url =
-                              Uri.parse('https://fcm.googleapis.com/fcm/send');
-                          final headers = <String, String>{
-                            'Content-Type': 'application/json',
-                            'Authorization': 'key=$serverKey',
-                          };
-                          final databaseRef =
-                              FirebaseDatabase.instance.reference();
-                          final event = await databaseReference
-                              .child('usertokens')
-                              .once();
-                          final snapshot = event.snapshot;
+                          // final serverKey =
+                          //     'AAAAZViK83M:APA91bEfsM2-_JxLO8R4zo9r670fy92mP5YZ7lyIeDq6yyyrdeWnCC4PM3o2uN6e6-KaDxs1wcYZBAk13bQ2NUfZo7i4jGxuUx9vjCmtaP2yOMbN144OtL0YiSWVuLTYKZp4dPY13B4Z';
+                          // final url =
+                          //     Uri.parse('https://fcm.googleapis.com/fcm/send');
+                          // final headers = <String, String>{
+                          //   'Content-Type': 'application/json',
+                          //   'Authorization': 'key=$serverKey',
+                          // };
+                          // final databaseRef =
+                          //     FirebaseDatabase.instance.reference();
+                          // final event = await databaseReference
+                          //     .child('usertokens')
+                          //     .once();
+                          // final snapshot = event.snapshot;
 
-                          if (snapshot.value != null) {
-                            final tokens = Map<String, dynamic>.from(
-                                snapshot.value as Map<dynamic, dynamic>);
-                            // Send a notification to each token
-                            for (final token in tokens.values) {
-                              print(token);
-                              final body = jsonEncode(<String, dynamic>{
-                                'notification': <String, dynamic>{
-                                  'body': descriptionController.text,
-                                  'title': 'NEW EVACUATION CENTER added',
-                                },
-                                'priority': 'high',
-                                'data': <String, dynamic>{
-                                  'click_action': 'FLUTTER_NOTIFICATION_CLICK',
-                                  'id': '1',
-                                  'status': 'done'
-                                },
-                                'to': token,
-                              });
+                          // if (snapshot.value != null) {
+                          //   final tokens = Map<String, dynamic>.from(
+                          //       snapshot.value as Map<dynamic, dynamic>);
+                          //   // Send a notification to each token
+                          //   for (final token in tokens.values) {
+                          //     print(token);
+                          //     final body = jsonEncode(<String, dynamic>{
+                          //       'notification': <String, dynamic>{
+                          //         'body': descriptionController.text,
+                          //         'title': 'NEW EVACUATION CENTER added',
+                          //       },
+                          //       'priority': 'high',
+                          //       'data': <String, dynamic>{
+                          //         'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+                          //         'id': '1',
+                          //         'status': 'done'
+                          //       },
+                          //       'to': token,
+                          //     });
 
-                              final response = await http.post(url,
-                                  headers: headers, body: body);
+                          //     final response = await http.post(url,
+                          //         headers: headers, body: body);
 
-                              if (response.statusCode == 200) {
-                                print(
-                                    'Notification sent successfully to $token');
-                              } else {
-                                print('Notification not sent to $token');
-                              }
-                            }
-                          }
+                          //     if (response.statusCode == 200) {
+                          //       print(
+                          //           'Notification sent successfully to $token');
+                          //     } else {
+                          //       print('Notification not sent to $token');
+                          //     }
+                          //   }
+                          // }
 
-                          ///SEND NOTIFICATION END
                           setState(() {
                             _isProcessing = false;
                           });

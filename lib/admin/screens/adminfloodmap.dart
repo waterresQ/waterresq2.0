@@ -7,7 +7,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 class adminfloodmap extends StatefulWidget {
   const adminfloodmap({super.key});
-
   @override
   State<adminfloodmap> createState() => _adminfloodmapState();
 }
@@ -62,7 +61,7 @@ class _adminfloodmapState extends State<adminfloodmap> {
               height: 80,
               builder: (ctx) => Icon(
                 Icons.circle,
-                size: 50,
+                size: 30,
               ),
             ),
           );
@@ -83,7 +82,7 @@ class _adminfloodmapState extends State<adminfloodmap> {
           children: [
             FlutterMap(
               options: MapOptions(
-                center: lt.LatLng(13.078547, 80.292314),
+                center: lt.LatLng(16.515099, 80.632095),
                 // center: lt.LatLng(13.078547, 80.292314),
                 zoom: 13.2,
                 maxZoom: 18,

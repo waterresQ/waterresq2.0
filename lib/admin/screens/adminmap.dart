@@ -195,7 +195,7 @@ class _adminmapsState extends State<adminmaps> {
           children: [
             FlutterMap(
               options: MapOptions(
-                center: lt.LatLng(13.078547, 80.292314),
+                center: lt.LatLng(16.515099, 80.632095),
                 // center: lt.LatLng(13.078547, 80.292314),
                 zoom: 13.2,
                 maxZoom: 18,
