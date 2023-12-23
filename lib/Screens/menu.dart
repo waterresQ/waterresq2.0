@@ -252,7 +252,7 @@ class _menupageState extends State<menupage> {
                           onPressed: () async {
                             final response = await http.post(
                               Uri.parse(
-                                  'https://10d1-202-53-81-82.ngrok-free.app/predict'),
+                                  'https://1925-182-74-154-218.ngrok-free.app/predict'),
                               headers: <String, String>{
                                 'Content-Type':
                                     'application/json; charset=UTF-8',
