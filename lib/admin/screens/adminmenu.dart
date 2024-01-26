@@ -27,7 +27,7 @@ class _adminmenuState extends State<adminmenu> {
       child: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.only(
-              left: screenWidth * 0.05, right: screenWidth * 0.05),
+              left: screenWidth * 0.05, right: screenWidth * 0.04),
           child: Column(
             children: [
               const SizedBox(

@@ -353,7 +353,7 @@ class _addnewpostState extends State<addnewpost> {
 
     if (pickedFile != null) {
       setState(() {
-        PickedFile = File(pickedFile.path); // Convert XFile to File
+        PickedFile = File(pickedFile.path);
       });
       //sethu start
 

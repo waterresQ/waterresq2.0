@@ -64,7 +64,7 @@ class _WeatherAppState extends State<WeatherApp> {
           padding:
               const EdgeInsets.only(top: 30, left: 20, right: 20, bottom: 10),
           child: FutureBuilder<Map<String, dynamic>>(
-            future: weatherApi.getWeatherData('Vijayawada'), //change location
+            future: weatherApi.getWeatherData('chennai'), //change location
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const CircularProgressIndicator();
@@ -74,7 +74,7 @@ class _WeatherAppState extends State<WeatherApp> {
                 final weatherData = snapshot.data!;
                 return FutureBuilder<Map<String, dynamic>>(
                   future: weatherApi
-                      .getWeatherForecast('Vijayawada'), //change location
+                      .getWeatherForecast('chennai'), //change location
                   builder: (context, forecastSnapshot) {
                     if (forecastSnapshot.connectionState ==
                         ConnectionState.waiting) {

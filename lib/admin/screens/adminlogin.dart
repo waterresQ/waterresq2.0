@@ -240,7 +240,6 @@ class _adminloginState extends State<adminlogin> {
   Future<void> loginclicked() async {
     String username = _username.text;
     String password = _password.text;
-
     if (username.isEmpty || password.isEmpty) {
       showDialog(
         context: context,

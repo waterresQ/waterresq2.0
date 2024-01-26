@@ -87,7 +87,6 @@ class _admincommunityrequestState extends State<admincommunityrequest> {
                                 if (snapshot.key != null) {
                                   databaseRef.child('community').push().set({
                                     'phone': value['phone'],
-                                    'aadhaar': value['aadhaar'],
                                     'communityname': value['communityname'],
                                     'name': value['name'],
                                     'description': value['description'],

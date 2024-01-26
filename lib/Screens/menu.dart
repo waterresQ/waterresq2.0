@@ -160,7 +160,7 @@ class _menupageState extends State<menupage> {
                                     Colors.red,
                                     Color.fromARGB(255, 205, 37, 25),
                                     Color.fromARGB(255, 156, 1, 1)
-                                  ])),
+                                  ],),),
                               child: const Stack(children: [
                                 Align(
                                   alignment: Alignment.center,
